@@ -1,7 +1,6 @@
 ## Description
 
-Welcome to the Habit Tracker app! This project serves as a practical implementation of concepts covered in 
-System Design II as part of the Master's in Software Development and Architecture program at La Salle University.  
+Welcome to the David's Habit Tracker app! 
 
 ## Installation
 
