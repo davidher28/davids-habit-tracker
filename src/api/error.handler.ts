@@ -1,6 +1,6 @@
 import { Response } from 'express'
-import { UserAlreadyExistsError } from '../../application/user/user-already-exists.error'
-import { BaseError } from '../../error'
+import { UserAlreadyExistsError } from '../application/command/user/user-already-exists.error'
+import { BaseError } from './error'
 
 export class ErrorResponse {
   code: string

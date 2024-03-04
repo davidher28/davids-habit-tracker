@@ -2,7 +2,8 @@ import { User } from './user'
 
 export interface UserRepository {
   save(user: User): void
-  findByUsername(username: string): User | undefined
+  findByUserName(userName: string): User | undefined
+  isExistingUser(user: User): boolean
 }
 
 export const UserRepository = Symbol('UserRepository')

@@ -1,15 +1,19 @@
 import { Module } from '@nestjs/common'
-import { RegisterUserCommandHandler } from './core/application/user/register-user.command-handler'
-import { CreateUserController } from './core/ui/api/create-user.controller'
-import { UserRepository } from './core/domain/user/user.repository'
-import { UserInMemoryRepository } from './core/infrastructure/user/user.in-memory.repository'
+import { CreateUserHandler } from './application/command/user/create-user.handler'
+import { UserController } from './api/user.controller'
+import { UserRepository } from './domain/user/user.repository'
+import { InMemoryUserRepository } from './infrastructure/persistence/user/user.in-memory.repository'
+import { CqrsModule } from '@nestjs/cqrs'
+
+const CommandHandlers = [CreateUserHandler]
+const QueryHandlers = []
+const Repositories = [
+  { provide: UserRepository, useClass: InMemoryUserRepository },
+]
 
 @Module({
-  imports: [],
-  controllers: [CreateUserController],
-  providers: [
-    RegisterUserCommandHandler,
-    { provide: UserRepository, useClass: UserInMemoryRepository },
-  ],
+  imports: [CqrsModule],
+  controllers: [UserController],
+  providers: [...CommandHandlers, ...QueryHandlers, ...Repositories],
 })
 export class AppModule {}
