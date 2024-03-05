@@ -24,6 +24,7 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
       new Date(),
       new Date(),
     )
+
     this.userRepository.save(user)
   }
 }
