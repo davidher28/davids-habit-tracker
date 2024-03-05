@@ -5,18 +5,23 @@ import { UserMother } from '../../../../test/user/user.mother'
 
 describe('CreateUserHandler', () => {
   const prepareScenario = () => {
+    const user = UserMother.create()
     const repository = new InMemoryUserRepository()
     const handler = new CreateUserHandler(repository)
-    const user = UserMother.create()
-    return { repository, handler, user }
+    return { user, repository, handler }
   }
 
   it('should create the user', async () => {
     // Given
-    const { repository, handler, user } = prepareScenario()
+    const { user, repository, handler } = prepareScenario()
 
     // When
-    const command = new CreateUserCommand(user.id, user.userName, user.fullName)
+    const command = new CreateUserCommand(
+      user.id,
+      user.userName,
+      user.email,
+      user.fullName,
+    )
     await handler.execute(command)
 
     // Then
@@ -25,11 +30,16 @@ describe('CreateUserHandler', () => {
 
   it('should throw an error if the user already exists', async () => {
     // Given
-    const { repository, handler, user } = prepareScenario()
+    const { user, repository, handler } = prepareScenario()
     repository.withUsers([user])
 
     // When
-    const command = new CreateUserCommand(user.id, user.userName, user.fullName)
+    const command = new CreateUserCommand(
+      user.id,
+      user.userName,
+      user.email,
+      user.fullName,
+    )
 
     // Then
     await expect(handler.execute(command)).rejects.toThrow()
