@@ -34,4 +34,8 @@ export class Habit {
     this.createdAt = new Date()
     this.updatedAt = new Date()
   }
+
+  get nameValue(): string {
+    return this.name.value
+  }
 }
