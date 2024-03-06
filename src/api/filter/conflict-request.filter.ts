@@ -5,8 +5,8 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { Response } from 'express'
-import { UserAlreadyExistsError } from '../errors/user-already-exists.error'
-import { HabitAlreadyExistsError } from '../errors/habit-already-exists.error'
+import { UserAlreadyExistsError } from '../error/user/user-already-exists.error'
+import { HabitAlreadyExistsError } from '../error/habit/habit-already-exists.error'
 
 type ConflictError = UserAlreadyExistsError | HabitAlreadyExistsError
 

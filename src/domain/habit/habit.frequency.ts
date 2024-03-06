@@ -16,6 +16,10 @@ export class HabitFrequency {
     this.value = value
   }
 
+  static create(value: Frequency): HabitFrequency {
+    return new HabitFrequency(value)
+  }
+
   getValue(): Frequency {
     return this.value
   }

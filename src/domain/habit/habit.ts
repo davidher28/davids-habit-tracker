@@ -19,17 +19,11 @@ export class Habit {
     id: HabitId,
     name: HabitName,
     description: HabitDescription,
-    frequency: HabitFrequency,
-    habitTime: number,
-    restTime: number,
     userId: UserId,
   ) {
     this.id = id
     this.name = name
     this.description = description
-    this.frequency = frequency
-    this.habitTime = habitTime
-    this.restTime = restTime
     this.userId = userId
     this.createdAt = new Date()
     this.updatedAt = new Date()
@@ -37,5 +31,13 @@ export class Habit {
 
   get nameValue(): string {
     return this.name.value
+  }
+
+  get descriptionValue(): string {
+    return this.description.value
+  }
+
+  get userIdValue(): string {
+    return this.userId.value
   }
 }
