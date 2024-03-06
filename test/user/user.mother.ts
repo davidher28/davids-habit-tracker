@@ -1,5 +1,11 @@
-import { User } from '../../src/domain/user/user'
 import { v4 as uuidv4 } from 'uuid'
+import {
+  User,
+  UserEmail,
+  UserFullName,
+  UserId,
+  UserName,
+} from '../../src/domain'
 
 export class UserMother {
   private id: string = uuidv4()
@@ -7,35 +13,12 @@ export class UserMother {
   private email: string = 'email@email.com'
   private fullName: string = 'fullName'
 
-  withId(id: string) {
-    this.id = id
-    return this
-  }
-
-  withUserName(userName: string) {
-    this.userName = userName
-    return this
-  }
-
-  withEmail(email: string) {
-    this.email = email
-    return this
-  }
-
-  withFullName(fullName: string) {
-    this.fullName = fullName
-    return this
-  }
-
   build(): User {
-    return new User(
-      this.id,
-      this.userName,
-      this.email,
-      this.fullName,
-      new Date(),
-      new Date(),
-    )
+    const userId = UserId.create(this.id)
+    const userName = UserName.create(this.userName)
+    const email = UserEmail.create(this.email)
+    const fullName = UserFullName.create(this.fullName)
+    return new User(userId, userName, email, fullName)
   }
 
   static create(): User {

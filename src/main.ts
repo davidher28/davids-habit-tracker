@@ -1,13 +1,26 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
-import { Logger, ValidationPipe } from '@nestjs/common'
+import {
+  BadRequestException,
+  Logger,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common'
 
 const APP_PORT = 3010
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
-  // TODO: Review if it's worth it to implement validation pipes for each endpoint
-  app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalPipes(
+    new ValidationPipe({
+      exceptionFactory: (validationErrors: ValidationError[] = []) => {
+        const firstConstraint = Object.values(
+          validationErrors[0].constraints,
+        )[0]
+        return new BadRequestException(firstConstraint)
+      },
+    }),
+  )
   await app.listen(APP_PORT)
 }
 

@@ -5,7 +5,7 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { Response } from 'express'
-import { UserAlreadyExistsError } from './user-already-exists.error'
+import { UserAlreadyExistsError } from '../errors/user-already-exists.error'
 
 @Catch(UserAlreadyExistsError)
 export class UserAlreadyExistsFilter implements ExceptionFilter {

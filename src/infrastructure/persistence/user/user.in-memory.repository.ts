@@ -6,7 +6,7 @@ import { Injectable } from '@nestjs/common'
 export class InMemoryUserRepository implements UserRepository {
   private users: User[] = []
 
-  withUsers(users: User[]) {
+  setUsers(users: User[]) {
     this.users = users
   }
 
@@ -15,10 +15,10 @@ export class InMemoryUserRepository implements UserRepository {
   }
 
   findByUserName(userName: string): User | undefined {
-    return this.users.find((user) => user.userName === userName)
+    return this.users.find((user) => user.userNameValue === userName)
   }
 
-  isExistingUser(user: User): boolean {
-    return this.users.some((u) => u.id === user.id)
+  isExistingUser(userId: string): boolean {
+    return this.users.some((user) => user.idValue === userId)
   }
 }

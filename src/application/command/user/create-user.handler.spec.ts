@@ -2,53 +2,87 @@ import { CreateUserCommand } from './create-user.command'
 import { CreateUserHandler } from './create-user.handler'
 import { InMemoryUserRepository } from '../../../infrastructure/persistence/user/user.in-memory.repository'
 import { UserMother } from '../../../../test/user/user.mother'
+import { User } from '../../../domain'
+import { UserAlreadyExistsError } from '../../../api/errors/user-already-exists.error'
+import { BadRequestException } from '@nestjs/common'
 
 describe('CreateUserHandler', () => {
-  const prepareScenario = () => {
-    const user = UserMother.create()
-    const repository = new InMemoryUserRepository()
-    const handler = new CreateUserHandler(repository)
-    return { user, repository, handler }
-  }
+  let user: User
+  let repository: InMemoryUserRepository
+  let handler: CreateUserHandler
+
+  beforeEach(() => {
+    user = UserMother.create()
+    repository = new InMemoryUserRepository()
+    handler = new CreateUserHandler(repository)
+  })
 
   it('should create the user', async () => {
     // Given
-    const { user, repository, handler } = prepareScenario()
+    const userName = user.userNameValue
+    const email = user.emailValue
+    const fullName = user.fullNameValue
 
     // When
-    const command = new CreateUserCommand(
-      user.id,
-      user.userName,
-      user.email,
-      user.fullName,
-    )
+    const command = new CreateUserCommand(userName, email, fullName)
     await handler.execute(command)
 
     // Then
-    expect(repository.isExistingUser(user)).toBeTruthy()
+    expect(repository.findByUserName(user.userNameValue)).toBeTruthy()
   })
 
   it('should throw an error if the user already exists', async () => {
     // Given
-    const { user, repository, handler } = prepareScenario()
-    repository.withUsers([user])
+    repository.setUsers([user])
+    const userName = user.userNameValue
+    const email = user.emailValue
+    const fullName = user.fullNameValue
 
     // When
-    const command = new CreateUserCommand(
-      user.id,
-      user.userName,
-      user.email,
-      user.fullName,
-    )
+    const command = new CreateUserCommand(userName, email, fullName)
 
     // Then
-    await expect(handler.execute(command)).rejects.toThrow()
+    await expect(handler.execute(command)).rejects.toThrow(
+      UserAlreadyExistsError,
+    )
   })
 
-  it('should throw an error if the user is not valid', () => {
-    // TODO: Implement this test case
+  it('should throw an error if the user name is empty', async () => {
     // Given
+    const emptyUserName = ''
+    const email = user.emailValue
+    const fullName = user.fullNameValue
+
     // When
+    const command = new CreateUserCommand(emptyUserName, email, fullName)
+
     // Then
+    await expect(handler.execute(command)).rejects.toThrow(BadRequestException)
+  })
+
+  it('should throw an error if the user email is not valid', async () => {
+    // Given
+    const userName = user.userNameValue
+    const invalidEmail = 'invalidEmail'
+    const fullName = user.fullNameValue
+
+    // When
+    const command = new CreateUserCommand(userName, invalidEmail, fullName)
+
+    // Then
+    await expect(handler.execute(command)).rejects.toThrow(BadRequestException)
+  })
+
+  it('should throw an error if the full name is empty', async () => {
+    // Given
+    const userName = user.userNameValue
+    const email = user.emailValue
+    const emptyFullName = ''
+
+    // When
+    const command = new CreateUserCommand(userName, email, emptyFullName)
+
+    // Then
+    await expect(handler.execute(command)).rejects.toThrow(BadRequestException)
   })
 })
