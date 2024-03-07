@@ -6,6 +6,6 @@ export class HabitNotFoundError extends BaseError {
   }
 
   static withId(habitId: string): HabitNotFoundError {
-    return new HabitNotFoundError(`Habit with id ${habitId} does not exists.`)
+    return new HabitNotFoundError(`Habit with id ${habitId} does not exist.`)
   }
 }
