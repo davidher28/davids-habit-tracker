@@ -5,14 +5,11 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { Response } from 'express'
-import { UserNotFoundError } from '../error/user/user-not-found.error'
-import { HabitNotFoundError } from '../error/habit/habit-not-found.error'
+import { NotFoundErrors, NotFoundErrorType } from '../error/not-found.error'
 
-type NotFoundError = HabitNotFoundError | UserNotFoundError
-
-@Catch(HabitNotFoundError, UserNotFoundError)
+@Catch(...NotFoundErrors)
 export class NotFoundFilter implements ExceptionFilter {
-  catch(exception: NotFoundError, host: ArgumentsHost) {
+  catch(exception: NotFoundErrorType, host: ArgumentsHost) {
     const context = host.switchToHttp()
     const response = context.getResponse<Response>()
     response.status(HttpStatus.NOT_FOUND).json({
