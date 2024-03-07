@@ -14,4 +14,8 @@ export class HabitName {
   static create(value: string): HabitName {
     return new HabitName(value)
   }
+
+  equals(name: string): boolean {
+    return this.value === name
+  }
 }

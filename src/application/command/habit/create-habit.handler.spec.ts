@@ -7,6 +7,8 @@ import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-mem
 import { Habit, User } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserMother } from '../../../../test/user/user.mother'
+import { HabitAlreadyExistsError } from '../../../api/error/habit/habit-already-exists.error'
+import { NotFoundException } from '@nestjs/common'
 
 describe('CreateHabitHandler', () => {
   let user: User
@@ -42,5 +44,47 @@ describe('CreateHabitHandler', () => {
 
     // Then
     expect(habitRepository.findByName(habit.nameValue)).toBeTruthy()
+  })
+
+  it('should throw an error if the habit already exists', async () => {
+    // Given
+    userRepository.setUsers([user])
+    habitRepository.save(habit)
+    const habitName = habit.nameValue
+    const habitDescription = habit.descriptionValue
+    const habitFrequency = habit.frequencyValue
+    const userId = user.idValue
+
+    // When
+    const command = new CreateHabitCommand(
+      habitName,
+      habitDescription,
+      habitFrequency,
+      userId,
+    )
+
+    // Then
+    await expect(handler.execute(command)).rejects.toThrow(
+      HabitAlreadyExistsError,
+    )
+  })
+
+  it('should throw an error if the user does not exist', async () => {
+    // Given
+    const habitName = habit.nameValue
+    const habitDescription = habit.descriptionValue
+    const habitFrequency = habit.frequencyValue
+    const userId = user.idValue
+
+    // When
+    const command = new CreateHabitCommand(
+      habitName,
+      habitDescription,
+      habitFrequency,
+      userId,
+    )
+
+    // Then
+    await expect(handler.execute(command)).rejects.toThrow(NotFoundException)
   })
 })

@@ -5,13 +5,13 @@ import { HabitDescription } from './habit.description'
 import { HabitFrequency } from './habit.frequency'
 
 export class Habit {
-  private readonly id: HabitId
-  private name: HabitName
+  readonly id: HabitId
+  readonly name: HabitName
   private description: HabitDescription
   private frequency: HabitFrequency
   private habitTime: number
   private restTime: number
-  private readonly userId: UserId
+  readonly userId: UserId
   private wearableDeviceId?: string
   private readonly createdAt: Date
   private updatedAt: Date

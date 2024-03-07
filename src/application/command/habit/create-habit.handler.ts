@@ -22,21 +22,20 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
   ) {}
 
   async execute(command: CreateHabitCommand): Promise<void> {
-    if (this.habitRepository.findByName(command.name)) {
+    const name = HabitName.create(command.name)
+    if (this.habitRepository.findByName(name.value)) {
       throw HabitAlreadyExistsError.withName(command.name)
     }
 
-    if (!this.userRepository.isExistingUser(command.userId)) {
+    const userId = UserId.create(command.userId)
+    if (!this.userRepository.isExistingUser(userId.value)) {
       throw new NotFoundException('User does not exist')
     }
 
     const uuid = HabitId.generateId()
     const habitId = HabitId.create(uuid)
-
-    const name = HabitName.create(command.name)
     const description = HabitDescription.create(command.description)
     const frequency = HabitFrequency.create(Frequency[command.frequency])
-    const userId = UserId.create(command.userId)
 
     const habit = new Habit(
       habitId,

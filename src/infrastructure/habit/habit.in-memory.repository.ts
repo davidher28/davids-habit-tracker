@@ -13,14 +13,14 @@ export class InMemoryHabitRepository implements HabitRepository {
   }
 
   findByName(name: string): Habit | undefined {
-    return this.habits.find((habit) => habit.nameValue === name)
+    return this.habits.find((habit) => habit.name.equals(name))
   }
 
   findByUserId(userId: string): Habit[] {
-    return this.habits.filter((habit) => habit.userIdValue === userId)
+    return this.habits.filter((habit) => habit.userId.equals(userId))
   }
 
   isExistingHabit(id: string): boolean {
-    return this.habits.some((habit) => habit.idValue === id)
+    return this.habits.some((habit) => habit.id.equals(id))
   }
 }
