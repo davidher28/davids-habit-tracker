@@ -13,9 +13,9 @@ export { ProgressDate } from './progress/progress.date'
 export { ProgressId } from './progress/progress.id'
 export { ProgressObservations } from './progress/progress.observations'
 
-// Aggregates
-
 // Entities
 export { User } from './user/user'
+
 export { Habit } from './habit/habit'
+
 export { Progress } from './progress/progress'
