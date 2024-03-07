@@ -10,7 +10,8 @@ import { Response } from 'express'
 @Catch(BadRequestException)
 export class BadRequestFilter implements ExceptionFilter {
   catch(exception: BadRequestException, host: ArgumentsHost) {
-    const response = host.switchToHttp().getResponse<Response>()
+    const context = host.switchToHttp()
+    const response = context.getResponse<Response>()
     response.status(HttpStatus.BAD_REQUEST).json({
       code: 'bad-request',
       message: exception.message,
