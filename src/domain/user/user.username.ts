@@ -14,4 +14,8 @@ export class UserName {
   static create(value: string): UserName {
     return new UserName(value)
   }
+
+  equals(userName: string): boolean {
+    return this.value === userName
+  }
 }

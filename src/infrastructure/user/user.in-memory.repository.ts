@@ -15,10 +15,10 @@ export class InMemoryUserRepository implements UserRepository {
   }
 
   findByUserName(userName: string): User | undefined {
-    return this.users.find((user) => user.userNameValue === userName)
+    return this.users.find((user) => user.userName.equals(userName))
   }
 
   isExistingUser(userId: string): boolean {
-    return this.users.some((user) => user.idValue === userId)
+    return this.users.some((user) => user.id.equals(userId))
   }
 }

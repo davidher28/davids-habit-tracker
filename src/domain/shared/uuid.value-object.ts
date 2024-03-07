@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+import { v4 as uuidv4, validate as uuidValidate } from 'uuid'
 import { BadRequestException } from '@nestjs/common'
 
 export class UUId {
@@ -9,9 +9,7 @@ export class UUId {
       throw new BadRequestException('The UUID must be a non-empty string.')
     }
 
-    const uuidRegex =
-      /^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i
-    if (!uuidRegex.test(value)) {
+    if (!uuidValidate(value)) {
       throw new BadRequestException('The UUID provided is not a valid UUIDv4.')
     }
 
@@ -24,5 +22,9 @@ export class UUId {
 
   static generateId(): string {
     return uuidv4()
+  }
+
+  equals(id: string): boolean {
+    return this.value === id
   }
 }

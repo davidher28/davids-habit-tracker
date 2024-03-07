@@ -4,12 +4,12 @@ import { UserEmail } from './user.email'
 import { UserFullName } from './user.fullname'
 
 export class User {
-  private readonly id: UserId
-  private readonly userName: UserName
-  private email: UserEmail
-  private readonly fullName: UserFullName
-  private readonly createdAt: Date
-  private updatedAt: Date
+  readonly id: UserId
+  readonly userName: UserName
+  email: UserEmail
+  readonly fullName: UserFullName
+  readonly createdAt: Date
+  updatedAt: Date
 
   constructor(
     id: UserId,
