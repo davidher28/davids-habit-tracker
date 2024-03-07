@@ -8,7 +8,7 @@ import { Habit, User } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserMother } from '../../../../test/user/user.mother'
 import { HabitAlreadyExistsError } from '../../../api/error/habit/habit-already-exists.error'
-import { NotFoundException } from '@nestjs/common'
+import { UserNotFoundError } from '../../../api/error/user/user-not-found.error'
 
 describe('CreateHabitHandler', () => {
   let user: User
@@ -85,6 +85,6 @@ describe('CreateHabitHandler', () => {
     )
 
     // Then
-    await expect(handler.execute(command)).rejects.toThrow(NotFoundException)
+    await expect(handler.execute(command)).rejects.toThrow(UserNotFoundError)
   })
 })

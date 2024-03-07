@@ -1,19 +1,21 @@
 import {
   ArgumentsHost,
-  BadRequestException,
   Catch,
   ExceptionFilter,
   HttpStatus,
   NotFoundException,
 } from '@nestjs/common'
 import { Response } from 'express'
+import { UserNotFoundError } from '../error/user/user-not-found.error'
 
-@Catch(NotFoundException)
+type NotFoundError = NotFoundException | UserNotFoundError
+
+@Catch(NotFoundException, UserNotFoundError)
 export class NotFoundFilter implements ExceptionFilter {
-  catch(exception: BadRequestException, host: ArgumentsHost) {
+  catch(exception: NotFoundError, host: ArgumentsHost) {
     const response = host.switchToHttp().getResponse<Response>()
     response.status(HttpStatus.NOT_FOUND).json({
-      code: 'not-found',
+      code: exception['code'] || 'not-found',
       message: exception.message,
     })
   }

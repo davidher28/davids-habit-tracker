@@ -4,22 +4,18 @@ import { GetHabitsHandler } from './get-habits.handler'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
 import { User } from '../../../domain'
-import { NotFoundException } from '@nestjs/common'
 import { UserMother } from '../../../../test/user/user.mother'
 import { HabitMother } from '../../../../test/habit/habit.mother'
+import { UserNotFoundError } from '../../../api/error/user/user-not-found.error'
 
 describe('GetHabitsHandler', () => {
-  let user: User
-  let habitRepository: InMemoryHabitRepository
-  let userRepository: InMemoryUserRepository
-  let handler: GetHabitsHandler
-
-  beforeEach(() => {
-    user = UserMother.create()
-    habitRepository = new InMemoryHabitRepository()
-    userRepository = new InMemoryUserRepository()
-    handler = new GetHabitsHandler(habitRepository, userRepository)
-  })
+  const user: User = UserMother.create()
+  const habitRepository: InMemoryHabitRepository = new InMemoryHabitRepository()
+  const userRepository: InMemoryUserRepository = new InMemoryUserRepository()
+  const handler: GetHabitsHandler = new GetHabitsHandler(
+    habitRepository,
+    userRepository,
+  )
 
   it('should read the habits of the user', async () => {
     // Given
@@ -49,6 +45,6 @@ describe('GetHabitsHandler', () => {
     const query = new GetHabitsQuery(userId)
 
     // Then
-    await expect(handler.execute(query)).rejects.toThrow(NotFoundException)
+    await expect(handler.execute(query)).rejects.toThrow(UserNotFoundError)
   })
 })

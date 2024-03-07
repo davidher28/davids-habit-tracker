@@ -10,6 +10,7 @@ import {
   UserId,
   UserName,
 } from '../../../domain'
+import { UUId } from '../../../domain/shared/uuid.value-object'
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -18,19 +19,17 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
   ) {}
 
   async execute(command: CreateUserCommand): Promise<void> {
-    if (this.userRepository.findByUserName(command.userName)) {
+    const userName = UserName.create(command.userName)
+    if (this.userRepository.findByUserName(userName.value)) {
       throw UserAlreadyExistsError.withUserName(command.userName)
     }
 
-    const uuid = UserId.generateId()
+    const uuid = UUId.generate()
     const userId = UserId.create(uuid)
-
-    const userName = UserName.create(command.userName)
     const userEmail = UserEmail.create(command.email)
     const userFullName = UserFullName.create(command.fullName)
 
     const user = new User(userId, userName, userEmail, userFullName)
-
     this.userRepository.save(user)
   }
 }

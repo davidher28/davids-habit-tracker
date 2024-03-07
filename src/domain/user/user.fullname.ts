@@ -5,7 +5,7 @@ export class UserFullName {
 
   private constructor(value: string) {
     if (!value || typeof value !== 'string' || value.trim() === '') {
-      throw new BadRequestException('Full name must be a non-empty string')
+      throw new BadRequestException('Full name must be a non-empty string.')
     }
 
     this.value = value

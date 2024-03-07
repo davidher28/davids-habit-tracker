@@ -20,7 +20,7 @@ export class UUId {
     return new UUId(value)
   }
 
-  static generateId(): string {
+  static generate(): string {
     return uuidv4()
   }
 

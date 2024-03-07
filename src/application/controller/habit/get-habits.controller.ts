@@ -24,7 +24,7 @@ export class GetHabitsController {
 
     Logger.log(this.SUCCESS_MESSAGE, 'GetHabitsController')
     return response.status(201).json({
-      code: 'habits-retrieved-successfully',
+      code: 'habits-successfully-retrieved',
       message: this.SUCCESS_MESSAGE,
       data: habits.map((habit: Habit) => JSON.stringify(habit)),
     })
