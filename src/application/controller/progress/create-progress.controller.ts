@@ -1,7 +1,7 @@
 import { Body, Controller, Logger, Post, Res, UseFilters } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
-import { ConflictRequestFilter } from '../../../api/filter/conflict-request.filter'
+import { ConflictFilter } from '../../../api/filter/conflict.filter'
 import { BadRequestFilter } from '../../../api/filter/bad-request.filter'
 import { NotFoundFilter } from '../../../api/filter/not-found.filter'
 import { CreateProgressDTO } from '../../command/progress/create-progress.dto'
@@ -15,7 +15,7 @@ export class CreateProgressController {
 
   @Post('progress')
   @UseFilters(
-    new ConflictRequestFilter(),
+    new ConflictFilter(),
     new BadRequestFilter(),
     new NotFoundFilter(),
   )

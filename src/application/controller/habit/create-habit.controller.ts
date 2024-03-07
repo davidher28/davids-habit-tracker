@@ -1,7 +1,7 @@
 import { Body, Controller, Logger, Post, Res, UseFilters } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
-import { ConflictRequestFilter } from '../../../api/filter/conflict-request.filter'
+import { ConflictFilter } from '../../../api/filter/conflict.filter'
 import { BadRequestFilter } from '../../../api/filter/bad-request.filter'
 import { CreateHabitDTO } from '../../command/habit/create-habit.dto'
 import { CreateHabitCommand } from '../../command/habit/create-habit.command'
@@ -14,7 +14,7 @@ export class CreateHabitController {
 
   @Post()
   @UseFilters(
-    new ConflictRequestFilter(),
+    new ConflictFilter(),
     new BadRequestFilter(),
     new NotFoundFilter(),
   )

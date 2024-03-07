@@ -5,14 +5,11 @@ import {
   HttpStatus,
 } from '@nestjs/common'
 import { Response } from 'express'
-import {
-  ConflictRequestErrors,
-  ConflictRequestErrorType,
-} from '../error/conflict-request.error'
+import { ConflictErrors, ConflictErrorType } from '../error/conflict.error'
 
-@Catch(...ConflictRequestErrors)
-export class ConflictRequestFilter implements ExceptionFilter {
-  catch(exception: ConflictRequestErrorType, host: ArgumentsHost) {
+@Catch(...ConflictErrors)
+export class ConflictFilter implements ExceptionFilter {
+  catch(exception: ConflictErrorType, host: ArgumentsHost) {
     const context = host.switchToHttp()
     const response = context.getResponse<Response>()
     response.status(HttpStatus.CONFLICT).json({

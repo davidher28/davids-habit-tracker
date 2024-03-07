@@ -1,6 +1,6 @@
 import { CreateUserCommand } from './create-user.command'
 import { UserRepository } from '../../../domain/user/user.repository'
-import { UserAlreadyExistsError } from '../../../api/error/user/user-already-exists.error'
+import { UserAlreadyExistsError } from '../../../domain/user/user.already-exists.error'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import {

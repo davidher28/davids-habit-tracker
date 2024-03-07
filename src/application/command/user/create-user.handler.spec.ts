@@ -3,7 +3,7 @@ import { CreateUserHandler } from './create-user.handler'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
 import { UserMother } from '../../../../test/user/user.mother'
 import { User } from '../../../domain'
-import { UserAlreadyExistsError } from '../../../api/error/user/user-already-exists.error'
+import { UserAlreadyExistsError } from '../../../domain/user/user.already-exists.error'
 import { BadRequestException } from '@nestjs/common'
 
 describe('CreateUserHandler', () => {

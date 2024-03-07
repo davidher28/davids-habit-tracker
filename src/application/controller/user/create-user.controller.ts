@@ -3,7 +3,7 @@ import { CreateUserCommand } from '../../command/user/create-user.command'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { CreateUserDTO } from '../../command/user/create-user.dto'
-import { ConflictRequestFilter } from '../../../api/filter/conflict-request.filter'
+import { ConflictFilter } from '../../../api/filter/conflict.filter'
 import { BadRequestFilter } from '../../../api/filter/bad-request.filter'
 
 @Controller('users')
@@ -12,7 +12,7 @@ export class CreateUserController {
   constructor(private readonly commandBus: CommandBus) {}
 
   @Post()
-  @UseFilters(new BadRequestFilter(), new ConflictRequestFilter())
+  @UseFilters(new BadRequestFilter(), new ConflictFilter())
   async createUser(
     @Body() request: CreateUserDTO,
     @Res() response: Response,

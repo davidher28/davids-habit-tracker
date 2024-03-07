@@ -1,4 +1,4 @@
-import { BaseError } from '../base-error'
+import { BaseError } from '../../api/error/base-error'
 
 export class UserNotFoundError extends BaseError {
   constructor(message: string) {

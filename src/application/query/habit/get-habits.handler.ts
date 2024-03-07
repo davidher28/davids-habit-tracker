@@ -4,7 +4,7 @@ import { GetHabitsQuery } from './get-habits.query'
 import { Inject } from '@nestjs/common'
 import { UserRepository } from '../../../domain/user/user.repository'
 import { Habit, UserId } from '../../../domain'
-import { UserNotFoundError } from '../../../api/error/user/user-not-found.error'
+import { UserNotFoundError } from '../../../domain/user/user.not-found.error'
 
 @QueryHandler(GetHabitsQuery)
 export class GetHabitsHandler implements IQueryHandler<GetHabitsQuery> {

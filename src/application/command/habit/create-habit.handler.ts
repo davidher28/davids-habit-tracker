@@ -1,6 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
-import { HabitAlreadyExistsError } from '../../../api/error/habit/habit-already-exists.error'
+import { HabitAlreadyExistsError } from '../../../domain/habit/habit.already-exists.error'
 import { CreateHabitCommand } from './create-habit.command'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
@@ -13,7 +13,7 @@ import {
   UserId,
 } from '../../../domain'
 import { Frequency } from '../../../domain/habit/habit.frequency'
-import { UserNotFoundError } from '../../../api/error/user/user-not-found.error'
+import { UserNotFoundError } from '../../../domain/user/user.not-found.error'
 import { UUId } from '../../../domain/shared/uuid.value-object'
 
 @CommandHandler(CreateHabitCommand)

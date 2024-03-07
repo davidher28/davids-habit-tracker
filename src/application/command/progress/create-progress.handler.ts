@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { ProgressRepository } from '../../../domain/progress/progress.repository'
 import { CreateProgressCommand } from './create-progress.command'
-import { HabitNotFoundError } from '../../../api/error/habit/habit-not-found.error'
+import { HabitNotFoundError } from '../../../domain/habit/habit.not-found.error'
 import { HabitId } from '../../../domain'
 
 @CommandHandler(CreateProgressCommand)
