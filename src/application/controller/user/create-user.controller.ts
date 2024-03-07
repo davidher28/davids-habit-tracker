@@ -8,6 +8,7 @@ import { BadRequestFilter } from '../../../api/filter/bad-request.filter'
 
 @Controller('users')
 export class CreateUserController {
+  private readonly SUCCESS_MESSAGE = 'The user has been successfully created.'
   constructor(private readonly commandBus: CommandBus) {}
 
   @Post()
@@ -16,16 +17,17 @@ export class CreateUserController {
     @Body() request: CreateUserDTO,
     @Res() response: Response,
   ): Promise<Response> {
-    await this.commandBus.execute(
-      new CreateUserCommand(request.userName, request.email, request.fullName),
+    const newUserCommand = new CreateUserCommand(
+      request.userName,
+      request.email,
+      request.fullName,
     )
+    await this.commandBus.execute(newUserCommand)
 
-    const message = 'The user has been successfully created.'
-    Logger.log(message, 'CreateUserController')
-
+    Logger.log(this.SUCCESS_MESSAGE, 'CreateUserController')
     return response.status(201).json({
       code: 'user-created',
-      message: message,
+      message: this.SUCCESS_MESSAGE,
     })
   }
 }

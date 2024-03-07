@@ -13,6 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule)
   app.useGlobalPipes(
     new ValidationPipe({
+      transform: true,
       exceptionFactory: (validationErrors: ValidationError[] = []) => {
         const firstConstraint = Object.values(
           validationErrors[0].constraints,

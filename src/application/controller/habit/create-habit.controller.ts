@@ -9,6 +9,7 @@ import { NotFoundFilter } from '../../../api/filter/not-found.filter'
 
 @Controller('habits')
 export class CreateHabitController {
+  private readonly SUCCESS_MESSAGE = 'The habit has been successfully created.'
   constructor(private readonly commandBus: CommandBus) {}
 
   @Post()
@@ -21,16 +22,18 @@ export class CreateHabitController {
     @Body() request: CreateHabitDTO,
     @Res() response: Response,
   ): Promise<Response> {
-    await this.commandBus.execute(
-      new CreateHabitCommand(request.name, request.description, request.userId),
+    const newHabitCommand = new CreateHabitCommand(
+      request.name,
+      request.description,
+      request.frequency,
+      request.userId,
     )
+    await this.commandBus.execute(newHabitCommand)
 
-    const message = 'The habit has been successfully created.'
-    Logger.log(message, 'CreateHabitController')
-
+    Logger.log(this.SUCCESS_MESSAGE, 'CreateHabitController')
     return response.status(201).json({
       code: 'habit-created',
-      message: message,
+      message: this.SUCCESS_MESSAGE,
     })
   }
 }

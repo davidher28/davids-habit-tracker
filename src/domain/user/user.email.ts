@@ -4,10 +4,15 @@ export class UserEmail {
   readonly value: string
 
   private constructor(value: string) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!value || value.length === 0) {
+      throw new BadRequestException('Email must be a non-empty string.')
+    }
 
-    if (!value || typeof value !== 'string' || !emailRegex.test(value)) {
-      throw new BadRequestException('Invalid email address')
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(value)) {
+      throw new BadRequestException(
+        'The email provided is not a valid address.',
+      )
     }
 
     this.value = value

@@ -5,7 +5,14 @@ import { CreateHabitCommand } from './create-habit.command'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
 import { Habit } from '../../../domain/habit/habit'
-import { HabitDescription, HabitId, HabitName, UserId } from '../../../domain'
+import {
+  HabitDescription,
+  HabitFrequency,
+  HabitId,
+  HabitName,
+  UserId,
+} from '../../../domain'
+import { Frequency } from '../../../domain/habit/habit.frequency'
 
 @CommandHandler(CreateHabitCommand)
 export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
@@ -28,9 +35,10 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
 
     const name = HabitName.create(command.name)
     const description = HabitDescription.create(command.description)
+    const frequency = HabitFrequency.create(Frequency[command.frequency])
     const userId = UserId.create(command.userId)
 
-    const habit = new Habit(habitId, name, description, userId)
+    const habit = new Habit(habitId, name, description, frequency, userId)
 
     this.habitRepository.save(habit)
   }

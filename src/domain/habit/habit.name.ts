@@ -5,7 +5,7 @@ export class HabitName {
 
   private constructor(value: string) {
     if (!value || typeof value !== 'string' || value.length < 3) {
-      throw new BadRequestException('Invalid habit name')
+      throw new BadRequestException('Habit name must be a non-empty string.')
     }
 
     this.value = value

@@ -1,6 +1,6 @@
 import { CreateUserCommand } from './create-user.command'
 import { CreateUserHandler } from './create-user.handler'
-import { InMemoryUserRepository } from '../../../infrastructure/persistence/user/user.in-memory.repository'
+import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
 import { UserMother } from '../../../../test/user/user.mother'
 import { User } from '../../../domain'
 import { UserAlreadyExistsError } from '../../../api/error/user/user-already-exists.error'

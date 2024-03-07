@@ -1,5 +1,4 @@
 // Value Objects
-
 export { UserEmail } from './user/user.email'
 export { UserFullName } from './user/user.fullname'
 export { UserId } from './user/user.id'
@@ -10,8 +9,13 @@ export { HabitFrequency } from './habit/habit.frequency'
 export { HabitId } from './habit/habit.id'
 export { HabitName } from './habit/habit.name'
 
+export { ProgressDate } from './progress/progress.date'
+export { ProgressId } from './progress/progress.id'
+export { ProgressObservations } from './progress/progress.observations'
+
 // Aggregates
 
 // Entities
-
 export { User } from './user/user'
+export { Habit } from './habit/habit'
+export { Progress } from './progress/progress'

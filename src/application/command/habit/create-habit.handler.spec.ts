@@ -2,8 +2,8 @@ import { CreateHabitCommand } from './create-habit.command'
 import { CreateHabitHandler } from './create-habit.handler'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
-import { InMemoryHabitRepository } from '../../../infrastructure/persistence/habit/habit.in-memory.repository'
-import { InMemoryUserRepository } from '../../../infrastructure/persistence/user/user.in-memory.repository'
+import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
+import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
 import { Habit } from '../../../domain/habit/habit'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserMother } from '../../../../test/user/user.mother'
@@ -29,10 +29,16 @@ describe('CreateHabitHandler', () => {
     userRepository.setUsers([user])
     const habitName = habit.nameValue
     const habitDescription = habit.descriptionValue
+    const habitFrequency = habit.frequencyValue
     const userId = user.idValue
 
     // When
-    const command = new CreateHabitCommand(habitName, habitDescription, userId)
+    const command = new CreateHabitCommand(
+      habitName,
+      habitDescription,
+      habitFrequency,
+      userId,
+    )
     await handler.execute(command)
 
     // Then

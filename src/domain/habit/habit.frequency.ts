@@ -1,30 +1,28 @@
 import { BadRequestException } from '@nestjs/common'
 
 export enum Frequency {
-  HOUR = 'HOUR',
-  DAY = 'DAY',
-  WEEK = 'WEEK',
+  HOURLY = 'HOURLY',
+  DAILY = 'DAILY',
+  WEEKLY = 'WEEKLY',
 }
 
 export class HabitFrequency {
-  private readonly value: Frequency
+  readonly value: string
 
-  constructor(value: Frequency) {
-    if (!HabitFrequency.isValidFrequency(value)) {
-      throw new BadRequestException('Invalid frequency value')
+  constructor(value: string) {
+    if (!HabitFrequency.isValidFrequency(value as Frequency)) {
+      throw new BadRequestException(
+        'Habit frequency must be a valid frequency. Please, use HOURLY, DAILY or WEEKLY.',
+      )
     }
     this.value = value
   }
 
-  static create(value: Frequency): HabitFrequency {
+  static create(value: string): HabitFrequency {
     return new HabitFrequency(value)
   }
 
-  getValue(): Frequency {
-    return this.value
-  }
-
   static isValidFrequency(value: Frequency): boolean {
-    return [Frequency.HOUR, Frequency.DAY, Frequency.WEEK].includes(value)
+    return [Frequency.HOURLY, Frequency.DAILY, Frequency.WEEKLY].includes(value)
   }
 }

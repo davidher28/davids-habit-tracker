@@ -4,8 +4,10 @@ export class HabitDescription {
   readonly value: string
 
   private constructor(value: string) {
-    if (!value || typeof value !== 'string' || value.length > 500) {
-      throw new BadRequestException('Invalid habit description')
+    if (!value || typeof value !== 'string' || value.length === 0) {
+      throw new BadRequestException(
+        'Habit description must be a non-empty string.',
+      )
     }
 
     this.value = value
