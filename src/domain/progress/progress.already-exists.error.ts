@@ -1,4 +1,4 @@
-import { BaseError } from '../../api/error/base-error'
+import { BaseError } from '../shared/base.error'
 
 export class ProgressAlreadyExistsError extends BaseError {
   constructor(message: string) {
