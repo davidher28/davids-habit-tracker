@@ -4,8 +4,8 @@ import { HabitAlreadyExistsError } from '../../../api/error/habit/habit-already-
 import { CreateHabitCommand } from './create-habit.command'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
-import { Habit } from '../../../domain/habit/habit'
 import {
+  Habit,
   HabitDescription,
   HabitFrequency,
   HabitId,
@@ -38,7 +38,14 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
     const frequency = HabitFrequency.create(Frequency[command.frequency])
     const userId = UserId.create(command.userId)
 
-    const habit = new Habit(habitId, name, description, frequency, userId)
+    const habit = new Habit(
+      habitId,
+      name,
+      description,
+      frequency,
+      userId,
+      command.wearableDeviceId,
+    )
 
     this.habitRepository.save(habit)
   }

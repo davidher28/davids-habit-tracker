@@ -12,6 +12,7 @@ export class Habit {
   private habitTime: number
   private restTime: number
   private readonly userId: UserId
+  private wearableDeviceId?: string
   private readonly createdAt: Date
   private updatedAt: Date
 
@@ -21,12 +22,14 @@ export class Habit {
     description: HabitDescription,
     frequency: HabitFrequency,
     userId: UserId,
+    wearableDeviceId?: string,
   ) {
     this.id = id
     this.name = name
     this.description = description
     this.frequency = frequency
     this.userId = userId
+    this.wearableDeviceId = wearableDeviceId
     this.createdAt = new Date()
     this.updatedAt = new Date()
   }

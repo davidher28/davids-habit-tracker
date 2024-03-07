@@ -27,6 +27,7 @@ export class CreateHabitController {
       request.description,
       request.frequency,
       request.userId,
+      request.wearableDeviceId,
     )
     await this.commandBus.execute(newHabitCommand)
 

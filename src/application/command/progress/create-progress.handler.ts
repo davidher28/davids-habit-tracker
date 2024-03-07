@@ -15,7 +15,7 @@ export class CreateProgressHandler
   ) {}
 
   async execute(command: CreateProgressCommand): Promise<void> {
-    if (this.habitRepository.findById(command.habitId)) {
+    if (!this.habitRepository.isExistingHabit(command.habitId)) {
       throw new NotFoundException('Habit does not exist')
     }
     // this.progressRepository.save(progress)

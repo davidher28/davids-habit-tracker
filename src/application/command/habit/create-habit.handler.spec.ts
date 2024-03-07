@@ -4,10 +4,9 @@ import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
-import { Habit } from '../../../domain/habit/habit'
+import { Habit, User } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserMother } from '../../../../test/user/user.mother'
-import { User } from '../../../domain'
 
 describe('CreateHabitHandler', () => {
   let user: User

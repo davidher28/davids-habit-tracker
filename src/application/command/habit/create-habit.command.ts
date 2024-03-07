@@ -6,5 +6,6 @@ export class CreateHabitCommand implements ICommand {
     readonly description: string,
     readonly frequency: string,
     readonly userId: string,
+    readonly wearableDeviceId?: string,
   ) {}
 }

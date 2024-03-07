@@ -6,7 +6,7 @@ import {
   HabitName,
   UserId,
 } from '../../src/domain'
-import { Habit } from '../../src/domain/habit/habit'
+import { Habit } from '../../src/domain'
 import { Frequency } from '../../src/domain/habit/habit.frequency'
 
 export class HabitMother {
