@@ -1,11 +1,13 @@
-import { BadRequestException } from '@nestjs/common'
+import { InvalidFullNameError } from './invalid-user.fullname'
 
 export class UserFullName {
   readonly value: string
 
   private constructor(value: string) {
     if (!value || typeof value !== 'string' || value.trim() === '') {
-      throw new BadRequestException('Full name must be a non-empty string.')
+      throw InvalidFullNameError.withMessage(
+        'Full name must be a non-empty string.',
+      )
     }
 
     this.value = value

@@ -4,7 +4,7 @@ import { GetHabitsQuery } from './get-habits.query'
 import { Inject } from '@nestjs/common'
 import { UserRepository } from '../../../domain/user/user.repository'
 import { Habit, UserId } from '../../../domain'
-import { UserNotFoundError } from '../../../domain/user/user.not-found.error'
+import { UserNotFoundError } from '../../command/habit/user.not-found.error'
 
 @QueryHandler(GetHabitsQuery)
 export class GetHabitsHandler implements IQueryHandler<GetHabitsQuery> {
@@ -15,10 +15,10 @@ export class GetHabitsHandler implements IQueryHandler<GetHabitsQuery> {
 
   async execute(query: GetHabitsQuery): Promise<Habit[]> {
     const userId = UserId.create(query.userId)
-    if (!this.userRepository.isExistingUser(userId.value)) {
+    if (!this.userRepository.isExistingUser(userId)) {
       throw UserNotFoundError.withId(userId.value)
     }
 
-    return this.habitRepository.findByUserId(userId.value)
+    return this.habitRepository.findByUserId(userId)
   }
 }

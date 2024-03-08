@@ -1,10 +1,12 @@
 import { User } from './user'
+import { UserName } from './user.username'
+import { UserId } from './user.id'
 
 export interface UserRepository {
   setUsers(users: User[]): void
   save(user: User): void
-  findByUserName(userName: string): User | undefined
-  isExistingUser(userId: string): boolean
+  findByUserName(userName: UserName): User | undefined
+  isExistingUser(userId: UserId): boolean
 }
 
 export const UserRepository = Symbol('UserRepository')

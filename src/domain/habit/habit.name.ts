@@ -1,11 +1,13 @@
-import { BadRequestException } from '@nestjs/common'
+import { InvalidHabitNameError } from './invalid-habit.name'
 
 export class HabitName {
   readonly value: string
 
   private constructor(value: string) {
     if (!value || typeof value !== 'string' || value.length < 3) {
-      throw new BadRequestException('Habit name must be a non-empty string.')
+      throw InvalidHabitNameError.withMessage(
+        'Habit name must be a non-empty string.',
+      )
     }
 
     this.value = value
@@ -15,7 +17,7 @@ export class HabitName {
     return new HabitName(value)
   }
 
-  equals(name: string): boolean {
-    return this.value === name
+  equals(name: HabitName): boolean {
+    return this.value === name.value
   }
 }

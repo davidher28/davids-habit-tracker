@@ -1,18 +1,18 @@
-import { BadRequestException } from '@nestjs/common'
+import { InvalidUserEmailError } from './invalid-user.email'
 
 export class UserEmail {
   readonly value: string
 
   private constructor(value: string) {
-    if (!value || value.length === 0) {
-      throw new BadRequestException('Email must be a non-empty string.')
+    if (!value || typeof value !== 'string' || value.trim() === '') {
+      throw InvalidUserEmailError.withMessage(
+        'Email must be a non-empty string.',
+      )
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(value)) {
-      throw new BadRequestException(
-        'The email provided is not a valid address.',
-      )
+      throw InvalidUserEmailError.withEmail(value)
     }
 
     this.value = value

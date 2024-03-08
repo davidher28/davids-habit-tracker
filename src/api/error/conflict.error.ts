@@ -1,13 +1,6 @@
-import { UserAlreadyExistsError } from '../../domain/user/user.already-exists.error'
-import { HabitAlreadyExistsError } from '../../domain/habit/habit.already-exists.error'
-import { ProgressAlreadyExistsError } from '../../domain/progress/progress.already-exists.error'
+import { UserAlreadyExistsError } from '../../application/command/user/user.already-exists.error'
+import { HabitAlreadyExistsError } from '../../application/command/habit/habit.already-exists.error'
 
-export type ConflictErrorType =
-  | UserAlreadyExistsError
-  | HabitAlreadyExistsError
-  | ProgressAlreadyExistsError
-export const ConflictErrors = [
-  UserAlreadyExistsError,
-  HabitAlreadyExistsError,
-  ProgressAlreadyExistsError,
-]
+export type ConflictErrorType = UserAlreadyExistsError | HabitAlreadyExistsError
+
+export const ConflictErrors = [UserAlreadyExistsError, HabitAlreadyExistsError]

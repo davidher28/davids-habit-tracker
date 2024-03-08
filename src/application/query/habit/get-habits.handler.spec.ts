@@ -6,7 +6,7 @@ import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-mem
 import { User } from '../../../domain'
 import { UserMother } from '../../../../test/user/user.mother'
 import { HabitMother } from '../../../../test/habit/habit.mother'
-import { UserNotFoundError } from '../../../domain/user/user.not-found.error'
+import { UserNotFoundError } from '../../command/habit/user.not-found.error'
 
 describe('GetHabitsHandler', () => {
   const user: User = UserMother.create()

@@ -1,16 +1,16 @@
 import { CreateUserCommand } from './create-user.command'
 import { UserRepository } from '../../../domain/user/user.repository'
-import { UserAlreadyExistsError } from '../../../domain/user/user.already-exists.error'
+import { UserAlreadyExistsError } from './user.already-exists.error'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import {
+  UUId,
   User,
   UserEmail,
   UserFullName,
   UserId,
   UserName,
 } from '../../../domain'
-import { UUId } from '../../../domain/shared/uuid.value-object'
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
@@ -20,8 +20,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
 
   async execute(command: CreateUserCommand): Promise<void> {
     const userName = UserName.create(command.userName)
-    if (this.userRepository.findByUserName(userName.value)) {
-      throw UserAlreadyExistsError.withUserName(command.userName)
+    if (this.userRepository.findByUserName(userName)) {
+      throw UserAlreadyExistsError.withUserName(userName.value)
     }
 
     const uuid = UUId.generate()

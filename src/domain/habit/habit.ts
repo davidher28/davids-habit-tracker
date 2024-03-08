@@ -2,17 +2,15 @@ import { HabitId } from './habit.id'
 import { UserId } from '../user/user.id'
 import { HabitName } from './habit.name'
 import { HabitDescription } from './habit.description'
-import { HabitFrequency } from './habit.frequency'
+import { Frequency, HabitSchedule } from './habit.schedule'
 
 export class Habit {
   readonly id: HabitId
   readonly name: HabitName
   private description: HabitDescription
-  private frequency: HabitFrequency
-  private habitTime: number
-  private restTime: number
+  private schedule: HabitSchedule
   readonly userId: UserId
-  private wearableDeviceId?: string
+  readonly wearableDeviceId?: string
   private readonly createdAt: Date
   private updatedAt: Date
 
@@ -20,14 +18,14 @@ export class Habit {
     id: HabitId,
     name: HabitName,
     description: HabitDescription,
-    frequency: HabitFrequency,
+    schedule: HabitSchedule,
     userId: UserId,
     wearableDeviceId?: string,
   ) {
     this.id = id
     this.name = name
     this.description = description
-    this.frequency = frequency
+    this.schedule = schedule
     this.userId = userId
     this.wearableDeviceId = wearableDeviceId
     this.createdAt = new Date()
@@ -46,8 +44,16 @@ export class Habit {
     return this.description.value
   }
 
-  get frequencyValue(): string {
-    return this.frequency.value
+  get scheduleValue(): {
+    frequency: Frequency
+    duration: number
+    restTime: number
+  } {
+    return {
+      frequency: this.schedule.frequency,
+      duration: this.schedule.duration,
+      restTime: this.schedule.restTime,
+    }
   }
 
   get userIdValue(): string {

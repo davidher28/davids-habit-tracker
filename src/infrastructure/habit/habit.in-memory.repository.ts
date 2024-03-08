@@ -1,5 +1,5 @@
 import { HabitRepository } from '../../domain/habit/habit.repository'
-import { Habit } from '../../domain'
+import { Habit, HabitId, HabitName, UserId } from '../../domain'
 
 export class InMemoryHabitRepository implements HabitRepository {
   private habits: Habit[] = []
@@ -12,15 +12,15 @@ export class InMemoryHabitRepository implements HabitRepository {
     this.habits.push(habit)
   }
 
-  findByName(name: string): Habit | undefined {
+  findByName(name: HabitName): Habit | undefined {
     return this.habits.find((habit) => habit.name.equals(name))
   }
 
-  findByUserId(userId: string): Habit[] {
+  findByUserId(userId: UserId): Habit[] {
     return this.habits.filter((habit) => habit.userId.equals(userId))
   }
 
-  isExistingHabit(id: string): boolean {
+  isExistingHabit(id: HabitId): boolean {
     return this.habits.some((habit) => habit.id.equals(id))
   }
 }

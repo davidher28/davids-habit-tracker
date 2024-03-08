@@ -2,9 +2,13 @@ import { CreateUserCommand } from './create-user.command'
 import { CreateUserHandler } from './create-user.handler'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
 import { UserMother } from '../../../../test/user/user.mother'
-import { User } from '../../../domain'
-import { UserAlreadyExistsError } from '../../../domain/user/user.already-exists.error'
-import { BadRequestException } from '@nestjs/common'
+import {
+  InvalidUserEmailError,
+  InvalidFullNameError,
+  InvalidUserNameError,
+  User,
+} from '../../../domain'
+import { UserAlreadyExistsError } from './user.already-exists.error'
 
 describe('CreateUserHandler', () => {
   let user: User
@@ -28,7 +32,7 @@ describe('CreateUserHandler', () => {
     await handler.execute(command)
 
     // Then
-    expect(repository.findByUserName(user.userNameValue)).toBeTruthy()
+    expect(repository.findByUserName(user.userName)).toBeTruthy()
   })
 
   it('should throw an error if the user already exists', async () => {
@@ -57,7 +61,7 @@ describe('CreateUserHandler', () => {
     const command = new CreateUserCommand(emptyUserName, email, fullName)
 
     // Then
-    await expect(handler.execute(command)).rejects.toThrow(BadRequestException)
+    await expect(handler.execute(command)).rejects.toThrow(InvalidUserNameError)
   })
 
   it('should throw an error if the user email is not valid', async () => {
@@ -70,7 +74,9 @@ describe('CreateUserHandler', () => {
     const command = new CreateUserCommand(userName, invalidEmail, fullName)
 
     // Then
-    await expect(handler.execute(command)).rejects.toThrow(BadRequestException)
+    await expect(handler.execute(command)).rejects.toThrow(
+      InvalidUserEmailError,
+    )
   })
 
   it('should throw an error if the full name is empty', async () => {
@@ -83,6 +89,6 @@ describe('CreateUserHandler', () => {
     const command = new CreateUserCommand(userName, email, emptyFullName)
 
     // Then
-    await expect(handler.execute(command)).rejects.toThrow(BadRequestException)
+    await expect(handler.execute(command)).rejects.toThrow(InvalidFullNameError)
   })
 })

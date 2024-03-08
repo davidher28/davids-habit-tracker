@@ -1,11 +1,13 @@
-import { BadRequestException } from '@nestjs/common'
+import { InvalidUserNameError } from './invalid-user.username'
 
 export class UserName {
   readonly value: string
 
   private constructor(value: string) {
     if (!value || typeof value !== 'string' || value.trim() === '') {
-      throw new BadRequestException('User name must be a non-empty string.')
+      throw InvalidUserNameError.withMessage(
+        'User name must be a non-empty string.',
+      )
     }
 
     this.value = value
@@ -15,7 +17,7 @@ export class UserName {
     return new UserName(value)
   }
 
-  equals(userName: string): boolean {
-    return this.value === userName
+  equals(userName: UserName): boolean {
+    return this.value === userName.value
   }
 }
