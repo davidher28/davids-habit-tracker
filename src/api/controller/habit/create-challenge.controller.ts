@@ -13,7 +13,7 @@ export class CreateChallengeController {
     'The challenge has been successfully created.'
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Post('challenge')
+  @Post('challenges')
   @UseFilters(
     new ConflictFilter(),
     new BadRequestFilter(),

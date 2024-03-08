@@ -7,17 +7,16 @@ export enum Frequency {
 }
 
 export namespace Frequency {
+  export const toSeconds = {
+    [Frequency.HOURLY]: 3600,
+    [Frequency.DAILY]: 86400,
+    [Frequency.WEEKLY]: 604800,
+  }
   export function isValidFrequency(value: string): boolean {
     return [Frequency.HOURLY, Frequency.DAILY, Frequency.WEEKLY].includes(
       value as Frequency,
     )
   }
-}
-
-const FrequencyInSeconds: { [key in Frequency]: number } = {
-  [Frequency.HOURLY]: 3600,
-  [Frequency.DAILY]: 86400,
-  [Frequency.WEEKLY]: 604800,
 }
 
 export class HabitSchedule {
@@ -32,9 +31,9 @@ export class HabitSchedule {
       )
     }
 
-    if (duration + restTime > FrequencyInSeconds[frequency]) {
+    if (duration + restTime > Frequency.toSeconds[frequency]) {
       throw InvalidHabitScheduleError.create(
-        FrequencyInSeconds[frequency],
+        Frequency.toSeconds[frequency],
         duration,
         restTime,
       )
