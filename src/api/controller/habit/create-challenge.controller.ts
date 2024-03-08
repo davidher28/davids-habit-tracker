@@ -19,7 +19,7 @@ export class CreateChallengeController {
     new BadRequestFilter(),
     new NotFoundFilter(),
   )
-  async createHabit(
+  async createChallenge(
     @Body() request: CreateChallengeDTO,
     @Res() response: Response,
   ): Promise<Response> {

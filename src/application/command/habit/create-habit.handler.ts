@@ -13,7 +13,7 @@ import {
   HabitName,
   UserId,
 } from '../../../domain'
-import { UserNotFoundError } from './user.not-found.error'
+import { UserNotFoundError } from '../user/user.not-found.error'
 import { Frequency } from '../../../domain/habit/habit.schedule'
 
 @CommandHandler(CreateHabitCommand)

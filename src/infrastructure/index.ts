@@ -4,9 +4,12 @@ import { HabitRepository } from '../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from './habit/habit.in-memory.repository'
 import { ProgressRepository } from '../domain/habit/progress.repository'
 import { InMemoryProgressRepository } from './habit/progress.in-memory.repository'
+import { ChallengeRepository } from '../domain/habit/challenge.repository'
+import { InMemoryChallengeRepository } from './habit/challenge.in-memory.repository'
 
 export const RepositoryProviders = [
   { provide: UserRepository, useClass: InMemoryUserRepository },
   { provide: HabitRepository, useClass: InMemoryHabitRepository },
   { provide: ProgressRepository, useClass: InMemoryProgressRepository },
+  { provide: ChallengeRepository, useClass: InMemoryChallengeRepository },
 ]

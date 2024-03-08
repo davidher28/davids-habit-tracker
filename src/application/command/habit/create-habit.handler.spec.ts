@@ -8,7 +8,7 @@ import { Habit, User } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserMother } from '../../../../test/user/user.mother'
 import { HabitAlreadyExistsError } from './habit.already-exists.error'
-import { UserNotFoundError } from './user.not-found.error'
+import { UserNotFoundError } from '../user/user.not-found.error'
 import {
   InvalidHabitDescriptionError,
   InvalidHabitNameError,

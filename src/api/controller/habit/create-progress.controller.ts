@@ -19,7 +19,7 @@ export class CreateProgressController {
     new BadRequestFilter(),
     new NotFoundFilter(),
   )
-  async createHabit(
+  async createProgress(
     @Body() request: CreateProgressDTO,
     @Res() response: Response,
   ): Promise<Response> {

@@ -15,12 +15,12 @@ export class GetHabitsController {
 
   @Get(':userId')
   @UseFilters(new BadRequestFilter(), new NotFoundFilter())
-  async createHabit(
+  async getHabits(
     @Param() queryParameters: GetHabitsDTO,
     @Res() response: Response,
   ): Promise<Response> {
-    const getHabitsQuery = new GetHabitsQuery(queryParameters.userId)
-    const habits = await this.queryBus.execute(getHabitsQuery)
+    const habitsQuery = new GetHabitsQuery(queryParameters.userId)
+    const habits = await this.queryBus.execute(habitsQuery)
 
     Logger.log(this.SUCCESS_MESSAGE, 'GetHabitsController')
     return response.status(201).json({
