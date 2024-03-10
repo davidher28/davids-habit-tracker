@@ -1,4 +1,12 @@
-import { Body, Controller, Logger, Post, Res, UseFilters } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpStatus,
+  Logger,
+  Post,
+  Res,
+  UseFilters,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { ConflictFilter } from '../../filter/conflict.filter'
@@ -34,7 +42,7 @@ export class CreateHabitController {
     await this.commandBus.execute(newHabitCommand)
 
     Logger.log(this.SUCCESS_MESSAGE, 'CreateHabitController')
-    return response.status(201).json({
+    return response.status(HttpStatus.CREATED).json({
       code: 'habit-created',
       message: this.SUCCESS_MESSAGE,
     })

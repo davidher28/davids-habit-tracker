@@ -1,4 +1,12 @@
-import { Body, Controller, Logger, Post, Res, UseFilters } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  HttpStatus,
+  Logger,
+  Post,
+  Res,
+  UseFilters,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { ConflictFilter } from '../../filter/conflict.filter'
@@ -33,7 +41,7 @@ export class CreateChallengeController {
     await this.commandBus.execute(newChallengeCommand)
 
     Logger.log(this.SUCCESS_MESSAGE, 'CreateChallengeController')
-    return response.status(201).json({
+    return response.status(HttpStatus.CREATED).json({
       code: 'challenge-created',
       message: this.SUCCESS_MESSAGE,
     })

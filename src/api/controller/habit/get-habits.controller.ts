@@ -1,4 +1,12 @@
-import { Controller, Get, Logger, Param, Res, UseFilters } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  HttpStatus,
+  Logger,
+  Param,
+  Res,
+  UseFilters,
+} from '@nestjs/common'
 import { Response } from 'express'
 import { QueryBus } from '@nestjs/cqrs'
 import { BadRequestFilter } from '../../filter/bad-request.filter'
@@ -23,8 +31,8 @@ export class GetHabitsController {
     const habits = await this.queryBus.execute(habitsQuery)
 
     Logger.log(this.SUCCESS_MESSAGE, 'GetHabitsController')
-    return response.status(201).json({
-      code: 'habits-successfully-retrieved',
+    return response.status(HttpStatus.OK).json({
+      code: 'habits-retrieved',
       message: this.SUCCESS_MESSAGE,
       data: habits.map((habit: Habit) => JSON.stringify(habit)),
     })

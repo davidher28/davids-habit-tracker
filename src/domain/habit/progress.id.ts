@@ -1,4 +1,4 @@
-import { UUId } from '../shared/uuid.value-object'
+import { UUId } from '../shared/uuid'
 
 export class ProgressId extends UUId {
   static create(progressId: string): ProgressId {

@@ -9,8 +9,6 @@ export class InMemoryProgressRepository implements ProgressRepository {
   }
 
   findByHabitId(habitId: HabitId): Progress[] {
-    return this.progress.filter(
-      (progress) => progress.habitIdValue === habitId.value,
-    )
+    return this.progress.filter((progress) => progress.habitId.equals(habitId))
   }
 }

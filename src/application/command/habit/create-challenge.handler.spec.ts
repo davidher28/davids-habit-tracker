@@ -20,7 +20,7 @@ describe('CreateChallengeHandler', () => {
     handler = new CreateChallengeHandler(challengeRepository, habitRepository)
   })
 
-  it('should create the challenge', async () => {
+  it('should create a challenge', async () => {
     // Given
     habitRepository.setHabits([habit])
     const habitId = habit.idValue

@@ -31,7 +31,7 @@ describe('CreateHabitHandler', () => {
     handler = new CreateHabitHandler(habitRepository, userRepository)
   })
 
-  it('should create the habit', async () => {
+  it('should create a habit', async () => {
     // Given
     userRepository.setUsers([user])
     const habitName = habit.nameValue
@@ -54,7 +54,7 @@ describe('CreateHabitHandler', () => {
     expect(habitRepository.findByName(habit.name)).toBeTruthy()
   })
 
-  it('should create the habit with wearable id associated', async () => {
+  it('should create a habit with wearable id associated', async () => {
     // Given
     userRepository.setUsers([user])
     const habitName = habit.nameValue
@@ -202,7 +202,7 @@ describe('CreateHabitHandler', () => {
     )
   })
 
-  it('should throw an error if duration + rest time exceeds the frequency', async () => {
+  it('should throw an error if duration + rest time exceeds frequency', async () => {
     // Given
     userRepository.setUsers([user])
     const habitName = habit.nameValue

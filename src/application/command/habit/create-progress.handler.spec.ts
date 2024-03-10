@@ -7,8 +7,10 @@ import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { Habit } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
-import { InvalidProgressDateError } from '../../../domain/habit/invalid-progress.date'
-import { InvalidProgressObservationsError } from '../../../domain/habit/invalid-progress.observations'
+import {
+  InvalidProgressDateError,
+  InvalidProgressObservationsError,
+} from '../../../domain'
 
 describe('CreateProgressHandler', () => {
   let habit: Habit

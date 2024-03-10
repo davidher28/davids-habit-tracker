@@ -1,7 +1,7 @@
 // -------------------- Value Objects -------------------- //
 // Shared
-export { UUId } from './shared/uuid.value-object'
-export { InvalidUUIdError } from './shared/invalid-uuid.error'
+export { UUId } from './shared/uuid'
+export { InvalidUuid } from './shared/invalid-uuid'
 
 // User
 export { UserName } from './user/user.username'
@@ -31,8 +31,12 @@ export { ProgressId } from './habit/progress.id'
 // Challenge
 export { ChallengeId } from './habit/challenge.id'
 
+// Reminder
+export { ReminderId } from './habit/reminder.id'
+
 // -------------------- Entities -------------------- //
 export { User } from './user/user'
 export { Habit } from './habit/habit'
 export { Progress } from './habit/progress'
 export { Challenge } from './habit/challenge'
+export { Reminder } from './habit/reminder'
