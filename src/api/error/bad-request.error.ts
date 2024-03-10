@@ -2,7 +2,7 @@ import {
   InvalidUserEmailError,
   InvalidFullNameError,
   InvalidUserNameError,
-  InvalidUuid,
+  InvalidUUId,
   InvalidHabitNameError,
   InvalidHabitDescriptionError,
   InvalidHabitScheduleError,
@@ -11,7 +11,7 @@ import {
 } from '../../domain'
 
 export type BadRequestErrorType =
-  | InvalidUuid
+  | InvalidUUId
   | InvalidUserNameError
   | InvalidFullNameError
   | InvalidUserEmailError
@@ -22,7 +22,7 @@ export type BadRequestErrorType =
   | InvalidProgressObservationsError
 
 export const BadRequestErrors = [
-  InvalidUuid,
+  InvalidUUId,
   InvalidUserNameError,
   InvalidFullNameError,
   InvalidUserEmailError,

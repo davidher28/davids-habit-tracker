@@ -202,7 +202,7 @@ describe('CreateHabitHandler', () => {
     )
   })
 
-  it('should throw an error if duration + rest time exceeds frequency', async () => {
+  it('should throw an error if the duration + rest time exceeds the frequency', async () => {
     // Given
     userRepository.setUsers([user])
     const habitName = habit.nameValue

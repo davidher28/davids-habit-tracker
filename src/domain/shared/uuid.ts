@@ -1,16 +1,16 @@
 import { v4 as uuidv4, validate } from 'uuid'
-import { InvalidUuid } from './invalid-uuid'
+import { InvalidUUId } from './invalid-uuid'
 
 export class UUId {
   readonly value: string
 
   constructor(value: string) {
     if (!value || typeof value !== 'string' || value.trim() === '') {
-      throw InvalidUuid.withMessage('The UUID must be a non-empty string.')
+      throw InvalidUUId.withMessage('The UUID must be a non-empty string.')
     }
 
     if (!validate(value)) {
-      throw InvalidUuid.withMessage('The UUID provided is not a valid UUIDv4.')
+      throw InvalidUUId.withMessage('The UUID provided is not a valid UUIDv4.')
     }
 
     this.value = value

@@ -1,7 +1,7 @@
 // -------------------- Value Objects -------------------- //
 // Shared
 export { UUId } from './shared/uuid'
-export { InvalidUuid } from './shared/invalid-uuid'
+export { InvalidUUId } from './shared/invalid-uuid'
 
 // User
 export { UserName } from './user/user.username'
