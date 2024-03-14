@@ -10,6 +10,7 @@ import { Reminder } from './reminder'
 import { Challenge } from './challenge'
 import { UUId } from '../shared/uuid'
 import { ReminderLimitError } from './reminder.limit.error'
+import { WearableService } from '../shared/wearable.service'
 
 export class Habit extends AggregateRoot {
   readonly id: HabitId
@@ -111,19 +112,46 @@ export class Habit extends AggregateRoot {
     return this.reminders
   }
 
-  addProgress(progress: Progress): void {
+  public addProgress(
+    habitId: string,
+    progressDate: Date,
+    observations: string,
+    wearableService: WearableService,
+  ): void {
+    const validated = this.validateWearableDevice(wearableService)
+    const progress = Progress.create(
+      habitId,
+      progressDate,
+      observations,
+      validated,
+    )
     this.progress.push(progress)
+
     this.apply(ProgressCreatedEvent.createFromProgress(progress))
   }
 
-  addChallenge(challenge: Challenge): void {
+  public addChallenge(challenge: Challenge): void {
     this.challenges.push(challenge)
   }
 
-  addReminder(reminder: Reminder): void {
+  public addReminder(
+    habitId: string,
+    message: string,
+    state: string,
+    time: string,
+  ): void {
     if (this.reminders.length === 3) {
       throw ReminderLimitError.withMessage('Only 3 reminders are allowed')
     }
+
+    const reminder = Reminder.create(habitId, message, state, time)
     this.reminders.push(reminder)
+  }
+
+  private validateWearableDevice(wearableService: WearableService): boolean {
+    if (this.usesWearableDevice()) {
+      return wearableService.execute(this.wearableDeviceId)
+    }
+    return false
   }
 }

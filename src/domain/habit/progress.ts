@@ -28,7 +28,7 @@ export class Progress {
     habitId: string,
     progressDate: Date,
     observations: string,
-    validated: boolean,
+    validated: boolean = false,
   ): Progress {
     const uuid = UUId.generate()
     const progressId = ProgressId.create(uuid)

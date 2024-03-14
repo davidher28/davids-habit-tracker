@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { HabitId, Progress } from '../../../domain'
+import { Habit, HabitId } from '../../../domain'
 import { WearableService } from '../../../domain/shared/wearable.service'
 
 @CommandHandler(CreateProgressCommand)
@@ -18,26 +18,18 @@ export class CreateProgressHandler
 
   async execute(command: CreateProgressCommand): Promise<void> {
     const habitId = HabitId.create(command.habitId)
-    const habit = this.habitRepository.findById(habitId)
+    let habit: Habit = this.habitRepository.findById(habitId)
     if (habit === undefined) {
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    // If the habit uses a wearable device, we need to validate the progress
-    let validated = false
-    if (habit.usesWearableDevice()) {
-      validated = await this.wearableService.execute(habit.wearableDeviceId)
-    }
-
-    const progress = Progress.create(
+    // Enable events publication
+    habit = this.publisher.mergeObjectContext(habit)
+    habit.addProgress(
       command.habitId,
       command.progressDate,
       command.observations,
-      validated,
+      this.wearableService,
     )
-
-    // Enabling the object to publish events to the events stream
-    const habitAggregate = this.publisher.mergeObjectContext(habit)
-    habitAggregate.addProgress(progress)
   }
 }

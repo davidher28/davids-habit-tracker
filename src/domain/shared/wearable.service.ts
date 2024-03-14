@@ -1,5 +1,5 @@
 export interface WearableService {
-  execute(wearableDeviceId: string): Promise<boolean>
+  execute(wearableDeviceId: string): boolean
 }
 
 export const WearableService = Symbol('WearableService')
