@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { Challenge, HabitId } from '../../../domain'
+import { HabitId } from '../../../domain'
 import { CreateChallengeCommand } from './create-challenge.command'
 
 @CommandHandler(CreateChallengeCommand)
@@ -20,14 +20,12 @@ export class CreateChallengeHandler
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    const challenge = Challenge.create(
+    habit.addChallenge(
       command.habitId,
       command.description,
       command.habitTimes,
       command.startDate,
       command.endDate,
     )
-
-    habit.addChallenge(challenge)
   }
 }

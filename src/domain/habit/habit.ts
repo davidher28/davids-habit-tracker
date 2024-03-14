@@ -130,7 +130,20 @@ export class Habit extends AggregateRoot {
     this.apply(ProgressCreatedEvent.createFromProgress(progress))
   }
 
-  public addChallenge(challenge: Challenge): void {
+  public addChallenge(
+    habitId: string,
+    description: string,
+    habitTimes: number,
+    startDate: Date,
+    endDate: Date,
+  ): void {
+    const challenge = Challenge.create(
+      habitId,
+      description,
+      habitTimes,
+      startDate,
+      endDate,
+    )
     this.challenges.push(challenge)
   }
 
