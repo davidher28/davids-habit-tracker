@@ -1,4 +1,4 @@
-import { BaseError } from '../../api/error/base.error'
+import { BaseError } from '../../api/base.error'
 import { HttpStatus } from '@nestjs/common'
 
 export class InvalidFullNameError extends BaseError {
