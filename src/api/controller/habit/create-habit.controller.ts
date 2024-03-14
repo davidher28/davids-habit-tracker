@@ -6,6 +6,8 @@ import { CreateHabitCommand } from '../../../application/command/habit/create-ha
 
 @Controller('habits')
 export class CreateHabitController {
+  private readonly logger = new Logger(CreateHabitController.name)
+
   static successCode: string = 'habit-created'
   static successMessage: string = 'The habit has been successfully created.'
 
@@ -27,7 +29,8 @@ export class CreateHabitController {
     )
     await this.commandBus.execute(createHabitCommand)
 
-    Logger.log(CreateHabitController.successMessage, CreateHabitController.name)
+    this.logger.log(CreateHabitController.successMessage)
+
     return response.status(HttpStatus.CREATED).json({
       code: CreateHabitController.successCode,
       message: CreateHabitController.successMessage,

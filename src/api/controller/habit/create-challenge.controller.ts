@@ -6,6 +6,8 @@ import { CreateChallengeCommand } from '../../../application/command/habit/creat
 
 @Controller('habits')
 export class CreateChallengeController {
+  private readonly logger = new Logger(CreateChallengeController.name)
+
   static successCode: string = 'challenge-created'
   static successMessage: string = 'The challenge has been successfully created.'
 
@@ -25,10 +27,8 @@ export class CreateChallengeController {
     )
     await this.commandBus.execute(createChallengeCommand)
 
-    Logger.log(
-      CreateChallengeController.successMessage,
-      CreateChallengeController.name,
-    )
+    this.logger.log(CreateChallengeController.successMessage)
+
     return response.status(HttpStatus.CREATED).json({
       code: CreateChallengeController.successCode,
       message: CreateChallengeController.successMessage,

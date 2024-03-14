@@ -6,6 +6,8 @@ import { CreateReminderDTO } from './create-reminder.dto'
 
 @Controller('habits')
 export class CreateReminderController {
+  private readonly logger = new Logger(CreateReminderController.name)
+
   static successCode: string = 'reminder-created'
   static successMessage: string = 'The reminder has been successfully created.'
 
@@ -24,10 +26,8 @@ export class CreateReminderController {
     )
     await this.commandBus.execute(createReminderCommand)
 
-    Logger.log(
-      CreateReminderController.successMessage,
-      CreateReminderController.name,
-    )
+    this.logger.log(CreateReminderController.successMessage)
+
     return response.status(HttpStatus.CREATED).json({
       code: CreateReminderController.successCode,
       message: CreateReminderController.successMessage,

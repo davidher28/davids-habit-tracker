@@ -6,6 +6,8 @@ import { CreateProgressCommand } from '../../../application/command/habit/create
 
 @Controller('habits')
 export class CreateProgressController {
+  private readonly logger = new Logger(CreateProgressController.name)
+
   static successCode: string = 'progress-created'
   static successMessage: string = 'The progress has been successfully created.'
 
@@ -24,10 +26,8 @@ export class CreateProgressController {
     )
     await this.commandBus.execute(createProgressCommand)
 
-    Logger.log(
-      CreateProgressController.successMessage,
-      CreateProgressController.name,
-    )
+    this.logger.log(CreateProgressController.successMessage)
+
     return response.status(HttpStatus.CREATED).json({
       code: CreateProgressController.successCode,
       message: CreateProgressController.successMessage,

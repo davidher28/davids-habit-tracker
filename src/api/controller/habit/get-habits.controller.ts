@@ -7,6 +7,8 @@ import { Habit } from '../../../domain'
 
 @Controller('habits')
 export class GetHabitsController {
+  private readonly logger = new Logger(GetHabitsController.name)
+
   static successCode: string = 'habits-retrieved'
   static successMessage: string = 'The habits has been successfully retrieved.'
 
@@ -20,7 +22,8 @@ export class GetHabitsController {
     const getHabitsQuery = new GetHabitsQuery(queryParameters.userId)
     const habits = await this.queryBus.execute(getHabitsQuery)
 
-    Logger.log(GetHabitsController.successMessage, GetHabitsController.name)
+    this.logger.log(GetHabitsController.successMessage)
+
     return response.status(HttpStatus.OK).json({
       code: GetHabitsController.successCode,
       message: GetHabitsController.successMessage,
