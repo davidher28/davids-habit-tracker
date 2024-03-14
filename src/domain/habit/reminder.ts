@@ -9,7 +9,7 @@ export class Reminder {
   readonly state: string
   readonly time: string
 
-  constructor(
+  private constructor(
     id: ReminderId,
     habitId: HabitId,
     message: string,

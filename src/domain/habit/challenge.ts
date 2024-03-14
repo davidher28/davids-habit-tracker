@@ -11,7 +11,7 @@ export class Challenge {
   readonly startDate: Date
   readonly endDate: Date
 
-  constructor(
+  private constructor(
     id: ChallengeId,
     habitId: HabitId,
     challengeDescription: ChallengeDescription,

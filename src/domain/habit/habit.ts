@@ -26,7 +26,7 @@ export class Habit extends AggregateRoot {
   private challenges: Challenge[] = []
   private reminders: Reminder[] = []
 
-  constructor(
+  private constructor(
     id: HabitId,
     name: HabitName,
     description: HabitDescription,

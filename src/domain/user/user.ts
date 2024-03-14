@@ -12,7 +12,7 @@ export class User {
   readonly createdAt: Date
   updatedAt: Date
 
-  constructor(
+  private constructor(
     id: UserId,
     userName: UserName,
     email: UserEmail,
