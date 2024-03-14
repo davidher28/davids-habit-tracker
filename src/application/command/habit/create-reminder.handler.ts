@@ -2,7 +2,7 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { HabitId, Reminder, ReminderId, UUId } from '../../../domain'
+import { HabitId, Reminder } from '../../../domain'
 import { CreateReminderCommand } from './create-reminder.command'
 
 @CommandHandler(CreateReminderCommand)
@@ -20,11 +20,8 @@ export class CreateReminderHandler
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    const uuid = UUId.generate()
-    const reminderId = ReminderId.create(uuid)
     const reminder = Reminder.create(
-      reminderId,
-      habitId,
+      command.habitId,
       command.message,
       command.state,
       command.time,

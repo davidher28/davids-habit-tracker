@@ -4,15 +4,7 @@ import { HabitAlreadyExistsError } from './habit.already-exists.error'
 import { CreateHabitCommand } from './create-habit.command'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
-import {
-  UUId,
-  Habit,
-  HabitDescription,
-  HabitSchedule,
-  HabitId,
-  HabitName,
-  UserId,
-} from '../../../domain'
+import { Habit, HabitName, UserId } from '../../../domain'
 import { UserNotFoundError } from '../user/user.not-found.error'
 import { Frequency } from '../../../domain/habit/habit.schedule'
 
@@ -34,20 +26,13 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
       throw HabitAlreadyExistsError.withName(command.name)
     }
 
-    const uuid = UUId.generate()
-    const habitId = HabitId.create(uuid)
-    const description = HabitDescription.create(command.description)
-    const schedule = HabitSchedule.create(
+    const habit = Habit.create(
+      command.name,
+      command.description,
       command.frequency as Frequency,
       command.duration,
       command.restTime,
-    )
-    const habit = Habit.create(
-      habitId,
-      name,
-      description,
-      schedule,
-      userId,
+      command.userId,
       command.wearableDeviceId,
     )
 

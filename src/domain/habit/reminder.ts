@@ -1,5 +1,6 @@
 import { HabitId } from './habit.id'
 import { ReminderId } from './reminder.id'
+import { UUId } from '../shared/uuid'
 
 export class Reminder {
   readonly id: ReminderId
@@ -23,13 +24,21 @@ export class Reminder {
   }
 
   static create(
-    id: ReminderId,
-    habitId: HabitId,
+    habitId: string,
     message: string,
     state: string,
     time: string,
   ): Reminder {
-    return new Reminder(id, habitId, message, state, time)
+    const uuid = UUId.generate()
+    const reminderId = ReminderId.create(uuid)
+
+    return new Reminder(
+      reminderId,
+      HabitId.create(habitId),
+      message,
+      state,
+      time,
+    )
   }
 
   get habitIdValue(): string {

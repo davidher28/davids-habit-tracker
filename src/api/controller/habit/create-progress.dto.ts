@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsDate,
   IsNotEmpty,
   IsOptional,
@@ -28,4 +29,8 @@ export class CreateProgressDTO {
     message: 'Observations must be at most 200 characters long.',
   })
   observations?: string
+
+  @IsOptional()
+  @IsBoolean({ message: 'Validated must be a boolean.' })
+  validated?: boolean = false
 }

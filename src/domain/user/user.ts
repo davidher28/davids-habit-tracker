@@ -2,6 +2,7 @@ import { UserName } from './user.username'
 import { UserId } from './user.id'
 import { UserEmail } from './user.email'
 import { UserFullName } from './user.fullname'
+import { UUId } from '../shared/uuid'
 
 export class User {
   readonly id: UserId
@@ -25,13 +26,16 @@ export class User {
     this.updatedAt = new Date()
   }
 
-  static create(
-    id: UserId,
-    userName: UserName,
-    email: UserEmail,
-    fullName: UserFullName,
-  ): User {
-    return new User(id, userName, email, fullName)
+  static create(userName: string, email: string, fullName: string): User {
+    const uuid = UUId.generate()
+    const userId = UserId.create(uuid)
+
+    return new User(
+      userId,
+      UserName.create(userName),
+      UserEmail.create(email),
+      UserFullName.create(fullName),
+    )
   }
 
   get idValue(): string {

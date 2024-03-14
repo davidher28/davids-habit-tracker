@@ -5,5 +5,6 @@ export class CreateProgressCommand implements ICommand {
     readonly habitId: string,
     readonly progressDate: Date,
     readonly observations?: string,
+    readonly validated?: boolean,
   ) {}
 }

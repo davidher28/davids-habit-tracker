@@ -2,31 +2,44 @@ import { ProgressId } from './progress.id'
 import { HabitId } from './habit.id'
 import { ProgressDate } from './progress.date'
 import { ProgressObservations } from './progress.observations'
+import { UUId } from '../shared/uuid'
 
 export class Progress {
   private readonly id: ProgressId
   private readonly progressDate: ProgressDate
   private readonly observations: ProgressObservations
+  private readonly validated: boolean
 
   private constructor(
     id: ProgressId,
     readonly habitId: HabitId,
     progressDate: ProgressDate,
     observations: ProgressObservations,
+    validated: boolean,
   ) {
     this.id = id
     this.habitId = habitId
     this.progressDate = progressDate
     this.observations = observations
+    this.validated = validated
   }
 
   static create(
-    id: ProgressId,
-    habitId: HabitId,
-    progressDate: ProgressDate,
-    observations: ProgressObservations,
+    habitId: string,
+    progressDate: Date,
+    observations: string,
+    validated: boolean,
   ): Progress {
-    return new Progress(id, habitId, progressDate, observations)
+    const uuid = UUId.generate()
+    const progressId = ProgressId.create(uuid)
+
+    return new Progress(
+      progressId,
+      HabitId.create(habitId),
+      ProgressDate.create(progressDate),
+      ProgressObservations.create(observations),
+      validated,
+    )
   }
 
   get idValue(): string {

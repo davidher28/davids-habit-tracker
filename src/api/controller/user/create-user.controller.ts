@@ -1,4 +1,4 @@
-import { Body, Controller, Logger, Post, Res } from '@nestjs/common'
+import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common'
 import { CreateUserCommand } from '../../../application/command/user/create-user.command'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
@@ -24,7 +24,7 @@ export class CreateUserController {
     await this.commandBus.execute(newUserCommand)
 
     Logger.log(CreateUserController.successMessage, CreateUserController.name)
-    return response.status(201).json({
+    return response.status(HttpStatus.CREATED).json({
       code: CreateUserController.successCode,
       message: CreateUserController.successMessage,
     })

@@ -3,14 +3,7 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
-import {
-  HabitId,
-  Progress,
-  ProgressDate,
-  ProgressId,
-  ProgressObservations,
-  UUId,
-} from '../../../domain'
+import { HabitId, Progress } from '../../../domain'
 
 @CommandHandler(CreateProgressCommand)
 export class CreateProgressHandler
@@ -28,17 +21,11 @@ export class CreateProgressHandler
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    const uuid = UUId.generate()
-    const progressId = ProgressId.create(uuid)
-    const progressDate = ProgressDate.create(command.progressDate)
-    const progressObservations = ProgressObservations.create(
-      command.observations,
-    )
     const progress = Progress.create(
-      progressId,
-      habitId,
-      progressDate,
-      progressObservations,
+      command.habitId,
+      command.progressDate,
+      command.observations,
+      command.validated,
     )
 
     // Enabling the object to publish events to the events stream

@@ -8,6 +8,7 @@ import { ProgressCreatedEvent } from './progress-created.event'
 import { Progress } from './progress'
 import { Reminder } from './reminder'
 import { Challenge } from './challenge'
+import { UUId } from '../shared/uuid'
 
 export class Habit extends AggregateRoot {
   readonly id: HabitId
@@ -44,14 +45,25 @@ export class Habit extends AggregateRoot {
   }
 
   static create(
-    id: HabitId,
-    name: HabitName,
-    description: HabitDescription,
-    schedule: HabitSchedule,
-    userId: UserId,
+    name: string,
+    description: string,
+    frequency: Frequency,
+    duration: number,
+    restTime: number,
+    userId: string,
     wearableDeviceId?: string,
   ): Habit {
-    return new Habit(id, name, description, schedule, userId, wearableDeviceId)
+    const uuid = UUId.generate()
+    const habitId = HabitId.create(uuid)
+
+    return new Habit(
+      habitId,
+      HabitName.create(name),
+      HabitDescription.create(description),
+      HabitSchedule.create(frequency, duration, restTime),
+      UserId.create(userId),
+      wearableDeviceId,
+    )
   }
 
   get idValue(): string {

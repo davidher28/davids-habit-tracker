@@ -1,5 +1,6 @@
 import { HabitId } from './habit.id'
 import { ChallengeId } from './challenge.id'
+import { UUId } from '../shared/uuid'
 
 export class Challenge {
   readonly id: ChallengeId
@@ -23,13 +24,21 @@ export class Challenge {
   }
 
   static create(
-    id: ChallengeId,
-    habitId: HabitId,
+    habitId: string,
     numberOfTimes: number,
     startDate: Date,
     endDate: Date,
   ): Challenge {
-    return new Challenge(id, habitId, numberOfTimes, startDate, endDate)
+    const uuid = UUId.generate()
+    const challengeId = ChallengeId.create(uuid)
+
+    return new Challenge(
+      challengeId,
+      HabitId.create(habitId),
+      numberOfTimes,
+      startDate,
+      endDate,
+    )
   }
 
   get habitIdValue(): string {
