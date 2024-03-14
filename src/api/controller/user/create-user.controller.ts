@@ -6,6 +6,8 @@ import { CreateUserDTO } from './create-user.dto'
 
 @Controller('users')
 export class CreateUserController {
+  private readonly logger = new Logger(CreateUserController.name)
+
   static successCode: string = 'user-created'
   static successMessage: string = 'The user has been successfully created.'
 
@@ -23,7 +25,8 @@ export class CreateUserController {
     )
     await this.commandBus.execute(newUserCommand)
 
-    Logger.log(CreateUserController.successMessage, CreateUserController.name)
+    this.logger.log(CreateUserController.successMessage)
+
     return response.status(HttpStatus.CREATED).json({
       code: CreateUserController.successCode,
       message: CreateUserController.successMessage,

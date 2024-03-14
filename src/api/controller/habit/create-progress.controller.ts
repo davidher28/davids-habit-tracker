@@ -22,7 +22,6 @@ export class CreateProgressController {
       request.habitId,
       request.progressDate,
       request.observations,
-      request.validated,
     )
     await this.commandBus.execute(createProgressCommand)
 

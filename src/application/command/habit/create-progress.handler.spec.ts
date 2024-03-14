@@ -10,12 +10,15 @@ import {
   InvalidProgressObservationsError,
 } from '../../../domain'
 import { EventPublisher } from '@nestjs/cqrs'
+import { UserWearableService } from '../../../infrastructure/user/user.wearable.service'
+import { WearableService } from '../../../domain/shared/wearable.service'
 
 describe('CreateProgressHandler', () => {
   let habit: Habit
   let progressDate: Date
   let observations: string
   let handler: CreateProgressHandler
+  let wearableService: WearableService
   let habitRepository: HabitRepository
   let publisher: EventPublisher
 
@@ -23,9 +26,14 @@ describe('CreateProgressHandler', () => {
     habit = HabitMother.create()
     progressDate = new Date('2024-03-07')
     observations = 'Observations'
+    wearableService = new UserWearableService()
     habitRepository = new InMemoryHabitRepository()
     publisher = { mergeObjectContext: jest.fn().mockReturnValue(habit) } as any
-    handler = new CreateProgressHandler(habitRepository, publisher)
+    handler = new CreateProgressHandler(
+      wearableService,
+      habitRepository,
+      publisher,
+    )
   })
 
   it('should create the progress', async () => {
