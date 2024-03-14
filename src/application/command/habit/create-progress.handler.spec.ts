@@ -1,8 +1,6 @@
 import { CreateProgressHandler } from './create-progress.handler'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
-import { ProgressRepository } from '../../../domain/habit/progress.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
-import { InMemoryProgressRepository } from '../../../infrastructure/habit/progress.in-memory.repository'
 import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { Habit } from '../../../domain'
@@ -11,6 +9,7 @@ import {
   InvalidProgressDateError,
   InvalidProgressObservationsError,
 } from '../../../domain'
+import { EventPublisher } from '@nestjs/cqrs'
 
 describe('CreateProgressHandler', () => {
   let habit: Habit
@@ -18,15 +17,15 @@ describe('CreateProgressHandler', () => {
   let observations: string
   let handler: CreateProgressHandler
   let habitRepository: HabitRepository
-  let progressRepository: ProgressRepository
+  let publisher: EventPublisher
 
   beforeEach(() => {
     habit = HabitMother.create()
     progressDate = new Date('2024-03-07')
     observations = 'Observations'
     habitRepository = new InMemoryHabitRepository()
-    progressRepository = new InMemoryProgressRepository()
-    handler = new CreateProgressHandler(progressRepository, habitRepository)
+    publisher = { mergeObjectContext: jest.fn().mockReturnValue(habit) } as any
+    handler = new CreateProgressHandler(habitRepository, publisher)
   })
 
   it('should create the progress', async () => {
@@ -43,7 +42,8 @@ describe('CreateProgressHandler', () => {
     await handler.execute(command)
 
     // Then
-    expect(progressRepository.findByHabitId(habit.id)).toBeTruthy()
+    expect(habit.getProgress.length).toBe(1)
+    expect(publisher.mergeObjectContext).toHaveBeenCalled()
   })
 
   it('should throw an error if the habit does not exist', async () => {

@@ -22,6 +22,16 @@ export class Reminder {
     this.time = time
   }
 
+  static create(
+    id: ReminderId,
+    habitId: HabitId,
+    message: string,
+    state: string,
+    time: string,
+  ): Reminder {
+    return new Reminder(id, habitId, message, state, time)
+  }
+
   get habitIdValue(): string {
     return this.habitId.value
   }

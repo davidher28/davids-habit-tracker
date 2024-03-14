@@ -1,12 +1,16 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { Logger, ValidationPipe } from '@nestjs/common'
+import { BaseErrorFilter } from './api/filter/base.filter'
 
 const APP_PORT = 3010
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
+
   app.useGlobalPipes(new ValidationPipe({ transform: true }))
+  app.useGlobalFilters(new BaseErrorFilter())
+
   await app.listen(APP_PORT)
 }
 

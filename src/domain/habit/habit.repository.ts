@@ -6,6 +6,7 @@ import { HabitId } from './habit.id'
 export interface HabitRepository {
   setHabits(habits: Habit[]): void
   save(habit: Habit): void
+  findById(id: HabitId): Habit | undefined
   findByName(name: HabitName): Habit | undefined
   findByUserId(userId: UserId): Habit[]
   isExistingHabit(id: HabitId): boolean

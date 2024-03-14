@@ -1,8 +1,9 @@
 import { BaseError } from '../../../api/error/base.error'
+import { HttpStatus } from '@nestjs/common'
 
 export class UserAlreadyExistsError extends BaseError {
   constructor(message: string) {
-    super('user-already-exists', message)
+    super(HttpStatus.CONFLICT, 'user-already-exists', message)
   }
 
   static withUserName(userName: string): UserAlreadyExistsError {

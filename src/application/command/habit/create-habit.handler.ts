@@ -42,8 +42,7 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
       command.duration,
       command.restTime,
     )
-
-    const habit = new Habit(
+    const habit = Habit.create(
       habitId,
       name,
       description,
@@ -51,6 +50,7 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
       userId,
       command.wearableDeviceId,
     )
+
     this.habitRepository.save(habit)
   }
 }

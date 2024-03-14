@@ -1,8 +1,9 @@
 import { BaseError } from '../../api/error/base.error'
+import { HttpStatus } from '@nestjs/common'
 
 export class InvalidUserEmailError extends BaseError {
   constructor(message: string) {
-    super('invalid-user-email', message)
+    super(HttpStatus.BAD_REQUEST, 'invalid-user-email', message)
   }
 
   static withMessage(message: string): InvalidUserEmailError {

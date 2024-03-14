@@ -1,39 +1,29 @@
-import {
-  Controller,
-  Get,
-  HttpStatus,
-  Logger,
-  Param,
-  Res,
-  UseFilters,
-} from '@nestjs/common'
+import { Controller, Get, HttpStatus, Logger, Param, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { QueryBus } from '@nestjs/cqrs'
-import { BadRequestFilter } from '../../filter/bad-request.filter'
-import { NotFoundFilter } from '../../filter/not-found.filter'
 import { GetHabitsQuery } from '../../../application/query/habit/get-habits.query'
 import { GetHabitsDTO } from '../../../application/query/habit/get-habits.dto'
 import { Habit } from '../../../domain'
 
 @Controller('habits')
 export class GetHabitsController {
-  private readonly SUCCESS_MESSAGE =
-    'The habits has been successfully retrieved.'
+  static successCode: string = 'habits-retrieved'
+  static successMessage: string = 'The habits has been successfully retrieved.'
+
   constructor(private readonly queryBus: QueryBus) {}
 
   @Get(':userId')
-  @UseFilters(new BadRequestFilter(), new NotFoundFilter())
   async getHabits(
     @Param() queryParameters: GetHabitsDTO,
     @Res() response: Response,
   ): Promise<Response> {
-    const habitsQuery = new GetHabitsQuery(queryParameters.userId)
-    const habits = await this.queryBus.execute(habitsQuery)
+    const getHabitsQuery = new GetHabitsQuery(queryParameters.userId)
+    const habits = await this.queryBus.execute(getHabitsQuery)
 
-    Logger.log(this.SUCCESS_MESSAGE, 'GetHabitsController')
+    Logger.log(GetHabitsController.successMessage, GetHabitsController.name)
     return response.status(HttpStatus.OK).json({
-      code: 'habits-retrieved',
-      message: this.SUCCESS_MESSAGE,
+      code: GetHabitsController.successCode,
+      message: GetHabitsController.successMessage,
       data: habits.map((habit: Habit) => JSON.stringify(habit)),
     })
   }

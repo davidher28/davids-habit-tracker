@@ -8,7 +8,7 @@ export class Progress {
   private readonly progressDate: ProgressDate
   private readonly observations: ProgressObservations
 
-  constructor(
+  private constructor(
     id: ProgressId,
     readonly habitId: HabitId,
     progressDate: ProgressDate,
@@ -18,6 +18,15 @@ export class Progress {
     this.habitId = habitId
     this.progressDate = progressDate
     this.observations = observations
+  }
+
+  static create(
+    id: ProgressId,
+    habitId: HabitId,
+    progressDate: ProgressDate,
+    observations: ProgressObservations,
+  ): Progress {
+    return new Progress(id, habitId, progressDate, observations)
   }
 
   get idValue(): string {

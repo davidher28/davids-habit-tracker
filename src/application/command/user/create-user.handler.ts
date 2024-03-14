@@ -28,8 +28,8 @@ export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {
     const userId = UserId.create(uuid)
     const userEmail = UserEmail.create(command.email)
     const userFullName = UserFullName.create(command.fullName)
+    const user = User.create(userId, userName, userEmail, userFullName)
 
-    const user = new User(userId, userName, userEmail, userFullName)
     this.userRepository.save(user)
   }
 }

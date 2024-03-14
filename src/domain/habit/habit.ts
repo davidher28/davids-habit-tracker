@@ -3,8 +3,13 @@ import { UserId } from '../user/user.id'
 import { HabitName } from './habit.name'
 import { HabitDescription } from './habit.description'
 import { Frequency, HabitSchedule } from './habit.schedule'
+import { AggregateRoot } from '@nestjs/cqrs'
+import { ProgressCreatedEvent } from './progress-created.event'
+import { Progress } from './progress'
+import { Reminder } from './reminder'
+import { Challenge } from './challenge'
 
-export class Habit {
+export class Habit extends AggregateRoot {
   readonly id: HabitId
   readonly name: HabitName
   private description: HabitDescription
@@ -14,6 +19,10 @@ export class Habit {
   private readonly createdAt: Date
   private updatedAt: Date
 
+  private progress: Progress[] = []
+  private challenges: Challenge[] = []
+  private reminders: Reminder[] = []
+
   constructor(
     id: HabitId,
     name: HabitName,
@@ -22,6 +31,8 @@ export class Habit {
     userId: UserId,
     wearableDeviceId?: string,
   ) {
+    super()
+    this.autoCommit = true
     this.id = id
     this.name = name
     this.description = description
@@ -30,6 +41,17 @@ export class Habit {
     this.wearableDeviceId = wearableDeviceId
     this.createdAt = new Date()
     this.updatedAt = new Date()
+  }
+
+  static create(
+    id: HabitId,
+    name: HabitName,
+    description: HabitDescription,
+    schedule: HabitSchedule,
+    userId: UserId,
+    wearableDeviceId?: string,
+  ): Habit {
+    return new Habit(id, name, description, schedule, userId, wearableDeviceId)
   }
 
   get idValue(): string {
@@ -58,5 +80,29 @@ export class Habit {
 
   get userIdValue(): string {
     return this.userId.value
+  }
+
+  get getProgress(): Progress[] {
+    return this.progress
+  }
+
+  get getReminders(): Reminder[] {
+    return this.reminders
+  }
+
+  addProgress(progress: Progress): void {
+    this.progress.push(progress)
+    this.apply(ProgressCreatedEvent.createFromProgress(progress))
+  }
+
+  addChallenge(challenge: Challenge): void {
+    this.challenges.push(challenge)
+  }
+
+  addReminder(reminder: Reminder): void {
+    if (this.reminders.length === 3) {
+      throw new Error('Only 3 reminders are allowed')
+    }
+    this.reminders.push(reminder)
   }
 }

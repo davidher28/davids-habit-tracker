@@ -1,49 +1,37 @@
-import {
-  Body,
-  Controller,
-  HttpStatus,
-  Logger,
-  Post,
-  Res,
-  UseFilters,
-} from '@nestjs/common'
+import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
-import { ConflictFilter } from '../../filter/conflict.filter'
-import { BadRequestFilter } from '../../filter/bad-request.filter'
-import { NotFoundFilter } from '../../filter/not-found.filter'
 import { CreateChallengeDTO } from './create-challenge.dto'
 import { CreateChallengeCommand } from '../../../application/command/habit/create-challenge.command'
 
 @Controller('habits')
 export class CreateChallengeController {
-  private readonly SUCCESS_MESSAGE =
-    'The challenge has been successfully created.'
+  static successCode: string = 'challenge-created'
+  static successMessage: string = 'The challenge has been successfully created.'
+
   constructor(private readonly commandBus: CommandBus) {}
 
   @Post('challenges')
-  @UseFilters(
-    new ConflictFilter(),
-    new BadRequestFilter(),
-    new NotFoundFilter(),
-  )
   async createChallenge(
     @Body() request: CreateChallengeDTO,
     @Res() response: Response,
   ): Promise<Response> {
-    const newChallengeCommand = new CreateChallengeCommand(
+    const createChallengeCommand = new CreateChallengeCommand(
       request.habitId,
       request.description,
       request.numberOfTimes,
       request.startDate,
       request.endDate,
     )
-    await this.commandBus.execute(newChallengeCommand)
+    await this.commandBus.execute(createChallengeCommand)
 
-    Logger.log(this.SUCCESS_MESSAGE, 'CreateChallengeController')
+    Logger.log(
+      CreateChallengeController.successMessage,
+      CreateChallengeController.name,
+    )
     return response.status(HttpStatus.CREATED).json({
-      code: 'challenge-created',
-      message: this.SUCCESS_MESSAGE,
+      code: CreateChallengeController.successCode,
+      message: CreateChallengeController.successMessage,
     })
   }
 }

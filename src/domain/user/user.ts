@@ -25,6 +25,15 @@ export class User {
     this.updatedAt = new Date()
   }
 
+  static create(
+    id: UserId,
+    userName: UserName,
+    email: UserEmail,
+    fullName: UserFullName,
+  ): User {
+    return new User(id, userName, email, fullName)
+  }
+
   get idValue(): string {
     return this.id.value
   }

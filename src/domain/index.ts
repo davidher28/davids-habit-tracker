@@ -40,3 +40,7 @@ export { Habit } from './habit/habit'
 export { Progress } from './habit/progress'
 export { Challenge } from './habit/challenge'
 export { Reminder } from './habit/reminder'
+
+// -------------------- Events -------------------- //
+import { ProgressCreatedHandler } from '../application/command/habit/progress-created.handler'
+export const EventHandlers = [ProgressCreatedHandler]

@@ -12,6 +12,10 @@ export class InMemoryHabitRepository implements HabitRepository {
     this.habits.push(habit)
   }
 
+  findById(id: HabitId): Habit | undefined {
+    return this.habits.find((habit) => habit.id.equals(id))
+  }
+
   findByName(name: HabitName): Habit | undefined {
     return this.habits.find((habit) => habit.name.equals(name))
   }

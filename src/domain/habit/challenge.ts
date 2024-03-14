@@ -22,6 +22,16 @@ export class Challenge {
     this.endDate = endDate
   }
 
+  static create(
+    id: ChallengeId,
+    habitId: HabitId,
+    numberOfTimes: number,
+    startDate: Date,
+    endDate: Date,
+  ): Challenge {
+    return new Challenge(id, habitId, numberOfTimes, startDate, endDate)
+  }
+
   get habitIdValue(): string {
     return this.habitId.value
   }

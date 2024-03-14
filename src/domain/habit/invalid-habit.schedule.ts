@@ -1,8 +1,9 @@
 import { BaseError } from '../../api/error/base.error'
+import { HttpStatus } from '@nestjs/common'
 
 export class InvalidHabitScheduleError extends BaseError {
   constructor(message: string) {
-    super('invalid-habit-schedule', message)
+    super(HttpStatus.BAD_REQUEST, 'invalid-habit-schedule', message)
   }
 
   static create(
