@@ -19,7 +19,7 @@ export class CreateChallengeController {
     const createChallengeCommand = new CreateChallengeCommand(
       request.habitId,
       request.description,
-      request.numberOfTimes,
+      request.habitTimes,
       request.startDate,
       request.endDate,
     )

@@ -22,7 +22,7 @@ export class CreateChallengeDTO {
   @IsPositive({
     message: 'Number of times must be a positive number.',
   })
-  numberOfTimes: number
+  habitTimes: number
 
   @Type(() => Date)
   @IsDate({ message: 'Start date must be a valid date.' })

@@ -1,31 +1,36 @@
 import { HabitId } from './habit.id'
 import { ChallengeId } from './challenge.id'
 import { UUId } from '../shared/uuid'
+import { ChallengeDescription } from './challenge.description'
 
 export class Challenge {
   readonly id: ChallengeId
   readonly habitId: HabitId
-  readonly numberOfTimes: number
+  readonly description: ChallengeDescription
+  readonly habitTimes: number
   readonly startDate: Date
   readonly endDate: Date
 
   constructor(
     id: ChallengeId,
     habitId: HabitId,
-    numberOfTimes: number,
+    challengeDescription: ChallengeDescription,
+    habitTimes: number,
     startDate: Date,
     endDate: Date,
   ) {
     this.id = id
     this.habitId = habitId
-    this.numberOfTimes = numberOfTimes
+    this.description = challengeDescription
+    this.habitTimes = habitTimes
     this.startDate = startDate
     this.endDate = endDate
   }
 
   static create(
     habitId: string,
-    numberOfTimes: number,
+    description: string,
+    habitTimes: number,
     startDate: Date,
     endDate: Date,
   ): Challenge {
@@ -35,7 +40,8 @@ export class Challenge {
     return new Challenge(
       challengeId,
       HabitId.create(habitId),
-      numberOfTimes,
+      ChallengeDescription.create(description),
+      habitTimes,
       startDate,
       endDate,
     )

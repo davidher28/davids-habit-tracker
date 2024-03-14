@@ -21,7 +21,7 @@ describe('CreateChallengeHandler', () => {
     habitRepository.setHabits([habit])
     const habitId = habit.idValue
     const description = 'description'
-    const numberOfTimes = 10
+    const habitTimes = 10
     const startDate = new Date('2024-03-01')
     const endDate = new Date('2024-03-31')
 
@@ -29,7 +29,7 @@ describe('CreateChallengeHandler', () => {
     const command = new CreateChallengeCommand(
       habitId,
       description,
-      numberOfTimes,
+      habitTimes,
       startDate,
       endDate,
     )
