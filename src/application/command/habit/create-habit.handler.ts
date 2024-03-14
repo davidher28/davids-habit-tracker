@@ -35,7 +35,6 @@ export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {
       command.userId,
       command.wearableDeviceId,
     )
-
     this.habitRepository.save(habit)
   }
 }
