@@ -2,7 +2,7 @@ import { UserRepository } from '../domain/user/user.repository'
 import { InMemoryUserRepository } from './user/user.in-memory.repository'
 import { HabitRepository } from '../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from './habit/habit.in-memory.repository'
-import { DomainService } from '../domain/shared/wearable.service'
+import { WearableService } from '../domain/shared/wearable.service'
 import { UserWearableService } from './user/user.wearable.service'
 
 export const RepositoryProviders = [
@@ -11,5 +11,5 @@ export const RepositoryProviders = [
 ]
 
 export const ServiceProviders = [
-  { provide: DomainService, useClass: UserWearableService },
+  { provide: WearableService, useClass: UserWearableService },
 ]
