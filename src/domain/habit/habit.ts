@@ -9,6 +9,7 @@ import { Progress } from './progress'
 import { Reminder } from './reminder'
 import { Challenge } from './challenge'
 import { UUId } from '../shared/uuid'
+import { ReminderLimitError } from './reminder.limit.error'
 
 export class Habit extends AggregateRoot {
   readonly id: HabitId
@@ -117,7 +118,7 @@ export class Habit extends AggregateRoot {
 
   addReminder(reminder: Reminder): void {
     if (this.reminders.length === 3) {
-      throw new Error('Only 3 reminders are allowed')
+      throw ReminderLimitError.withMessage('Only 3 reminders are allowed')
     }
     this.reminders.push(reminder)
   }
