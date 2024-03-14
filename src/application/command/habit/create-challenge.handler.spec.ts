@@ -36,6 +36,6 @@ describe('CreateChallengeHandler', () => {
     await handler.execute(command)
 
     // Then
-    // TODO: Implement
+    expect(habit.getChallenges.length).toBe(1)
   })
 })

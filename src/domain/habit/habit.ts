@@ -86,6 +86,10 @@ export class Habit extends AggregateRoot {
     return this.progress
   }
 
+  get getChallenges(): Challenge[] {
+    return this.challenges
+  }
+
   get getReminders(): Reminder[] {
     return this.reminders
   }
