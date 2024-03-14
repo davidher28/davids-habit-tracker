@@ -23,7 +23,12 @@ export class CreateProgressHandler
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    const validated = this.wearableService.execute(habitId)
+    // If the habit uses a wearable device, we need to validate the progress
+    let validated = false
+    if (habit.usesWearableDevice()) {
+      validated = await this.wearableService.execute(habit.wearableDeviceId)
+    }
+
     const progress = Progress.create(
       command.habitId,
       command.progressDate,

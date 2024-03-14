@@ -67,6 +67,10 @@ export class Habit extends AggregateRoot {
     )
   }
 
+  usesWearableDevice(): boolean {
+    return this.wearableDeviceId !== undefined
+  }
+
   get idValue(): string {
     return this.id.value
   }
