@@ -57,4 +57,8 @@ export class Progress {
   get observationsValue(): string {
     return this.observations.value
   }
+
+  get isValidated(): boolean {
+    return this.validated
+  }
 }

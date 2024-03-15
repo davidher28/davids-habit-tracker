@@ -3,8 +3,9 @@ import { UserId } from './user.id'
 import { UserEmail } from './user.email'
 import { UserFullName } from './user.fullname'
 import { UUId } from '../shared/uuid'
+import { AggregateRoot } from '@nestjs/cqrs'
 
-export class User {
+export class User extends AggregateRoot {
   readonly id: UserId
   readonly userName: UserName
   email: UserEmail
@@ -18,6 +19,8 @@ export class User {
     email: UserEmail,
     fullName: UserFullName,
   ) {
+    super()
+    this.autoCommit = true
     this.id = id
     this.userName = userName
     this.email = email

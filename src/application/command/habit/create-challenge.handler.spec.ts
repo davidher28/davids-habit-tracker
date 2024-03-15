@@ -4,6 +4,7 @@ import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-
 import { CreateChallengeCommand } from './create-challenge.command'
 import { Habit } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
+import { HabitNotFoundError } from './habit.not-found.error'
 
 describe('CreateChallengeHandler', () => {
   let habit: Habit
@@ -37,5 +38,26 @@ describe('CreateChallengeHandler', () => {
 
     // Then
     expect(habit.getChallenges.length).toBe(1)
+  })
+
+  it('should throw an error if the habit does not exist', async () => {
+    // Given
+    const habitId = habit.idValue
+    const description = 'description'
+    const habitTimes = 10
+    const startDate = new Date('2025-12-12')
+    const endDate = new Date('2025-12-12')
+
+    // When
+    const command = new CreateChallengeCommand(
+      habitId,
+      description,
+      habitTimes,
+      startDate,
+      endDate,
+    )
+
+    // Then
+    await expect(handler.execute(command)).rejects.toThrow(HabitNotFoundError)
   })
 })

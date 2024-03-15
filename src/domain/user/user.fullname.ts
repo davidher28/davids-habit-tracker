@@ -4,7 +4,7 @@ export class UserFullName {
   readonly value: string
 
   private constructor(value: string) {
-    if (!value || typeof value !== 'string' || value.trim() === '') {
+    if (!String(value).trim()) {
       throw InvalidFullNameError.withMessage(
         'Full name must be a non-empty string.',
       )

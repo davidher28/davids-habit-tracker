@@ -21,7 +21,7 @@ export class CreateReminderController {
     const createReminderCommand = new CreateReminderCommand(
       request.habitId,
       request.message,
-      request.state,
+      request.status,
       request.time,
     )
     await this.commandBus.execute(createReminderCommand)

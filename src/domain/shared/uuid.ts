@@ -5,7 +5,7 @@ export class UUId {
   readonly value: string
 
   constructor(value: string) {
-    if (!value || typeof value !== 'string' || value.trim() === '') {
+    if (!String(value).trim()) {
       throw InvalidUUId.withMessage('The UUID must be a non-empty string.')
     }
 

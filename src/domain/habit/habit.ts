@@ -6,11 +6,12 @@ import { Frequency, HabitSchedule } from './habit.schedule'
 import { AggregateRoot } from '@nestjs/cqrs'
 import { ProgressCreatedEvent } from './progress-created.event'
 import { Progress } from './progress'
-import { Reminder } from './reminder'
-import { Challenge } from './challenge'
+import { Reminder, ReminderStatus } from './reminder'
+import { Challenge, ChallengeStatus } from './challenge'
 import { UUId } from '../shared/uuid'
 import { ReminderLimitError } from './reminder.limit.error'
 import { WearableService } from '../shared/wearable.service'
+import { ReminderAlreadyExistsError } from './reminder.already-exists.error'
 
 export class Habit extends AggregateRoot {
   readonly id: HabitId
@@ -22,8 +23,8 @@ export class Habit extends AggregateRoot {
   private readonly createdAt: Date
   private updatedAt: Date
 
-  private progress: Progress[] = []
   private challenges: Challenge[] = []
+  private progress: Progress[] = []
   private reminders: Reminder[] = []
 
   private constructor(
@@ -68,10 +69,6 @@ export class Habit extends AggregateRoot {
     )
   }
 
-  usesWearableDevice(): boolean {
-    return this.wearableDeviceId !== undefined
-  }
-
   get idValue(): string {
     return this.id.value
   }
@@ -112,24 +109,6 @@ export class Habit extends AggregateRoot {
     return this.reminders
   }
 
-  public addProgress(
-    habitId: string,
-    progressDate: Date,
-    observations: string,
-    wearableService: WearableService,
-  ): void {
-    const validated = this.validateWearableDevice(wearableService)
-    const progress = Progress.create(
-      habitId,
-      progressDate,
-      observations,
-      validated,
-    )
-    this.progress.push(progress)
-
-    this.apply(ProgressCreatedEvent.createFromProgress(progress))
-  }
-
   public addChallenge(
     habitId: string,
     description: string,
@@ -147,22 +126,62 @@ export class Habit extends AggregateRoot {
     this.challenges.push(challenge)
   }
 
+  public addProgress(
+    habitId: string,
+    progressDate: Date,
+    observations: string,
+    wearableService: WearableService,
+  ): void {
+    const progress = Progress.create(
+      habitId,
+      progressDate,
+      observations,
+      this.isWearableDeviceValidated(wearableService),
+    )
+    this.progress.push(progress)
+
+    this.apply(ProgressCreatedEvent.createFromProgress(progress))
+  }
+
   public addReminder(
     habitId: string,
     message: string,
-    state: string,
+    status: ReminderStatus,
     time: string,
   ): void {
-    if (this.reminders.length === 3) {
-      throw ReminderLimitError.withMessage('Only 3 reminders are allowed')
+    if (this.isExistingReminder(time)) {
+      throw ReminderAlreadyExistsError.withMessage(
+        'Reminder time already exists.',
+      )
     }
 
-    const reminder = Reminder.create(habitId, message, state, time)
+    if (this.reminders.length === 3) {
+      throw ReminderLimitError.withMessage('Only 3 reminders are allowed.')
+    }
+
+    const reminder = Reminder.create(habitId, message, status, time)
     this.reminders.push(reminder)
   }
 
-  private validateWearableDevice(wearableService: WearableService): boolean {
-    if (this.usesWearableDevice()) {
+  public registerProgress(): void {
+    this.challenges.forEach((challenge) => {
+      challenge.registerProgress()
+      if (challenge.status === ChallengeStatus.COMPLETED) {
+        // TODO: Create Achievement
+      }
+    })
+  }
+
+  private isExistingReminder(time: string): boolean {
+    return this.reminders.some((reminder) => reminder.timeValue === time)
+  }
+
+  private isWearingDevice(): boolean {
+    return this.wearableDeviceId !== undefined
+  }
+
+  private isWearableDeviceValidated(wearableService: WearableService): boolean {
+    if (this.isWearingDevice()) {
       return wearableService.execute(this.wearableDeviceId)
     }
     return false

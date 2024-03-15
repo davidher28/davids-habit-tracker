@@ -4,6 +4,7 @@ import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { HabitId } from '../../../domain'
 import { CreateReminderCommand } from './create-reminder.command'
+import { ReminderStatus } from '../../../domain/habit/reminder'
 
 @CommandHandler(CreateReminderCommand)
 export class CreateReminderHandler
@@ -23,7 +24,7 @@ export class CreateReminderHandler
     habit.addReminder(
       command.habitId,
       command.message,
-      command.state,
+      command.status as ReminderStatus,
       command.time,
     )
   }
