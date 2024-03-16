@@ -80,10 +80,6 @@ export class Challenge {
   }
 
   private updateStatus(): void {
-    if (!this.isPending() && this.isExceededDate()) {
-      this.modifyStatus(ChallengeStatus.EXPIRED)
-    }
-
     if (this.isPending() && this.isExceededDate()) {
       this.modifyStatus(ChallengeStatus.EXPIRED)
     }
