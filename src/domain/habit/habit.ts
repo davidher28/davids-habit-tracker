@@ -7,11 +7,13 @@ import { AggregateRoot } from '@nestjs/cqrs'
 import { ProgressCreatedEvent } from './progress-created.event'
 import { Progress } from './progress'
 import { Reminder, ReminderStatus } from './reminder'
-import { Challenge, ChallengeStatus } from './challenge'
+import { Challenge } from './challenge'
 import { UUId } from '../shared/uuid'
 import { ReminderLimitError } from './reminder.limit.error'
 import { WearableService } from '../shared/wearable.service'
 import { ReminderAlreadyExistsError } from './reminder.already-exists.error'
+import { ChallengeId } from './challenge.id'
+import { ChallengeNotFoundError } from './challenge.not-found.error'
 
 export class Habit extends AggregateRoot {
   readonly id: HabitId
@@ -126,6 +128,14 @@ export class Habit extends AggregateRoot {
     this.challenges.push(challenge)
   }
 
+  public cancelChallenge(challengeId: ChallengeId): void {
+    if (!this.isExistingChallenge(challengeId.value)) {
+      throw ChallengeNotFoundError.withId(challengeId.value)
+    }
+
+    // TODO: Cancel the challenge
+  }
+
   public addProgress(
     habitId: string,
     progressDate: Date,
@@ -166,14 +176,19 @@ export class Habit extends AggregateRoot {
   public registerProgress(): void {
     this.challenges.forEach((challenge) => {
       challenge.registerProgress()
-      if (challenge.status === ChallengeStatus.COMPLETED) {
-        // TODO: Create Achievement
-      }
+
+      // TODO: Create Achievement
     })
   }
 
   private isExistingReminder(time: string): boolean {
     return this.reminders.some((reminder) => reminder.timeValue === time)
+  }
+
+  private isExistingChallenge(challengeId: string): boolean {
+    return this.challenges.some(
+      (challenge) => challenge.idValue === challengeId,
+    )
   }
 
   private isWearingDevice(): boolean {

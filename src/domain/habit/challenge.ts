@@ -59,6 +59,10 @@ export class Challenge {
     )
   }
 
+  get idValue(): string {
+    return this.id.value
+  }
+
   public registerProgress(): void {
     if (!this.isPending()) {
       return
