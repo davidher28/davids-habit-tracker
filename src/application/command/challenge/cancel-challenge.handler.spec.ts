@@ -3,13 +3,18 @@ import { ChallengeRepository } from '../../../domain/challenge/challenge.reposit
 import { InMemoryChallengeRepository } from '../../../infrastructure/challenge/challenge.in-memory.repository'
 import { CancelChallengeCommand } from './cancel-challenge.command'
 import { ChallengeNotFoundError } from '../../../domain/challenge/challenge.not-found.error'
-import { UUId } from '../../../domain'
+import { Challenge, UUId } from '../../../domain'
+import { ChallengeMother } from '../../../../test/challenge/challenge.mother'
+import { ChallengeStatus } from '../../../domain/challenge/challenge'
+import { ChallengeUnableToCancelError } from '../../../domain/challenge/challenge.unable-to-cancel.error'
 
 describe('CancelChallengeHandler', () => {
+  let challenge: Challenge
   let challengeRepository: ChallengeRepository
   let handler: CancelChallengeHandler
 
   beforeEach(async () => {
+    challenge = ChallengeMother.create()
     challengeRepository = new InMemoryChallengeRepository()
     handler = new CancelChallengeHandler(challengeRepository)
   })
@@ -26,4 +31,21 @@ describe('CancelChallengeHandler', () => {
       ChallengeNotFoundError,
     )
   })
+
+  it.each([[ChallengeStatus.COMPLETED], [ChallengeStatus.CANCELLED]])(
+    'should throw an error if the challenge is in a non-cancellable status (%s)',
+    async (status: ChallengeStatus) => {
+      // Given
+      challenge.modifyStatus(status)
+      challengeRepository.setChallenges([challenge])
+
+      // When
+      const command = new CancelChallengeCommand(challenge.idValue)
+
+      // Then
+      await expect(handler.execute(command)).rejects.toThrow(
+        ChallengeUnableToCancelError,
+      )
+    },
+  )
 })

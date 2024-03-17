@@ -3,11 +3,12 @@ import { ChallengeId } from './challenge.id'
 import { UUId } from '../shared/uuid'
 import { ChallengeDescription } from './challenge.description'
 import { AggregateRoot } from '@nestjs/cqrs'
+import { ChallengeUnableToCancelError } from './challenge.unable-to-cancel.error'
 
 export enum ChallengeStatus {
   PENDING = 'PENDING',
   COMPLETED = 'COMPLETED',
-  SUSPENDED = 'SUSPENDED',
+  CANCELLED = 'CANCELLED',
   EXPIRED = 'EXPIRED',
 }
 
@@ -60,7 +61,17 @@ export class Challenge extends AggregateRoot {
   }
 
   public cancel(): void {
-    // TODO: Cancel the challenge
+    if (!this.isCancellable()) {
+      throw ChallengeUnableToCancelError.withMessage(
+        'Challenge cannot be canceled as it is not in a cancellable status.',
+      )
+    }
+
+    this.modifyStatus(ChallengeStatus.CANCELLED)
+  }
+
+  public modifyStatus(status: ChallengeStatus): void {
+    this.status = status
   }
 
   public registerProgress(): void {
@@ -83,6 +94,13 @@ export class Challenge extends AggregateRoot {
     return this.habitRemainingRepetitionTimes === 0
   }
 
+  private isCancellable(): boolean {
+    return (
+      this.status !== ChallengeStatus.CANCELLED &&
+      this.status !== ChallengeStatus.COMPLETED
+    )
+  }
+
   private updateStatus(): void {
     if (this.isPending() && this.isExceededDate()) {
       this.modifyStatus(ChallengeStatus.EXPIRED)
@@ -95,9 +113,5 @@ export class Challenge extends AggregateRoot {
 
   private decreaseRecordedTimes(): void {
     this.habitRemainingRepetitionTimes--
-  }
-
-  private modifyStatus(status: ChallengeStatus): void {
-    this.status = status
   }
 }
