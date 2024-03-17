@@ -41,7 +41,7 @@ export class Habit extends AggregateRoot {
     this.updatedAt = new Date()
   }
 
-  static create(
+  public static create(
     name: string,
     description: string,
     frequency: Frequency,

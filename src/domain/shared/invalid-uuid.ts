@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidUUId extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-uuid', message)
+    super('invalid-uuid', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidUUId {
+  public static withMessage(message: string): InvalidUUId {
     return new InvalidUUId(message)
   }
 }

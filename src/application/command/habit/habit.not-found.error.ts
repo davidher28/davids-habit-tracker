@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class HabitNotFoundError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.NOT_FOUND, 'habit-not-found', message)
+    super('habit-not-found', message, HttpStatus.NOT_FOUND)
   }
 
-  static withId(habitId: string): HabitNotFoundError {
+  public static withId(habitId: string): HabitNotFoundError {
     return new HabitNotFoundError(`Habit with id ${habitId} does not exist.`)
   }
 }

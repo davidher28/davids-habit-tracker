@@ -6,27 +6,27 @@ import { Injectable } from '@nestjs/common'
 export class InMemoryHabitRepository implements HabitRepository {
   private habits: Habit[] = []
 
-  setHabits(habits: Habit[]): void {
+  public setHabits(habits: Habit[]): void {
     this.habits = habits
   }
 
-  save(habit: Habit): void {
+  public save(habit: Habit): void {
     this.habits.push(habit)
   }
 
-  findById(id: HabitId): Habit | undefined {
+  public findById(id: HabitId): Habit | undefined {
     return this.habits.find((habit) => habit.id.equals(id))
   }
 
-  findByName(name: HabitName): Habit | undefined {
+  public findByName(name: HabitName): Habit | undefined {
     return this.habits.find((habit) => habit.name.equals(name))
   }
 
-  findByUserId(userId: UserId): Habit[] {
+  public findByUserId(userId: UserId): Habit[] {
     return this.habits.filter((habit) => habit.userId.equals(userId))
   }
 
-  isExistingHabit(id: HabitId): boolean {
+  public isExistingHabit(id: HabitId): boolean {
     return this.habits.some((habit) => habit.id.equals(id))
   }
 }

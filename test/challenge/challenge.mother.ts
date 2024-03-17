@@ -5,7 +5,11 @@ export class ChallengeMother {
   private description: string = Math.random().toString().substring(10)
   private habitTimes: number = Math.random()
 
-  build(): Challenge {
+  public static create(): Challenge {
+    return new ChallengeMother().build()
+  }
+
+  private build(): Challenge {
     return Challenge.create(
       uuidv4(),
       this.description,
@@ -13,9 +17,5 @@ export class ChallengeMother {
       new Date(),
       new Date(),
     )
-  }
-
-  static create(): Challenge {
-    return new ChallengeMother().build()
   }
 }

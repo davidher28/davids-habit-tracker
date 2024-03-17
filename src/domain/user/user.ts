@@ -25,7 +25,11 @@ export class User extends AggregateRoot {
     this.updatedAt = new Date()
   }
 
-  static create(userName: string, email: string, fullName: string): User {
+  public static create(
+    userName: string,
+    email: string,
+    fullName: string,
+  ): User {
     const uuid = UUId.generate()
     const userId = UserId.create(uuid)
 

@@ -40,7 +40,7 @@ export class HabitSchedule {
     }
   }
 
-  static create(
+  public static create(
     frequency: Frequency,
     duration: number,
     restTime: number,

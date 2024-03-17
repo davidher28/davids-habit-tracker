@@ -3,10 +3,10 @@ import { BaseError } from '../../api/base.error'
 
 export class ReminderLimitError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.CONFLICT, 'reminder-limit-reached', message)
+    super('reminder-limit-reached', message, HttpStatus.CONFLICT)
   }
 
-  static withMessage(message: string): ReminderLimitError {
+  public static withMessage(message: string): ReminderLimitError {
     return new ReminderLimitError(message)
   }
 }

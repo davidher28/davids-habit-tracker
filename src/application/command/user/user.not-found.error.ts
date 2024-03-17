@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class UserNotFoundError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.NOT_FOUND, 'user-not-found', message)
+    super('user-not-found', message, HttpStatus.NOT_FOUND)
   }
 
-  static withId(userId: string): UserNotFoundError {
+  public static withId(userId: string): UserNotFoundError {
     return new UserNotFoundError(`User with id ${userId} does not exist.`)
   }
 }

@@ -23,7 +23,7 @@ export class Reminder {
     this.time = time
   }
 
-  static create(
+  public static create(
     habitId: string,
     message: string,
     status: ReminderStatus,

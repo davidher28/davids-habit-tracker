@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidReminderTimeError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-reminder-time', message)
+    super('invalid-reminder-time', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidReminderTimeError {
+  public static withMessage(message: string): InvalidReminderTimeError {
     return new InvalidReminderTimeError(message)
   }
 }

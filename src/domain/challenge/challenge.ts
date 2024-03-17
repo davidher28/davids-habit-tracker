@@ -36,7 +36,7 @@ export class Challenge extends AggregateRoot {
     this.endDate = endDate
   }
 
-  static create(
+  public static create(
     habitId: string,
     description: string,
     habitTimes: number,

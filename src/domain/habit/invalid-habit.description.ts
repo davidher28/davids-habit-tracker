@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidHabitDescriptionError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-habit-description', message)
+    super('invalid-habit-description', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidHabitDescriptionError {
+  public static withMessage(message: string): InvalidHabitDescriptionError {
     return new InvalidHabitDescriptionError(message)
   }
 }

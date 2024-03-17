@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidChallengeDescriptionError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-challenge-description', message)
+    super('invalid-challenge-description', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidChallengeDescriptionError {
+  public static withMessage(message: string): InvalidChallengeDescriptionError {
     return new InvalidChallengeDescriptionError(message)
   }
 }

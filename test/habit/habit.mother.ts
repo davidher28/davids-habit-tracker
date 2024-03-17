@@ -9,7 +9,15 @@ export class HabitMother {
   private duration: number = 10
   private restTime: number = 5
 
-  build(userId?: string): Habit {
+  public static create(): Habit {
+    return new HabitMother().build()
+  }
+
+  public static createWithUserId(userId: string): Habit {
+    return new HabitMother().build(userId)
+  }
+
+  private build(userId?: string): Habit {
     return Habit.create(
       this.name,
       this.description,
@@ -18,13 +26,5 @@ export class HabitMother {
       this.restTime,
       userId || uuidv4(),
     )
-  }
-
-  static create(): Habit {
-    return new HabitMother().build()
-  }
-
-  static createWithUserId(userId: string): Habit {
-    return new HabitMother().build(userId)
   }
 }

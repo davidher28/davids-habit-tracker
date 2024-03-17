@@ -3,10 +3,10 @@ import { BaseError } from '../../api/base.error'
 
 export class ReminderAlreadyExistsError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.CONFLICT, 'reminder-already-exists', message)
+    super('reminder-already-exists', message, HttpStatus.CONFLICT)
   }
 
-  static withMessage(message: string): ReminderAlreadyExistsError {
+  public static withMessage(message: string): ReminderAlreadyExistsError {
     return new ReminderAlreadyExistsError(message)
   }
 }

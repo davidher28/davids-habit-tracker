@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidUserNameError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-username', message)
+    super('invalid-username', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidUserNameError {
+  public static withMessage(message: string): InvalidUserNameError {
     return new InvalidUserNameError(message)
   }
 }

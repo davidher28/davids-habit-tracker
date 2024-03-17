@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class ChallengeUnableToCancelError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'unable-to-cancel-challenge', message)
+    super('unable-to-cancel-challenge', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): ChallengeUnableToCancelError {
+  public static withMessage(message: string): ChallengeUnableToCancelError {
     return new ChallengeUnableToCancelError(message)
   }
 }

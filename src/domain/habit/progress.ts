@@ -19,7 +19,7 @@ export class Progress {
     this.validated = validated
   }
 
-  static create(
+  public static create(
     habitId: string,
     progressDate: Date,
     observations: string,

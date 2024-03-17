@@ -1,9 +1,7 @@
 import { InvalidProgressDateError } from './invalid-progress.date'
 
 export class ProgressDate {
-  readonly value: Date
-
-  constructor(value: Date) {
+  private constructor(readonly value: Date) {
     if (value > new Date()) {
       throw InvalidProgressDateError.withMessage(
         'Progress date cannot be in the future.',
@@ -13,7 +11,7 @@ export class ProgressDate {
     this.value = value
   }
 
-  static create(date: Date): ProgressDate {
+  public static create(date: Date): ProgressDate {
     return new ProgressDate(date)
   }
 }

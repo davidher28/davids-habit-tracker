@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidHabitScheduleError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-habit-schedule', message)
+    super('invalid-habit-schedule', message, HttpStatus.BAD_REQUEST)
   }
 
-  static create(
+  public static create(
     frequency: number,
     duration: number,
     restTime: number,
@@ -16,7 +16,7 @@ export class InvalidHabitScheduleError extends BaseError {
     )
   }
 
-  static withMessage(message: string): InvalidHabitScheduleError {
+  public static withMessage(message: string): InvalidHabitScheduleError {
     return new InvalidHabitScheduleError(message)
   }
 }

@@ -2,9 +2,7 @@ import { v4 as uuidv4, validate } from 'uuid'
 import { InvalidUUId } from './invalid-uuid'
 
 export class UUId {
-  readonly value: string
-
-  constructor(value: string) {
+  protected constructor(readonly value: string) {
     if (!String(value).trim()) {
       throw InvalidUUId.withMessage('The UUID must be a non-empty string.')
     }
@@ -16,11 +14,11 @@ export class UUId {
     this.value = value
   }
 
-  static generate(): string {
+  public static generate(): string {
     return uuidv4()
   }
 
-  equals(id: UUId): boolean {
+  public equals(id: UUId): boolean {
     return this.value === id.value
   }
 }

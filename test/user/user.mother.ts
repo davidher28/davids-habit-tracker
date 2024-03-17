@@ -5,11 +5,11 @@ export class UserMother {
   private email: string = 'email@email.com'
   private fullName: string = 'fullName'
 
-  build(): User {
-    return User.create(this.userName, this.email, this.fullName)
+  public static create(): User {
+    return new UserMother().build()
   }
 
-  static create(): User {
-    return new UserMother().build()
+  private build(): User {
+    return User.create(this.userName, this.email, this.fullName)
   }
 }

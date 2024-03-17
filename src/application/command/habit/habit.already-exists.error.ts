@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class HabitAlreadyExistsError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.CONFLICT, 'habit-already-exists', message)
+    super('habit-already-exists', message, HttpStatus.CONFLICT)
   }
 
-  static withName(name: string): HabitAlreadyExistsError {
+  public static withName(name: string): HabitAlreadyExistsError {
     return new HabitAlreadyExistsError(
       `Habit with name ${name} already exists.`,
     )

@@ -5,7 +5,7 @@ import { Progress } from './progress'
 export class ProgressCreatedEvent implements IEvent {
   private constructor(public readonly habitId: HabitId) {}
 
-  static createFromProgress(progress: Progress) {
+  public static createFromProgress(progress: Progress) {
     return new ProgressCreatedEvent(progress.habitId)
   }
 }

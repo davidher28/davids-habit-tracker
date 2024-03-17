@@ -3,14 +3,14 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidUserEmailError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-user-email', message)
+    super('invalid-user-email', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidUserEmailError {
+  public static withMessage(message: string): InvalidUserEmailError {
     return new InvalidUserEmailError(message)
   }
 
-  static withEmail(email: string): InvalidUserEmailError {
+  public static withEmail(email: string): InvalidUserEmailError {
     return new InvalidUserEmailError(
       `The email ${email} is not a valid address.`,
     )

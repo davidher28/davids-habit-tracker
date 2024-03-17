@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidFullNameError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-fullname', message)
+    super('invalid-fullname', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidFullNameError {
+  public static withMessage(message: string): InvalidFullNameError {
     return new InvalidFullNameError(message)
   }
 }

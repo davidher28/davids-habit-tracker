@@ -1,9 +1,7 @@
 import { InvalidUserEmailError } from './invalid-user.email'
 
 export class UserEmail {
-  readonly value: string
-
-  private constructor(value: string) {
+  private constructor(readonly value: string) {
     if (!String(value).trim()) {
       throw InvalidUserEmailError.withMessage(
         'Email must be a non-empty string.',
@@ -18,7 +16,7 @@ export class UserEmail {
     this.value = value
   }
 
-  static create(value: string): UserEmail {
+  public static create(value: string): UserEmail {
     return new UserEmail(value)
   }
 }

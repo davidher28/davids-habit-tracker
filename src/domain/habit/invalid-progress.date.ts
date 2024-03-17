@@ -3,10 +3,10 @@ import { HttpStatus } from '@nestjs/common'
 
 export class InvalidProgressDateError extends BaseError {
   constructor(message: string) {
-    super(HttpStatus.BAD_REQUEST, 'invalid-progress-date', message)
+    super('invalid-progress-date', message, HttpStatus.BAD_REQUEST)
   }
 
-  static withMessage(message: string): InvalidProgressDateError {
+  public static withMessage(message: string): InvalidProgressDateError {
     return new InvalidProgressDateError(message)
   }
 }

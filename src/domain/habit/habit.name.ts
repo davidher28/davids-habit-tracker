@@ -1,9 +1,7 @@
 import { InvalidHabitNameError } from './invalid-habit.name'
 
 export class HabitName {
-  readonly value: string
-
-  private constructor(value: string) {
+  private constructor(readonly value: string) {
     if (!value || typeof value !== 'string' || value.length < 3) {
       throw InvalidHabitNameError.withMessage(
         'Habit name must be a non-empty string.',
@@ -13,11 +11,11 @@ export class HabitName {
     this.value = value
   }
 
-  static create(value: string): HabitName {
+  public static create(value: string): HabitName {
     return new HabitName(value)
   }
 
-  equals(name: HabitName): boolean {
+  public equals(name: HabitName): boolean {
     return this.value === name.value
   }
 }

@@ -1,9 +1,7 @@
 import { InvalidProgressObservationsError } from './invalid-progress.observations'
 
 export class ProgressObservations {
-  readonly value: string
-
-  constructor(value: string) {
+  private constructor(readonly value: string) {
     if (value && value.length < 10) {
       throw InvalidProgressObservationsError.withMessage(
         'Observations must be at least 10 characters long.',
@@ -19,7 +17,7 @@ export class ProgressObservations {
     this.value = value
   }
 
-  static create(value: string): ProgressObservations {
+  public static create(value: string): ProgressObservations {
     return new ProgressObservations(value)
   }
 }
