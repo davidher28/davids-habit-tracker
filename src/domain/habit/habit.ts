@@ -63,6 +63,10 @@ export class Habit extends AggregateRoot {
     )
   }
 
+  public cancel(): void {
+    // do nothing
+  }
+
   get idValue(): string {
     return this.id.value
   }
