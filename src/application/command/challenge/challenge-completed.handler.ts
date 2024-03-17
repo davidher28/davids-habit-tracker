@@ -1,9 +1,9 @@
 import { EventsHandler, IEventHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
-import { HabitId } from '../../../domain'
 import { UserRepository } from '../../../domain/user/user.repository'
 import { ChallengeCompletedEvent } from '../../../domain/challenge/challenge-completed.event'
 import { UserNotFoundError } from '../user/user.not-found.error'
+import { HabitId } from '../../../domain/habit/habit.id'
 
 @EventsHandler(ChallengeCompletedEvent)
 export class ChallengeCompletedHandler

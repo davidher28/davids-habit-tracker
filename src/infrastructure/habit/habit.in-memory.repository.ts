@@ -1,6 +1,9 @@
 import { HabitRepository } from '../../domain/habit/habit.repository'
-import { Habit, HabitId, HabitName, UserId } from '../../domain'
 import { Injectable } from '@nestjs/common'
+import { Habit } from '../../domain/habit/habit'
+import { HabitId } from '../../domain/habit/habit.id'
+import { HabitName } from '../../domain/habit/habit.name'
+import { UserId } from '../../domain/user/user.id'
 
 @Injectable()
 export class InMemoryHabitRepository implements HabitRepository {

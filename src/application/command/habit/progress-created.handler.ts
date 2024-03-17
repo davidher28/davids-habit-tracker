@@ -4,7 +4,7 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
-import { HabitId } from '../../../domain'
+import { HabitId } from '../../../domain/habit/habit.id'
 
 @EventsHandler(ProgressCreatedEvent)
 export class ProgressCreatedHandler

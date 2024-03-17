@@ -3,8 +3,8 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { HabitId } from '../../../domain'
 import { WearableService } from '../../../domain/shared/wearable.service'
+import { HabitId } from '../../../domain/habit/habit.id'
 
 @CommandHandler(CreateProgressCommand)
 export class CreateProgressHandler

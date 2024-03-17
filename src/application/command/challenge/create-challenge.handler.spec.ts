@@ -2,11 +2,11 @@ import { CreateChallengeHandler } from './create-challenge.handler'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { CreateChallengeCommand } from './create-challenge.command'
-import { Habit } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { HabitNotFoundError } from '../habit/habit.not-found.error'
 import { InMemoryChallengeRepository } from '../../../infrastructure/challenge/challenge.in-memory.repository'
 import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
+import { Habit } from '../../../domain/habit/habit'
 
 describe('CreateChallengeHandler', () => {
   let habit: Habit

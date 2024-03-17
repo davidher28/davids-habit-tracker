@@ -3,10 +3,10 @@ import { GetHabitsQuery } from './get-habits.query'
 import { GetHabitsHandler } from './get-habits.handler'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
-import { User } from '../../../domain'
 import { UserMother } from '../../../../test/user/user.mother'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserNotFoundError } from '../../command/user/user.not-found.error'
+import { User } from '../../../domain/user/user'
 
 describe('GetHabitsHandler', () => {
   const user: User = UserMother.create()

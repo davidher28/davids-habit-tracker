@@ -2,9 +2,9 @@ import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { HabitId } from '../../../domain'
 import { CreateReminderCommand } from './create-reminder.command'
 import { ReminderStatus } from '../../../domain/habit/reminder'
+import { HabitId } from '../../../domain/habit/habit.id'
 
 @CommandHandler(CreateReminderCommand)
 export class CreateReminderHandler

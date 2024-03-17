@@ -2,13 +2,11 @@ import { CreateUserCommand } from './create-user.command'
 import { CreateUserHandler } from './create-user.handler'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
 import { UserMother } from '../../../../test/user/user.mother'
-import {
-  InvalidUserEmailError,
-  InvalidFullNameError,
-  InvalidUserNameError,
-  User,
-} from '../../../domain'
 import { UserAlreadyExistsError } from './user.already-exists.error'
+import { InvalidFullNameError } from '../../../domain/user/invalid-user.fullname'
+import { InvalidUserEmailError } from '../../../domain/user/invalid-user.email'
+import { InvalidUserNameError } from '../../../domain/user/invalid-user.username'
+import { User } from '../../../domain/user/user'
 
 describe('CreateUserHandler', () => {
   let user: User

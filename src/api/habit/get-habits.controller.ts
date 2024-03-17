@@ -3,7 +3,7 @@ import { Response } from 'express'
 import { QueryBus } from '@nestjs/cqrs'
 import { GetHabitsQuery } from '../../application/query/habit/get-habits.query'
 import { GetHabitsDTO } from '../../application/query/habit/get-habits.dto'
-import { Habit } from '../../domain'
+import { Habit } from '../../domain/habit/habit'
 
 @Controller('habits')
 export class GetHabitsController {

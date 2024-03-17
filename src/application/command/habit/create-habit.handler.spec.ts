@@ -4,17 +4,16 @@ import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
-import { Habit, User } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { UserMother } from '../../../../test/user/user.mother'
 import { HabitAlreadyExistsError } from './habit.already-exists.error'
 import { UserNotFoundError } from '../user/user.not-found.error'
-import {
-  InvalidHabitDescriptionError,
-  InvalidHabitNameError,
-  InvalidHabitScheduleError,
-} from '../../../domain'
 import { Frequency } from '../../../domain/habit/habit.schedule'
+import { User } from '../../../domain/user/user'
+import { Habit } from '../../../domain/habit/habit'
+import { InvalidHabitDescriptionError } from '../../../domain/habit/invalid-habit.description'
+import { InvalidHabitNameError } from '../../../domain/habit/invalid-habit.name'
+import { InvalidHabitScheduleError } from '../../../domain/habit/invalid-habit.schedule'
 
 describe('CreateHabitHandler', () => {
   let user: User

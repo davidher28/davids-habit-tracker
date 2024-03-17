@@ -1,4 +1,4 @@
-import { User } from '../../src/domain'
+import { User } from '../../src/domain/user/user'
 
 export class UserMother {
   private userName: string = 'userName'

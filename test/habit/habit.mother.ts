@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid'
-import { Habit } from '../../src/domain'
 import { Frequency } from '../../src/domain/habit/habit.schedule'
+import { Habit } from '../../src/domain/habit/habit'
 
 export class HabitMother {
   private name: string = Math.random().toString().substring(4)

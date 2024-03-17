@@ -4,9 +4,11 @@ import { HabitAlreadyExistsError } from './habit.already-exists.error'
 import { CreateHabitCommand } from './create-habit.command'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { UserRepository } from '../../../domain/user/user.repository'
-import { Habit, HabitName, UserId } from '../../../domain'
 import { UserNotFoundError } from '../user/user.not-found.error'
 import { Frequency } from '../../../domain/habit/habit.schedule'
+import { UserId } from '../../../domain/user/user.id'
+import { HabitName } from '../../../domain/habit/habit.name'
+import { Habit } from '../../../domain/habit/habit'
 
 @CommandHandler(CreateHabitCommand)
 export class CreateHabitHandler implements ICommandHandler<CreateHabitCommand> {

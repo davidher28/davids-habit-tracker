@@ -3,7 +3,8 @@ import { UserRepository } from '../../../domain/user/user.repository'
 import { UserAlreadyExistsError } from './user.already-exists.error'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
-import { User, UserName } from '../../../domain'
+import { UserName } from '../../../domain/user/user.username'
+import { User } from '../../../domain/user/user'
 
 @CommandHandler(CreateUserCommand)
 export class CreateUserHandler implements ICommandHandler<CreateUserCommand> {

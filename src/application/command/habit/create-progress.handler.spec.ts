@@ -3,15 +3,13 @@ import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { Habit } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
-import {
-  InvalidProgressDateError,
-  InvalidProgressObservationsError,
-} from '../../../domain'
 import { EventPublisher } from '@nestjs/cqrs'
 import { UserWearableService } from '../../../infrastructure/user/user.wearable.service'
 import { WearableService } from '../../../domain/shared/wearable.service'
+import { InvalidProgressDateError } from '../../../domain/habit/invalid-progress.date'
+import { InvalidProgressObservationsError } from '../../../domain/habit/invalid-progress.observations'
+import { Habit } from '../../../domain/habit/habit'
 
 describe('CreateProgressHandler', () => {
   let habit: Habit

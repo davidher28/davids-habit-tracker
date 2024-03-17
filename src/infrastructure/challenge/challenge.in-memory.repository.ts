@@ -1,6 +1,8 @@
 import { ChallengeRepository } from '../../domain/challenge/challenge.repository'
-import { Challenge, ChallengeId, HabitId } from '../../domain'
 import { Injectable } from '@nestjs/common'
+import { Challenge } from '../../domain/challenge/challenge'
+import { ChallengeId } from '../../domain/challenge/challenge.id'
+import { HabitId } from '../../domain/habit/habit.id'
 
 @Injectable()
 export class InMemoryChallengeRepository implements ChallengeRepository {

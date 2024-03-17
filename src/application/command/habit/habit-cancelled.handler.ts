@@ -3,11 +3,13 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
-import { HabitId } from '../../../domain'
 import { HabitCancelledEvent } from '../../../domain/habit/habit-cancelled.event'
+import { HabitId } from '../../../domain/habit/habit.id'
 
 @EventsHandler(HabitCancelledEvent)
-export class HabitCreatedHandler implements IEventHandler<HabitCancelledEvent> {
+export class HabitCancelledHandler
+  implements IEventHandler<HabitCancelledEvent>
+{
   constructor(
     @Inject(HabitRepository) private readonly habitRepository: HabitRepository,
     @Inject(ChallengeRepository)

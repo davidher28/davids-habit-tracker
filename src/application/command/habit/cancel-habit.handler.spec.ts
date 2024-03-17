@@ -1,4 +1,3 @@
-import { Habit, UUId } from '../../../domain'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { CancelHabitHandler } from './cancel-habit.handler'
 import { CancelHabitCommand } from './cancel-habit.command'
@@ -6,6 +5,8 @@ import { HabitNotFoundError } from './habit.not-found.error'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { EventPublisher } from '@nestjs/cqrs'
 import { HabitMother } from '../../../../test/habit/habit.mother'
+import { Habit } from '../../../domain/habit/habit'
+import { UUId } from '../../../domain/shared/uuid'
 
 describe('CancelHabitHandler', () => {
   let habit: Habit

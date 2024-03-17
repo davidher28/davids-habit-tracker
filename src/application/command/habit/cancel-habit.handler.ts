@@ -1,9 +1,10 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
-import { Habit, HabitId } from '../../../domain'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { CancelHabitCommand } from './cancel-habit.command'
 import { HabitNotFoundError } from './habit.not-found.error'
+import { HabitId } from '../../../domain/habit/habit.id'
+import { Habit } from '../../../domain/habit/habit'
 
 @CommandHandler(CancelHabitCommand)
 export class CancelHabitHandler implements ICommandHandler<CancelHabitCommand> {

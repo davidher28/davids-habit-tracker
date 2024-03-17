@@ -3,8 +3,9 @@ import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { GetHabitsQuery } from './get-habits.query'
 import { Inject } from '@nestjs/common'
 import { UserRepository } from '../../../domain/user/user.repository'
-import { Habit, UserId } from '../../../domain'
 import { UserNotFoundError } from '../../command/user/user.not-found.error'
+import { Habit } from '../../../domain/habit/habit'
+import { UserId } from '../../../domain/user/user.id'
 
 @QueryHandler(GetHabitsQuery)
 export class GetHabitsHandler implements IQueryHandler<GetHabitsQuery> {

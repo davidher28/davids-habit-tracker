@@ -1,6 +1,5 @@
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
-import { Habit } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
 import { CreateReminderHandler } from './create-reminder.handler'
 import { CreateReminderCommand } from './create-reminder.command'
@@ -8,6 +7,7 @@ import { HabitNotFoundError } from './habit.not-found.error'
 import { ReminderLimitError } from '../../../domain/habit/reminder.limit.error'
 import { ReminderAlreadyExistsError } from '../../../domain/habit/reminder.already-exists.error'
 import { ReminderStatus } from '../../../domain/habit/reminder'
+import { Habit } from '../../../domain/habit/habit'
 
 describe('CreateReminderHandler', () => {
   let habit: Habit
