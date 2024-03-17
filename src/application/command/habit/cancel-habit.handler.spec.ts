@@ -14,7 +14,7 @@ describe('CancelHabitHandler', () => {
   let handler: CancelHabitHandler
   let publisher: EventPublisher
 
-  beforeEach(async () => {
+  beforeEach(() => {
     habit = HabitMother.create()
     habitRepository = new InMemoryHabitRepository()
     publisher = { mergeObjectContext: jest.fn().mockReturnValue(habit) } as any

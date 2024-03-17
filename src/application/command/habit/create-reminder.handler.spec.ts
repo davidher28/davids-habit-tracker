@@ -14,7 +14,7 @@ describe('CreateReminderHandler', () => {
   let habitRepository: HabitRepository
   let handler: CreateReminderHandler
 
-  beforeEach(async () => {
+  beforeEach(() => {
     habit = HabitMother.create()
     habitRepository = new InMemoryHabitRepository()
     handler = new CreateReminderHandler(habitRepository)

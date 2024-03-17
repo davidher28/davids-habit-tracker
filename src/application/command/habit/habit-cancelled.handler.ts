@@ -24,8 +24,6 @@ export class HabitCancelledHandler
     }
 
     const challenges = this.challengeRepository.findPendingByHabitId(habitId)
-    challenges.forEach((challenge) => {
-      challenge.cancel()
-    })
+    challenges.forEach((challenge) => challenge.cancel())
   }
 }

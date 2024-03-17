@@ -13,7 +13,7 @@ describe('CancelChallengeHandler', () => {
   let challengeRepository: ChallengeRepository
   let handler: CancelChallengeHandler
 
-  beforeEach(async () => {
+  beforeEach(() => {
     challenge = ChallengeMother.create()
     challengeRepository = new InMemoryChallengeRepository()
     handler = new CancelChallengeHandler(challengeRepository)

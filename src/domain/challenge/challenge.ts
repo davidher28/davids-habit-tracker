@@ -62,6 +62,10 @@ export class Challenge extends AggregateRoot {
     return this.id.value
   }
 
+  get getStatus(): ChallengeStatus {
+    return this.status
+  }
+
   public cancel(): void {
     if (!this.isCancellable()) {
       throw ChallengeUnableToCancelError.withMessage(

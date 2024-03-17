@@ -14,7 +14,7 @@ describe('CreateChallengeHandler', () => {
   let challengeRepository: ChallengeRepository
   let handler: CreateChallengeHandler
 
-  beforeEach(async () => {
+  beforeEach(() => {
     habit = HabitMother.create()
     habitRepository = new InMemoryHabitRepository()
     challengeRepository = new InMemoryChallengeRepository()

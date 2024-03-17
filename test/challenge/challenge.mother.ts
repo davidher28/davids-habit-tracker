@@ -9,9 +9,13 @@ export class ChallengeMother {
     return new ChallengeMother().build()
   }
 
-  private build(): Challenge {
+  public static createWithHabitId(habitId: string): Challenge {
+    return new ChallengeMother().build(habitId)
+  }
+
+  private build(habitId?: string): Challenge {
     return Challenge.create(
-      uuidv4(),
+      habitId || uuidv4(),
       this.description,
       this.habitRepetitionTimes,
       new Date(),
