@@ -73,15 +73,6 @@ export class Habit extends AggregateRoot {
     )
   }
 
-  public cancel(): void {
-    this.modifyStatus(HabitStatus.CANCELLED)
-    this.apply(HabitCancelledEvent.createFromHabitId(this.id))
-  }
-
-  public modifyStatus(status: HabitStatus): void {
-    this.status = status
-  }
-
   get idValue(): string {
     return this.id.value
   }
@@ -149,6 +140,15 @@ export class Habit extends AggregateRoot {
 
     const reminder = Reminder.create(habitId, message, status, time)
     this.reminders.push(reminder)
+  }
+
+  public cancel(): void {
+    this.modifyStatus(HabitStatus.CANCELLED)
+    this.apply(HabitCancelledEvent.createFromHabitId(this.id))
+  }
+
+  public modifyStatus(status: HabitStatus): void {
+    this.status = status
   }
 
   private isExistingReminder(time: string): boolean {

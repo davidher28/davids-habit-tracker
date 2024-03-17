@@ -1,3 +1,3 @@
 describe('ProgressCreatedHandler', () => {
-  it('should handle the progress creation', () => {})
+  it('should handle the progress registration', () => {})
 })

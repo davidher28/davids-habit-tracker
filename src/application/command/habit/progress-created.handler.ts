@@ -17,7 +17,7 @@ export class ProgressCreatedHandler
     private readonly publisher: EventPublisher,
   ) {}
 
-  handle(event: ProgressCreatedEvent) {
+  handle(event: ProgressCreatedEvent): void {
     const habitId = HabitId.create(event.habitId)
     const habit = this.habitRepository.findById(habitId)
     if (habit === undefined) {

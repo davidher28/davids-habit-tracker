@@ -3,7 +3,7 @@ import { UserId } from '../user/user.id'
 import { ChallengeId } from './challenge.id'
 
 export class ChallengeCompletedEvent implements IEvent {
-  private constructor(
+  protected constructor(
     public readonly challengeId: string,
     public readonly userId: string,
   ) {}

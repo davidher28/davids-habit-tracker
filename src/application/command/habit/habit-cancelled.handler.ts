@@ -16,7 +16,7 @@ export class HabitCancelledHandler
     private readonly challengeRepository: ChallengeRepository,
   ) {}
 
-  handle(event: HabitCancelledEvent) {
+  handle(event: HabitCancelledEvent): void {
     const habitId = HabitId.create(event.habitId)
     const habit = this.habitRepository.findById(habitId)
     if (habit === undefined) {

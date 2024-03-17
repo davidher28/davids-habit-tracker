@@ -60,6 +60,10 @@ export class User extends AggregateRoot {
     return this.fullName.value
   }
 
+  get getAchievements(): Achievement[] {
+    return this.achievements
+  }
+
   public addAchievement(challengeId: string, achievementDate: Date): void {
     const achievement = Achievement.create(
       challengeId,
