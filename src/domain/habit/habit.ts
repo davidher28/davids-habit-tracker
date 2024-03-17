@@ -119,7 +119,7 @@ export class Habit extends AggregateRoot {
     )
     this.progress.push(progress)
 
-    this.apply(ProgressCreatedEvent.createFromProgress(progress))
+    this.apply(ProgressCreatedEvent.createFromHabitId(progress.habitId))
   }
 
   public addReminder(

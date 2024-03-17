@@ -34,7 +34,6 @@ describe('HabitCancelledHandler', () => {
     handler.handle(event)
 
     // Then
-    const updatedChallenge = challengeRepository.findByHabitId(habit.id)[0]
-    expect(updatedChallenge.getStatus).toBe(ChallengeStatus.CANCELLED)
+    expect(challenge.getStatus).toBe(ChallengeStatus.CANCELLED)
   })
 })

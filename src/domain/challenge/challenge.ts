@@ -80,7 +80,7 @@ export class Challenge extends AggregateRoot {
     this.status = status
   }
 
-  public addProgress(userId: UserId): void {
+  public registerProgress(userId: UserId): void {
     if (!this.isPending()) {
       return
     }

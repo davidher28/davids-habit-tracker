@@ -27,7 +27,7 @@ export class ProgressCreatedHandler
     const challenges = this.challengeRepository.findPendingByHabitId(habitId)
     challenges.forEach((challenge) => {
       const challengeRoot = this.publisher.mergeObjectContext(challenge)
-      challengeRoot.addProgress(habit.userId)
+      challengeRoot.registerProgress(habit.userId)
     })
   }
 }
