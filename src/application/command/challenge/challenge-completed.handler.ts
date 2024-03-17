@@ -20,6 +20,6 @@ export class ChallengeCompletedHandler
       throw UserNotFoundError.withId(userId.value)
     }
 
-    user.addAchievement(event.challengeId, event.userId, new Date())
+    user.addAchievement(event.challengeId, new Date())
   }
 }

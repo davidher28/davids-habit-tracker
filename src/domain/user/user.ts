@@ -60,12 +60,12 @@ export class User extends AggregateRoot {
     return this.fullName.value
   }
 
-  public addAchievement(
-    challengeId: string,
-    userId: string,
-    achievementDate: Date,
-  ): void {
-    const achievement = Achievement.create(challengeId, userId, achievementDate)
+  public addAchievement(challengeId: string, achievementDate: Date): void {
+    const achievement = Achievement.create(
+      challengeId,
+      this.idValue,
+      achievementDate,
+    )
     this.achievements.push(achievement)
   }
 }

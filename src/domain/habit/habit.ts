@@ -12,9 +12,17 @@ import { ReminderLimitError } from './reminder.limit.error'
 import { WearableService } from '../shared/wearable.service'
 import { ReminderAlreadyExistsError } from './reminder.already-exists.error'
 
+export enum HabitStatus {
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED',
+  EXPIRED = 'EXPIRED',
+}
+
 export class Habit extends AggregateRoot {
   private readonly createdAt: Date
   private updatedAt: Date
+  private status: HabitStatus
 
   readonly progress: Progress[] = []
   readonly reminders: Reminder[] = []
@@ -37,6 +45,7 @@ export class Habit extends AggregateRoot {
     this.schedule = schedule
     this.userId = userId
     this.wearableDeviceId = wearableDeviceId
+    this.status = HabitStatus.PENDING
     this.createdAt = new Date()
     this.updatedAt = new Date()
   }
@@ -64,7 +73,11 @@ export class Habit extends AggregateRoot {
   }
 
   public cancel(): void {
-    // do nothing
+    this.modifyStatus(HabitStatus.CANCELLED)
+  }
+
+  public modifyStatus(status: HabitStatus): void {
+    this.status = status
   }
 
   get idValue(): string {
