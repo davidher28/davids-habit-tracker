@@ -4,17 +4,21 @@ import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-
 import { CreateChallengeCommand } from './create-challenge.command'
 import { Habit } from '../../../domain'
 import { HabitMother } from '../../../../test/habit/habit.mother'
-import { HabitNotFoundError } from './habit.not-found.error'
+import { HabitNotFoundError } from '../habit/habit.not-found.error'
+import { InMemoryChallengeRepository } from '../../../infrastructure/challenge/challenge.in-memory.repository'
+import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
 
 describe('CreateChallengeHandler', () => {
   let habit: Habit
   let habitRepository: HabitRepository
+  let challengeRepository: ChallengeRepository
   let handler: CreateChallengeHandler
 
   beforeEach(async () => {
     habit = HabitMother.create()
     habitRepository = new InMemoryHabitRepository()
-    handler = new CreateChallengeHandler(habitRepository)
+    challengeRepository = new InMemoryChallengeRepository()
+    handler = new CreateChallengeHandler(habitRepository, challengeRepository)
   })
 
   it('should create a challenge', async () => {
@@ -37,7 +41,7 @@ describe('CreateChallengeHandler', () => {
     await handler.execute(command)
 
     // Then
-    expect(habit.getChallenges.length).toBe(1)
+    expect(challengeRepository.findByHabitId(habit.id).length).toBe(1)
   })
 
   it('should throw an error if the habit does not exist', async () => {

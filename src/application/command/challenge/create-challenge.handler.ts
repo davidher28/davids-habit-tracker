@@ -1,9 +1,10 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
-import { HabitNotFoundError } from './habit.not-found.error'
-import { HabitId } from '../../../domain'
+import { HabitNotFoundError } from '../habit/habit.not-found.error'
+import { Challenge, HabitId } from '../../../domain'
 import { CreateChallengeCommand } from './create-challenge.command'
+import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
 
 @CommandHandler(CreateChallengeCommand)
 export class CreateChallengeHandler
@@ -11,21 +12,23 @@ export class CreateChallengeHandler
 {
   constructor(
     @Inject(HabitRepository) private readonly habitRepository: HabitRepository,
+    @Inject(ChallengeRepository)
+    private readonly challengeRepository: ChallengeRepository,
   ) {}
 
   async execute(command: CreateChallengeCommand): Promise<void> {
     const habitId = HabitId.create(command.habitId)
-    const habit = this.habitRepository.findById(habitId)
-    if (habit === undefined) {
+    if (!this.habitRepository.isExistingHabit(habitId)) {
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    habit.addChallenge(
+    const challenge = Challenge.create(
       command.habitId,
       command.description,
       command.habitTimes,
       command.startDate,
       command.endDate,
     )
+    this.challengeRepository.save(challenge)
   }
 }

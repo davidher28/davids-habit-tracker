@@ -6,18 +6,14 @@ import { UUId } from '../shared/uuid'
 import { AggregateRoot } from '@nestjs/cqrs'
 
 export class User extends AggregateRoot {
-  readonly id: UserId
-  readonly userName: UserName
-  email: UserEmail
-  readonly fullName: UserFullName
-  readonly createdAt: Date
-  updatedAt: Date
+  private readonly createdAt: Date
+  private updatedAt: Date
 
   private constructor(
-    id: UserId,
-    userName: UserName,
-    email: UserEmail,
-    fullName: UserFullName,
+    readonly id: UserId,
+    readonly userName: UserName,
+    readonly email: UserEmail,
+    readonly fullName: UserFullName,
   ) {
     super()
     this.autoCommit = true

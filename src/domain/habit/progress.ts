@@ -5,17 +5,12 @@ import { ProgressObservations } from './progress.observations'
 import { UUId } from '../shared/uuid'
 
 export class Progress {
-  private readonly id: ProgressId
-  private readonly progressDate: ProgressDate
-  private readonly observations: ProgressObservations
-  private readonly validated: boolean
-
   private constructor(
-    id: ProgressId,
+    readonly id: ProgressId,
     readonly habitId: HabitId,
-    progressDate: ProgressDate,
-    observations: ProgressObservations,
-    validated: boolean,
+    readonly progressDate: ProgressDate,
+    readonly observations: ProgressObservations,
+    readonly validated: boolean,
   ) {
     this.id = id
     this.habitId = habitId

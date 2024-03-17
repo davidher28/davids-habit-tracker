@@ -2,9 +2,9 @@ import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { CreateChallengeDTO } from './create-challenge.dto'
-import { CreateChallengeCommand } from '../../../application/command/habit/create-challenge.command'
+import { CreateChallengeCommand } from '../../../application/command/challenge/create-challenge.command'
 
-@Controller('habits')
+@Controller('challenges')
 export class CreateChallengeController {
   private readonly logger = new Logger(CreateChallengeController.name)
 
@@ -13,7 +13,7 @@ export class CreateChallengeController {
 
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Post('challenges')
+  @Post()
   async createChallenge(
     @Body() request: CreateChallengeDTO,
     @Res() response: Response,

@@ -29,7 +29,7 @@ export { InvalidProgressObservationsError } from './habit/invalid-progress.obser
 export { ProgressId } from './habit/progress.id'
 
 // Challenge
-export { ChallengeId } from './habit/challenge.id'
+export { ChallengeId } from './challenge/challenge.id'
 
 // Reminder
 export { ReminderId } from './habit/reminder.id'
@@ -38,7 +38,7 @@ export { ReminderId } from './habit/reminder.id'
 export { User } from './user/user'
 export { Habit } from './habit/habit'
 export { Progress } from './habit/progress'
-export { Challenge } from './habit/challenge'
+export { Challenge } from './challenge/challenge'
 export { Reminder } from './habit/reminder'
 
 // -------------------- Events -------------------- //

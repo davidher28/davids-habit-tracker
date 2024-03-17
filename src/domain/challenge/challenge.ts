@@ -1,7 +1,8 @@
-import { HabitId } from './habit.id'
+import { HabitId } from '../habit/habit.id'
 import { ChallengeId } from './challenge.id'
 import { UUId } from '../shared/uuid'
 import { ChallengeDescription } from './challenge.description'
+import { AggregateRoot } from '@nestjs/cqrs'
 
 export enum ChallengeStatus {
   PENDING = 'PENDING',
@@ -10,30 +11,26 @@ export enum ChallengeStatus {
   EXPIRED = 'EXPIRED',
 }
 
-export class Challenge {
-  readonly id: ChallengeId
-  readonly habitId: HabitId
-  readonly description: ChallengeDescription
-  readonly habitTimes: number
-  recordedTimes: number
-  status: ChallengeStatus
-  readonly startDate: Date
-  readonly endDate: Date
+export class Challenge extends AggregateRoot {
+  private habitRemainingRepetitionTimes: number
+  private status: ChallengeStatus
 
   private constructor(
-    id: ChallengeId,
-    habitId: HabitId,
-    challengeDescription: ChallengeDescription,
-    habitTimes: number,
-    status: ChallengeStatus,
-    startDate: Date,
-    endDate: Date,
+    readonly id: ChallengeId,
+    readonly habitId: HabitId,
+    readonly description: ChallengeDescription,
+    readonly habitRepetitionTimes: number,
+    readonly startDate: Date,
+    readonly endDate: Date,
   ) {
+    super()
+    this.autoCommit = true
     this.id = id
     this.habitId = habitId
-    this.description = challengeDescription
-    this.habitTimes = habitTimes
-    this.status = status
+    this.description = description
+    this.habitRepetitionTimes = habitRepetitionTimes
+    this.habitRemainingRepetitionTimes = habitRepetitionTimes
+    this.status = ChallengeStatus.PENDING
     this.startDate = startDate
     this.endDate = endDate
   }
@@ -53,7 +50,6 @@ export class Challenge {
       HabitId.create(habitId),
       ChallengeDescription.create(description),
       habitTimes,
-      ChallengeStatus.PENDING,
       startDate,
       endDate,
     )
@@ -63,11 +59,15 @@ export class Challenge {
     return this.id.value
   }
 
+  public cancel(): void {
+    // TODO: Cancel the challenge
+  }
+
   public registerProgress(): void {
     if (!this.isPending()) {
       return
     }
-    this.increaseRecordedTimes()
+    this.decreaseRecordedTimes()
     this.updateStatus()
   }
 
@@ -80,7 +80,7 @@ export class Challenge {
   }
 
   public hasReachedTheGoal(): boolean {
-    return this.recordedTimes === this.habitTimes
+    return this.habitRemainingRepetitionTimes === 0
   }
 
   private updateStatus(): void {
@@ -93,8 +93,8 @@ export class Challenge {
     }
   }
 
-  private increaseRecordedTimes(): void {
-    this.recordedTimes++
+  private decreaseRecordedTimes(): void {
+    this.habitRemainingRepetitionTimes--
   }
 
   private modifyStatus(status: ChallengeStatus): void {

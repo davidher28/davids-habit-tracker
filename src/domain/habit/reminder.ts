@@ -9,18 +9,12 @@ export enum ReminderStatus {
 }
 
 export class Reminder {
-  readonly id: ReminderId
-  readonly habitId: HabitId
-  readonly message: string
-  readonly status: ReminderStatus
-  readonly time: ReminderTime
-
   private constructor(
-    id: ReminderId,
-    habitId: HabitId,
-    message: string,
-    status: ReminderStatus,
-    time: ReminderTime,
+    readonly id: ReminderId,
+    readonly habitId: HabitId,
+    readonly message: string,
+    readonly status: ReminderStatus,
+    readonly time: ReminderTime,
   ) {
     this.id = id
     this.habitId = habitId
@@ -45,10 +39,6 @@ export class Reminder {
       status,
       ReminderTime.create(time),
     )
-  }
-
-  get habitIdValue(): string {
-    return this.habitId.value
   }
 
   get timeValue(): string {

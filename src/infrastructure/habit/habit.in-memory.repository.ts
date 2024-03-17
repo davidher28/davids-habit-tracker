@@ -1,6 +1,8 @@
 import { HabitRepository } from '../../domain/habit/habit.repository'
 import { Habit, HabitId, HabitName, UserId } from '../../domain'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class InMemoryHabitRepository implements HabitRepository {
   private habits: Habit[] = []
 
