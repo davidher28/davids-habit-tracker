@@ -2,7 +2,7 @@ import { Controller, HttpStatus, Logger, Param, Put, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { CancelChallengeDTO } from './cancel-challenge.dto'
-import { CancelChallengeCommand } from '../../../application/command/challenge/cancel-challenge.command'
+import { CancelChallengeCommand } from '../../application/command/challenge/cancel-challenge.command'
 
 @Controller('challenges')
 export class CancelChallengeController {

@@ -1,5 +1,5 @@
 import { IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator'
-import { ReminderStatus } from '../../../domain/habit/reminder'
+import { ReminderStatus } from '../../domain/habit/reminder'
 
 export class CreateReminderDTO {
   @IsString({ message: 'Habit Id must be a string.' })

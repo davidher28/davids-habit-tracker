@@ -1,4 +1,4 @@
-import { BaseError } from '../../api/base.error'
+import { BaseError } from '../../api/shared/base.error'
 import { HttpStatus } from '@nestjs/common'
 
 export class ChallengeUnableToCancelError extends BaseError {

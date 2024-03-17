@@ -1,9 +1,9 @@
 import { Controller, Get, HttpStatus, Logger, Param, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { QueryBus } from '@nestjs/cqrs'
-import { GetHabitsQuery } from '../../../application/query/habit/get-habits.query'
-import { GetHabitsDTO } from '../../../application/query/habit/get-habits.dto'
-import { Habit } from '../../../domain'
+import { GetHabitsQuery } from '../../application/query/habit/get-habits.query'
+import { GetHabitsDTO } from '../../application/query/habit/get-habits.dto'
+import { Habit } from '../../domain'
 
 @Controller('habits')
 export class GetHabitsController {

@@ -6,7 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator'
-import { Frequency } from '../../../domain/habit/habit.schedule'
+import { Frequency } from '../../domain/habit/habit.schedule'
 
 export class CreateHabitDTO {
   @IsString({ message: 'Habit name must be a string.' })

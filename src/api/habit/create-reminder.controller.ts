@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
-import { CreateReminderCommand } from '../../../application/command/habit/create-reminder.command'
+import { CreateReminderCommand } from '../../application/command/habit/create-reminder.command'
 import { CreateReminderDTO } from './create-reminder.dto'
 
 @Controller('habits')

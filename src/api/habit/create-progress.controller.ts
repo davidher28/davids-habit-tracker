@@ -2,7 +2,7 @@ import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { CreateProgressDTO } from './create-progress.dto'
-import { CreateProgressCommand } from '../../../application/command/habit/create-progress.command'
+import { CreateProgressCommand } from '../../application/command/habit/create-progress.command'
 
 @Controller('habits')
 export class CreateProgressController {

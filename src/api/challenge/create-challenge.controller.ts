@@ -2,7 +2,7 @@ import { Body, Controller, HttpStatus, Logger, Post, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { CreateChallengeDTO } from './create-challenge.dto'
-import { CreateChallengeCommand } from '../../../application/command/challenge/create-challenge.command'
+import { CreateChallengeCommand } from '../../application/command/challenge/create-challenge.command'
 
 @Controller('challenges')
 export class CreateChallengeController {

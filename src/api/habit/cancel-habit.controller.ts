@@ -2,7 +2,7 @@ import { Controller, HttpStatus, Logger, Param, Put, Res } from '@nestjs/common'
 import { Response } from 'express'
 import { CommandBus } from '@nestjs/cqrs'
 import { CancelHabitDTO } from './cancel-habit.dto'
-import { CancelHabitCommand } from '../../../application/command/habit/cancel-habit.command'
+import { CancelHabitCommand } from '../../application/command/habit/cancel-habit.command'
 
 @Controller('habits')
 export class CancelHabitController {

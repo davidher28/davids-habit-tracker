@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import { BaseErrorFilter } from './api/base.filter'
+import { BaseErrorFilter } from './api/shared/base.filter'
 
 const APP_PORT = 3010
 
