@@ -1,10 +1,17 @@
 import { IEvent } from '@nestjs/cqrs'
 import { UserId } from '../user/user.id'
+import { ChallengeId } from './challenge.id'
 
 export class ChallengeCompletedEvent implements IEvent {
-  private constructor(public readonly userId: string) {}
+  private constructor(
+    public readonly challengeId: string,
+    public readonly userId: string,
+  ) {}
 
-  public static createWithUserId(userId: UserId): ChallengeCompletedEvent {
-    return new ChallengeCompletedEvent(userId.value)
+  public static create(
+    challengedId: ChallengeId,
+    userId: UserId,
+  ): ChallengeCompletedEvent {
+    return new ChallengeCompletedEvent(challengedId.value, userId.value)
   }
 }

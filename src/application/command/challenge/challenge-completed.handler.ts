@@ -20,6 +20,6 @@ export class ChallengeCompletedHandler
       throw UserNotFoundError.withId(userId.value)
     }
 
-    // TODO: Create achievement
+    user.addAchievement(event.challengeId, event.userId, new Date())
   }
 }

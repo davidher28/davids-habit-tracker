@@ -80,7 +80,7 @@ export class Challenge extends AggregateRoot {
     if (!this.isPending()) {
       return
     }
-    this.updateStatus(userId)
+    this.registerChallengeProgress(userId)
   }
 
   public isPending(): boolean {
@@ -102,17 +102,16 @@ export class Challenge extends AggregateRoot {
     )
   }
 
-  private updateStatus(userId: UserId): void {
-    this.decreaseRecordedTimes()
-
+  private registerChallengeProgress(userId: UserId): void {
     if (this.isExceededDate()) {
       this.modifyStatus(ChallengeStatus.EXPIRED)
       return
     }
 
+    this.decreaseRecordedTimes()
     if (this.hasReachedTheGoal()) {
       this.modifyStatus(ChallengeStatus.COMPLETED)
-      this.apply(ChallengeCompletedEvent.createWithUserId(userId))
+      this.apply(ChallengeCompletedEvent.create(this.id, userId))
     }
   }
 
