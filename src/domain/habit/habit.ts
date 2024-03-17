@@ -11,6 +11,7 @@ import { UUId } from '../shared/uuid'
 import { ReminderLimitError } from './reminder.limit.error'
 import { WearableService } from '../shared/wearable.service'
 import { ReminderAlreadyExistsError } from './reminder.already-exists.error'
+import { HabitCancelledEvent } from './habit-cancelled.event'
 
 export enum HabitStatus {
   PENDING = 'PENDING',
@@ -74,6 +75,7 @@ export class Habit extends AggregateRoot {
 
   public cancel(): void {
     this.modifyStatus(HabitStatus.CANCELLED)
+    this.apply(HabitCancelledEvent.createFromHabitId(this.id))
   }
 
   public modifyStatus(status: HabitStatus): void {

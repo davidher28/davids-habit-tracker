@@ -1,4 +1,4 @@
-import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
+import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs'
 import { Inject } from '@nestjs/common'
 import { Habit, HabitId } from '../../../domain'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
@@ -10,6 +10,7 @@ export class CancelHabitHandler implements ICommandHandler<CancelHabitCommand> {
   constructor(
     @Inject(HabitRepository)
     private readonly habitRepository: HabitRepository,
+    private readonly publisher: EventPublisher,
   ) {}
 
   async execute(command: CancelHabitCommand): Promise<void> {
@@ -19,6 +20,7 @@ export class CancelHabitHandler implements ICommandHandler<CancelHabitCommand> {
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    habit.cancel()
+    const habitRoot = this.publisher.mergeObjectContext(habit)
+    habitRoot.cancel()
   }
 }
