@@ -4,6 +4,8 @@ import { UUId } from '../shared/uuid'
 import { ChallengeDescription } from './challenge.description'
 import { AggregateRoot } from '@nestjs/cqrs'
 import { ChallengeUnableToCancelError } from './challenge.unable-to-cancel.error'
+import { ChallengeCompletedEvent } from './challenge-completed.event'
+import { UserId } from '../user/user.id'
 
 export enum ChallengeStatus {
   PENDING = 'PENDING',
@@ -39,7 +41,7 @@ export class Challenge extends AggregateRoot {
   public static create(
     habitId: string,
     description: string,
-    habitTimes: number,
+    habitRepetitionTimes: number,
     startDate: Date,
     endDate: Date,
   ): Challenge {
@@ -50,7 +52,7 @@ export class Challenge extends AggregateRoot {
       challengeId,
       HabitId.create(habitId),
       ChallengeDescription.create(description),
-      habitTimes,
+      habitRepetitionTimes,
       startDate,
       endDate,
     )
@@ -63,7 +65,7 @@ export class Challenge extends AggregateRoot {
   public cancel(): void {
     if (!this.isCancellable()) {
       throw ChallengeUnableToCancelError.withMessage(
-        'Challenge cannot be canceled as it is not in a cancellable status.',
+        'Challenge cannot be canceled as it is in a non-cancellable status.',
       )
     }
 
@@ -74,12 +76,11 @@ export class Challenge extends AggregateRoot {
     this.status = status
   }
 
-  public registerProgress(): void {
+  public addProgress(userId: UserId): void {
     if (!this.isPending()) {
       return
     }
-    this.decreaseRecordedTimes()
-    this.updateStatus()
+    this.updateStatus(userId)
   }
 
   public isPending(): boolean {
@@ -101,13 +102,17 @@ export class Challenge extends AggregateRoot {
     )
   }
 
-  private updateStatus(): void {
-    if (this.isPending() && this.isExceededDate()) {
+  private updateStatus(userId: UserId): void {
+    this.decreaseRecordedTimes()
+
+    if (this.isExceededDate()) {
       this.modifyStatus(ChallengeStatus.EXPIRED)
+      return
     }
 
-    if (this.isPending() && this.hasReachedTheGoal()) {
+    if (this.hasReachedTheGoal()) {
       this.modifyStatus(ChallengeStatus.COMPLETED)
+      this.apply(ChallengeCompletedEvent.createWithUserId(userId))
     }
   }
 

@@ -4,10 +4,13 @@ import { UserEmail } from './user.email'
 import { UserFullName } from './user.fullname'
 import { UUId } from '../shared/uuid'
 import { AggregateRoot } from '@nestjs/cqrs'
+import { Achievement } from './achievement'
 
 export class User extends AggregateRoot {
   private readonly createdAt: Date
   private updatedAt: Date
+
+  readonly achievements: Achievement[] = []
 
   private constructor(
     readonly id: UserId,

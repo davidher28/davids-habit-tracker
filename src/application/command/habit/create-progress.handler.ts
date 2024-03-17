@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { CreateProgressCommand } from './create-progress.command'
 import { HabitNotFoundError } from './habit.not-found.error'
-import { Habit, HabitId } from '../../../domain'
+import { HabitId } from '../../../domain'
 import { WearableService } from '../../../domain/shared/wearable.service'
 
 @CommandHandler(CreateProgressCommand)
@@ -18,14 +18,13 @@ export class CreateProgressHandler
 
   async execute(command: CreateProgressCommand): Promise<void> {
     const habitId = HabitId.create(command.habitId)
-    let habit: Habit = this.habitRepository.findById(habitId)
+    const habit = this.habitRepository.findById(habitId)
     if (habit === undefined) {
       throw HabitNotFoundError.withId(habitId.value)
     }
 
-    // Enable events publication
-    habit = this.publisher.mergeObjectContext(habit)
-    habit.addProgress(
+    const habitRoot = this.publisher.mergeObjectContext(habit)
+    habitRoot.addProgress(
       command.habitId,
       command.progressDate,
       command.observations,

@@ -3,7 +3,7 @@ import { Challenge } from '../../src/domain'
 
 export class ChallengeMother {
   private description: string = Math.random().toString().substring(10)
-  private habitTimes: number = Math.random()
+  private habitRepetitionTimes: number = Math.random()
 
   public static create(): Challenge {
     return new ChallengeMother().build()
@@ -13,7 +13,7 @@ export class ChallengeMother {
     return Challenge.create(
       uuidv4(),
       this.description,
-      this.habitTimes,
+      this.habitRepetitionTimes,
       new Date(),
       new Date(),
     )

@@ -25,7 +25,7 @@ export class CreateChallengeHandler
     const challenge = Challenge.create(
       command.habitId,
       command.description,
-      command.habitTimes,
+      command.habitRepetitionTimes,
       command.startDate,
       command.endDate,
     )

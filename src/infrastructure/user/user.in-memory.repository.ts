@@ -15,6 +15,10 @@ export class InMemoryUserRepository implements UserRepository {
     this.users.push(user)
   }
 
+  public findById(id: UserId): User | undefined {
+    return this.users.find((user) => user.id.equals(id))
+  }
+
   public findByUserName(userName: UserName): User | undefined {
     return this.users.find((user) => user.userName.equals(userName))
   }
