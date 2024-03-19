@@ -1,6 +1,6 @@
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
-import { HabitMother } from '../../../../test/habit/habit.mother'
+import { HabitMother } from '../../../../../test/habit/habit.mother'
 import { CreateReminderHandler } from './create-reminder.handler'
 import { CreateReminderCommand } from './create-reminder.command'
 import { HabitNotFoundError } from './habit.not-found.error'

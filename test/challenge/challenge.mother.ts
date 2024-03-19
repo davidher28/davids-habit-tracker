@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { Challenge } from '../../src/domain/challenge/challenge'
+import { Challenge } from '../../src/core/domain/challenge/challenge'
 
 export class ChallengeMother {
   private description: string = Math.random().toString().substring(10)

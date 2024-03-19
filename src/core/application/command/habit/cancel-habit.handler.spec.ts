@@ -4,7 +4,7 @@ import { CancelHabitCommand } from './cancel-habit.command'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { EventPublisher } from '@nestjs/cqrs'
-import { HabitMother } from '../../../../test/habit/habit.mother'
+import { HabitMother } from '../../../../../test/habit/habit.mother'
 import { Habit } from '../../../domain/habit/habit'
 import { UUId } from '../../../domain/shared/uuid'
 

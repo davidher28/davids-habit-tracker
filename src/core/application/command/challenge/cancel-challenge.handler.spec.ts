@@ -3,7 +3,7 @@ import { ChallengeRepository } from '../../../domain/challenge/challenge.reposit
 import { InMemoryChallengeRepository } from '../../../infrastructure/challenge/challenge.in-memory.repository'
 import { CancelChallengeCommand } from './cancel-challenge.command'
 import { ChallengeNotFoundError } from '../../../domain/challenge/challenge.not-found.error'
-import { ChallengeMother } from '../../../../test/challenge/challenge.mother'
+import { ChallengeMother } from '../../../../../test/challenge/challenge.mother'
 import { Challenge, ChallengeStatus } from '../../../domain/challenge/challenge'
 import { ChallengeUnableToCancelError } from '../../../domain/challenge/challenge.unable-to-cancel.error'
 import { UUId } from '../../../domain/shared/uuid'

@@ -4,10 +4,10 @@ import { HabitCancelledHandler } from './habit-cancelled.handler'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
 import { InMemoryChallengeRepository } from '../../../infrastructure/challenge/challenge.in-memory.repository'
-import { HabitMother } from '../../../../test/habit/habit.mother'
+import { HabitMother } from '../../../../../test/habit/habit.mother'
 import { HabitCancelledEvent } from '../../../domain/habit/habit-cancelled.event'
 import { Challenge, ChallengeStatus } from '../../../domain/challenge/challenge'
-import { ChallengeMother } from '../../../../test/challenge/challenge.mother'
+import { ChallengeMother } from '../../../../../test/challenge/challenge.mother'
 
 describe('HabitCancelledHandler', () => {
   let habit: Habit

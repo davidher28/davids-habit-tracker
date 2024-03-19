@@ -1,8 +1,8 @@
-import { User } from 'src/domain/user/user'
 import { UserRepository } from '../../domain/user/user.repository'
 import { Injectable } from '@nestjs/common'
 import { UserId } from '../../domain/user/user.id'
 import { UserName } from '../../domain/user/user.username'
+import { User } from '../../domain/user/user'
 
 @Injectable()
 export class InMemoryUserRepository implements UserRepository {

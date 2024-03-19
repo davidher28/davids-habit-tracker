@@ -1,7 +1,7 @@
 import { CreateUserCommand } from './create-user.command'
 import { CreateUserHandler } from './create-user.handler'
 import { InMemoryUserRepository } from '../../../infrastructure/user/user.in-memory.repository'
-import { UserMother } from '../../../../test/user/user.mother'
+import { UserMother } from '../../../../../test/user/user.mother'
 import { UserAlreadyExistsError } from './user.already-exists.error'
 import { InvalidFullNameError } from '../../../domain/user/invalid-user.fullname'
 import { InvalidUserEmailError } from '../../../domain/user/invalid-user.email'

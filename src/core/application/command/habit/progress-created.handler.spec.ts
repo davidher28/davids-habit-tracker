@@ -1,13 +1,13 @@
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { ChallengeRepository } from '../../../domain/challenge/challenge.repository'
 import { Habit } from '../../../domain/habit/habit'
-import { HabitMother } from '../../../../test/habit/habit.mother'
+import { HabitMother } from '../../../../../test/habit/habit.mother'
 import { InMemoryHabitRepository } from '../../../infrastructure/habit/habit.in-memory.repository'
 import { InMemoryChallengeRepository } from '../../../infrastructure/challenge/challenge.in-memory.repository'
 import { ProgressCreatedEvent } from '../../../domain/habit/progress-created.event'
 import { ProgressCreatedHandler } from './progress-created.handler'
 import { EventPublisher } from '@nestjs/cqrs'
-import { ChallengeMother } from '../../../../test/challenge/challenge.mother'
+import { ChallengeMother } from '../../../../../test/challenge/challenge.mother'
 import { Challenge, ChallengeStatus } from '../../../domain/challenge/challenge'
 
 describe('ProgressCreatedHandler', () => {
