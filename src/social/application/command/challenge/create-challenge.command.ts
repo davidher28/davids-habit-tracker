@@ -1,5 +1,6 @@
 export class CreateChallengeCommand {
   constructor(
+    public readonly challengeId: string,
     public readonly habitId: string,
     public readonly target: number,
     public readonly partner: string,

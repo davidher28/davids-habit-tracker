@@ -24,7 +24,7 @@ export class CreateChallengeHandler
     }
 
     const challenge = Challenge.createStarted(
-      UUId.generate(),
+      command.challengeId || UUId.generate(),
       habitId,
       command.target,
       command.partner,

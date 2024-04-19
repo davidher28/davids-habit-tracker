@@ -1,10 +1,15 @@
-const validStatus = ['PENDING', 'IN_PROGRESS', 'COMPLETED', 'FAILED']
-
 export class ChallengeStatus {
+  private static VALID_STATUS: string[] = [
+    'PENDING',
+    'IN_PROGRESS',
+    'COMPLETED',
+    'FAILED',
+  ]
+
   constructor(readonly value: string) {}
 
   static create(value: string): ChallengeStatus {
-    if (!validStatus.includes(value)) {
+    if (!this.VALID_STATUS.includes(value)) {
       throw new Error(`Invalid challenge status: ${value}`)
     }
 

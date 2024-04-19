@@ -4,15 +4,18 @@ import { ChallengeId } from './challenge-id'
 import { ChallengeStatus } from './challenge.status'
 import { ProgressLoggedEvent } from './progress-logged.event'
 import { UsersAddedEvent } from './users-added.event'
+import { ChallengePartner } from './challenge.partner'
+import { ChallengeProject } from './challenge.project'
+import { ChallengeCost } from './challenge.cost'
 
 export class ChallengeState {
   constructor(
     readonly id: ChallengeId,
     readonly habitId: HabitId,
     readonly target: number,
-    readonly partner: string,
-    readonly project: string,
-    readonly cost: number,
+    readonly partner: ChallengePartner,
+    readonly project: ChallengeProject,
+    readonly cost: ChallengeCost,
     readonly deadline: Date,
     readonly progress: number,
     readonly status: ChallengeStatus,
@@ -24,9 +27,9 @@ export class ChallengeState {
       ChallengeId.empty(),
       HabitId.empty(),
       0,
-      '',
-      '',
-      0,
+      ChallengePartner.empty(),
+      ChallengeProject.empty(),
+      ChallengeCost.empty(),
       new Date(),
       0,
       ChallengeStatus.empty(),
@@ -39,9 +42,9 @@ export class ChallengeState {
       ChallengeId.create(event.payload.challengeId),
       HabitId.create(event.payload.habitId),
       event.payload.target,
-      event.payload.partner,
-      event.payload.project,
-      event.payload.cost,
+      ChallengePartner.create(event.payload.partner),
+      ChallengeProject.create(event.payload.project),
+      ChallengeCost.create(event.payload.cost),
       event.payload.deadline,
       0,
       ChallengeStatus.started(),

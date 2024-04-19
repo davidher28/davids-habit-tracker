@@ -16,20 +16,23 @@ export class Challenge extends EventSourcedEntity {
       this.challengeState = ChallengeState.empty()
     }
   }
+
   protected when(e: DomainEvent): void {
-    switch (e.type) {
-      case ChallengeStartedEvent.TYPE:
-        this.whenChallengeStarted(e as unknown as ChallengeStartedEvent)
-        break
-      case ProgressLoggedEvent.TYPE:
-        this.whenProgressLogged(e as unknown as ProgressLoggedEvent)
-        break
-      case UsersAddedEvent.TYPE:
-        this.whenUsersAdded(e as unknown as UsersAddedEvent)
-        break
-      default:
-        throw new Error('Unknown event type')
+    const eventHandlers: { [key: string]: (event: DomainEvent) => void } = {
+      [ChallengeStartedEvent.TYPE]: (event) =>
+        this.whenChallengeStarted(event as ChallengeStartedEvent),
+      [ProgressLoggedEvent.TYPE]: (event) =>
+        this.whenProgressLogged(event as ProgressLoggedEvent),
+      [UsersAddedEvent.TYPE]: (event) =>
+        this.whenUsersAdded(event as UsersAddedEvent),
     }
+
+    const handler = eventHandlers[e.type]
+    if (!handler) {
+      throw new Error('Unknown event type')
+    }
+
+    handler(e)
   }
 
   private whenChallengeStarted(event: ChallengeStartedEvent) {
@@ -46,9 +49,6 @@ export class Challenge extends EventSourcedEntity {
 
   isPending(): boolean {
     return this.challengeState.isPending()
-  }
-  private hasReachedTheGoal(): boolean {
-    return this.challengeState.hasReachedTheTarget()
   }
 
   static create(stream: Array<DomainEvent>): Challenge {

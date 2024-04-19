@@ -1,5 +1,5 @@
 import { HttpStatus } from '@nestjs/common'
-import { BaseError } from '../../../core/api/shared/base.error'
+import { BaseError } from '../../api/shared/base.error'
 
 export class InvalidUUId extends BaseError {
   constructor(message: string) {
