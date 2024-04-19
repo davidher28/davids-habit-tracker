@@ -1,19 +1,19 @@
-import { Id } from './id'
 import { EventId } from './event.id'
+import { UUId } from './uuid'
 
-type Primitive = string | number | boolean | null | Date
+type Primitive = string | string[] | number | boolean | null | Date
 type Map = { [key: string]: Primitive }
 
 export abstract class DomainEvent<Payload extends Map = Map> {
-  readonly id: Id
-  readonly aggregateId: Id
+  readonly id: UUId
+  readonly aggregateId: UUId
   readonly type: string
   readonly payload: Payload
   readonly occurredAt: Date
   readonly version: number
 
   protected constructor(
-    aggregateId: Id,
+    aggregateId: UUId,
     type: string,
     payload: Payload,
     version: number = 1,

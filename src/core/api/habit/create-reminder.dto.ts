@@ -2,9 +2,9 @@ import { IsEnum, IsNotEmpty, IsString, IsUUID } from 'class-validator'
 import { ReminderStatus } from '../../domain/habit/reminder'
 
 export class CreateReminderDTO {
-  @IsString({ message: 'Habit Id must be a string.' })
-  @IsNotEmpty({ message: 'Habit Id must be a non-empty string.' })
-  @IsUUID('4', { message: 'Habit Id must be a valid UUID.' })
+  @IsString({ message: 'Habit Uuid must be a string.' })
+  @IsNotEmpty({ message: 'Habit Uuid must be a non-empty string.' })
+  @IsUUID('4', { message: 'Habit Uuid must be a valid UUID.' })
   habitId: string
 
   @IsString({ message: 'Message must be a string.' })

@@ -35,12 +35,12 @@ export class CreateHabitDTO {
   })
   restTime: number
 
-  @IsString({ message: 'User Id must be a string.' })
-  @IsNotEmpty({ message: 'User Id must be a non-empty string.' })
-  @IsUUID('4', { message: 'User Id must be a valid UUID.' })
+  @IsString({ message: 'User Uuid must be a string.' })
+  @IsNotEmpty({ message: 'User Uuid must be a non-empty string.' })
+  @IsUUID('4', { message: 'User Uuid must be a valid UUID.' })
   userId: string
 
-  @IsString({ message: 'Wearable Device Id must be a string.' })
+  @IsString({ message: 'Wearable Device Uuid must be a string.' })
   @IsOptional()
   wearableDeviceId?: string
 }
