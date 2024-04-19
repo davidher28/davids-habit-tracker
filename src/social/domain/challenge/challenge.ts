@@ -6,11 +6,12 @@ import { HabitId } from '../habit/habit.id'
 import { DomainEvent } from '../shared/domain.event'
 import { ChallengeId } from './challenge-id'
 import { UsersAddedEvent } from './users-added.event'
+import { AlreadyAttachedUserError } from '../../application/command/challenge/already-attached-user.error'
 
 export class Challenge extends EventSourcedEntity {
   private challengeState: ChallengeState
 
-  private constructor(stream: Array<DomainEvent> = []) {
+  constructor(stream: Array<DomainEvent> = []) {
     super(stream)
     if (stream.length === 0) {
       this.challengeState = ChallengeState.empty()
@@ -30,6 +31,10 @@ export class Challenge extends EventSourcedEntity {
     const handler = eventHandlers[e.type]
     if (!handler) {
       throw new Error('Unknown event type')
+    }
+
+    if (this.challengeState === undefined) {
+      this.challengeState = ChallengeState.empty()
     }
 
     handler(e)
@@ -107,5 +112,14 @@ export class Challenge extends EventSourcedEntity {
         users,
       ),
     )
+  }
+
+  addUsers(users: string[]): void {
+    if (this.challengeState.users.some((user) => users.includes(user))) {
+      throw AlreadyAttachedUserError.withMessage(
+        'User already belongs to the challenge.',
+      )
+    }
+    this.apply(UsersAddedEvent.with(this.challengeState.id, users))
   }
 }

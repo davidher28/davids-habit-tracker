@@ -5,16 +5,13 @@ export abstract class EventSourcedEntity {
   private version: number
 
   protected constructor(stream?: Array<DomainEvent>) {
+    this.version = 0
     if (stream) {
-      stream.forEach((e) => {
-        this.when(e)
+      stream.forEach((event) => {
+        this.when(event)
       })
       this.version = stream.length
-    } else {
-      this.version = 0
     }
-
-    this.appliedEvents = []
   }
 
   protected apply(e: DomainEvent): void {

@@ -49,6 +49,7 @@ describe('CreateChallengeHandler', () => {
     await handler.execute(command)
 
     // Then
+    expect(eventPublisher.publishedEvents.length).toBeGreaterThan(0)
     expect(
       eventPublisher.hasPublishedEvent(
         ChallengeStartedEvent.TYPE,
