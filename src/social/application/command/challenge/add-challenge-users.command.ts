@@ -1,4 +1,4 @@
-export class AddUsersToChallengeCommand {
+export class AddChallengeUsersCommand {
   constructor(
     public readonly challengeId: string,
     public readonly users: string[],

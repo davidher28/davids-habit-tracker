@@ -1,20 +1,20 @@
 import { v4 as uuidv4 } from 'uuid'
 import { InMemoryEventPublisher } from '../../../infrastructure/event-publisher.in-memory'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
-import { AddUsersToChallengeCommand } from './add-users-to-challenge.command'
-import { AddUsersToChallengeHandler } from './add-users-to-challenge.handler'
+import { AddChallengeUsersCommand } from './add-challenge-users.command'
+import { AddChallengeUsersHandler } from './add-challenge-users.handler'
 import { UsersAddedEvent } from '../../../domain/challenge/users-added.event'
 import { UUId } from '../../../domain/shared/uuid'
 import { HabitId } from '../../../domain/habit/habit.id'
 import { Challenge } from '../../../domain/challenge/challenge'
 
-describe('AddUsersToChallengeHandler', () => {
+describe('AddChallengeUsersHandler', () => {
   let eventPublisher: EventPublisher
-  let handler: AddUsersToChallengeHandler
+  let handler: AddChallengeUsersHandler
 
   beforeEach(() => {
     eventPublisher = new InMemoryEventPublisher()
-    handler = new AddUsersToChallengeHandler(eventPublisher)
+    handler = new AddChallengeUsersHandler(eventPublisher)
   })
 
   it('should add users to a challenge', async () => {
@@ -35,7 +35,7 @@ describe('AddUsersToChallengeHandler', () => {
 
     // When
     const addedUsers = [uuidv4(), uuidv4()]
-    const command = new AddUsersToChallengeCommand(challengeId, addedUsers)
+    const command = new AddChallengeUsersCommand(challengeId, addedUsers)
     await handler.execute(command)
 
     // Then
@@ -54,7 +54,7 @@ describe('AddUsersToChallengeHandler', () => {
     const addedUsers = [uuidv4(), uuidv4()]
 
     // When
-    const command = new AddUsersToChallengeCommand(UUId.generate(), addedUsers)
+    const command = new AddChallengeUsersCommand(UUId.generate(), addedUsers)
 
     // Then
     await expect(handler.execute(command)).rejects.toThrow()
@@ -80,7 +80,7 @@ describe('AddUsersToChallengeHandler', () => {
     eventPublisher.publish(challenge.releaseEvents())
 
     // When
-    const command = new AddUsersToChallengeCommand(challengeId, initialUsers)
+    const command = new AddChallengeUsersCommand(challengeId, initialUsers)
 
     // Then
     await expect(handler.execute(command)).rejects.toThrow()

@@ -11,7 +11,7 @@ import { AlreadyAttachedUserError } from '../../application/command/challenge/al
 export class Challenge extends EventSourcedEntity {
   private challengeState: ChallengeState
 
-  constructor(stream: Array<DomainEvent> = []) {
+  protected constructor(stream: Array<DomainEvent> = []) {
     super(stream)
     if (stream.length === 0) {
       this.challengeState = ChallengeState.empty()
