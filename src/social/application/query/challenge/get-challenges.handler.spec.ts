@@ -8,6 +8,8 @@ import { UUId } from '../../../domain/shared/uuid'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
 import { InMemoryEventPublisher } from '../../../infrastructure/shared/event-publisher.in-memory'
 import { ChallengeStartedEvent } from '../../../domain/challenge/challenge-started.event'
+import { UserId } from '../../../domain/user/user.id'
+import { ChallengeNotFoundError } from '../../command/challenge/challenge.not-found.error'
 
 describe('GetChallengesHandler', () => {
   const eventPublisher: EventPublisher = new InMemoryEventPublisher()
@@ -40,5 +42,16 @@ describe('GetChallengesHandler', () => {
 
     // Then
     expect(result).toEqual([challengeId])
+  })
+
+  it('should throw an error when no challenges are found', async () => {
+    // Given
+    const userId = UserId.create(UUId.generate())
+
+    // When
+    const query = new GetChallengesQuery(userId.value)
+
+    // Then
+    await expect(handler.execute(query)).rejects.toThrow(ChallengeNotFoundError)
   })
 })
