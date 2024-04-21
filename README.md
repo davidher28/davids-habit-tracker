@@ -14,7 +14,7 @@ $ npm install
 $ npm run start
 ```
 
-## Running the test suite
+## Running the test suites
 
 ```bash
 $ npm run test
