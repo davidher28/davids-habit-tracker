@@ -22,7 +22,7 @@ export class LogChallengeProgressHandler
     const challengeIds = this.habitChallengesReadModel.handle(habitId)
     if (challengeIds.length === 0) {
       throw ChallengeNotFoundError.withMessage(
-        'No challenges found for habit with id ' + habitId.toString(),
+        'No challenges found for habit with id ' + habitId.value,
       )
     }
 

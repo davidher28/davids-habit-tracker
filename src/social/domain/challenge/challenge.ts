@@ -60,6 +60,10 @@ export class Challenge extends EventSourcedEntity {
     return this.challengeState.deadline < date
   }
 
+  public isCompleted(): boolean {
+    return this.challengeState.hasReachedTheTarget()
+  }
+
   static create(stream: DomainEvent[]): Challenge {
     return new Challenge(stream)
   }
@@ -124,6 +128,7 @@ export class Challenge extends EventSourcedEntity {
         'User already belongs to the challenge.',
       )
     }
+
     this.apply(UsersAddedEvent.with(this.challengeState.id, users))
   }
 

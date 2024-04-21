@@ -13,10 +13,10 @@ export class UsersAddedEvent extends DomainEvent<UsersAddedPayload> {
     super(challengeId, UsersAddedEvent.TYPE, payload)
   }
 
-  static with(challengeId: ChallengeId, users: string[]) {
+  static with(challengeId: ChallengeId, users: string[] = []) {
     return new UsersAddedEvent(challengeId, {
       challengeId: challengeId.value,
-      users,
+      users: users,
     })
   }
 }
