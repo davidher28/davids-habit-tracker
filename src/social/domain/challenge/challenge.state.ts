@@ -1,6 +1,6 @@
 import { HabitId } from '../habit/habit.id'
 import { ChallengeStartedEvent } from './challenge-started.event'
-import { ChallengeId } from './challenge-id'
+import { ChallengeId } from './challenge.id'
 import { ChallengeStatus } from './challenge.status'
 import { ProgressLoggedEvent } from './progress-logged.event'
 import { UsersAddedEvent } from './users-added.event'

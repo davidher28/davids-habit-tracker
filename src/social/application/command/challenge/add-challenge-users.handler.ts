@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs'
 import { AddChallengeUsersCommand } from './add-challenge-users.command'
-import { ChallengeId } from '../../../domain/challenge/challenge-id'
+import { ChallengeId } from '../../../domain/challenge/challenge.id'
 import { ChallengeNotFoundError } from './challenge.not-found.error'
 import { Challenge } from '../../../domain/challenge/challenge'
 

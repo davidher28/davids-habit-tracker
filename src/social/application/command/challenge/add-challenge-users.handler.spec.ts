@@ -6,6 +6,7 @@ import { AddChallengeUsersHandler } from './add-challenge-users.handler'
 import { UsersAddedEvent } from '../../../domain/challenge/users-added.event'
 import { UUId } from '../../../domain/shared/uuid'
 import { HabitId } from '../../../domain/habit/habit.id'
+import { ChallengeId } from '../../../domain/challenge/challenge.id'
 import { Challenge } from '../../../domain/challenge/challenge'
 
 describe('AddChallengeUsersHandler', () => {
@@ -42,8 +43,8 @@ describe('AddChallengeUsersHandler', () => {
     expect(eventPublisher.publishedEvents.length).toBeGreaterThan(0)
     expect(
       eventPublisher.hasPublishedEvent(
+        ChallengeId.create(command.challengeId),
         UsersAddedEvent.TYPE,
-        command.challengeId,
       ),
     ).toBe(true)
   })
@@ -59,7 +60,10 @@ describe('AddChallengeUsersHandler', () => {
     // Then
     await expect(handler.execute(command)).rejects.toThrow()
     expect(
-      eventPublisher.hasPublishedEvent(UsersAddedEvent.TYPE, challengeId),
+      eventPublisher.hasPublishedEvent(
+        ChallengeId.create(challengeId),
+        UsersAddedEvent.TYPE,
+      ),
     ).toBe(false)
   })
 
@@ -85,7 +89,10 @@ describe('AddChallengeUsersHandler', () => {
     // Then
     await expect(handler.execute(command)).rejects.toThrow()
     expect(
-      eventPublisher.hasPublishedEvent(UsersAddedEvent.TYPE, challengeId),
+      eventPublisher.hasPublishedEvent(
+        ChallengeId.create(challengeId),
+        UsersAddedEvent.TYPE,
+      ),
     ).toBe(false)
   })
 })

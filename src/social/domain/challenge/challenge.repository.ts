@@ -1,5 +1,5 @@
 import { Challenge } from './challenge'
-import { ChallengeId } from './challenge-id'
+import { ChallengeId } from './challenge.id'
 
 export interface ChallengeRepository {
   setChallenges(challenges: Challenge[]): void

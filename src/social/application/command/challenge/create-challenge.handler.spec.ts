@@ -9,6 +9,7 @@ import { HabitMother } from '../../../../../test/habit/habit.mother'
 import { Habit } from '../../../../core/domain/habit/habit'
 import { ChallengeStartedEvent } from '../../../domain/challenge/challenge-started.event'
 import { HabitNotFoundError } from './habit.not-found.error'
+import { ChallengeId } from '../../../domain/challenge/challenge.id'
 
 describe('CreateChallengeHandler', () => {
   let habit: Habit
@@ -52,8 +53,8 @@ describe('CreateChallengeHandler', () => {
     expect(eventPublisher.publishedEvents.length).toBeGreaterThan(0)
     expect(
       eventPublisher.hasPublishedEvent(
+        ChallengeId.create(command.challengeId),
         ChallengeStartedEvent.TYPE,
-        command.challengeId,
       ),
     ).toBe(true)
   })

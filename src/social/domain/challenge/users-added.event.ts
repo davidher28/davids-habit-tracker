@@ -1,5 +1,5 @@
 import { DomainEvent } from '../shared/domain.event'
-import { ChallengeId } from './challenge-id'
+import { ChallengeId } from './challenge.id'
 
 export type UsersAddedPayload = {
   readonly challengeId: string

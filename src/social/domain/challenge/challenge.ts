@@ -1,10 +1,10 @@
 import { EventSourcedEntity } from '../shared/event-sourced.entity'
 import { ChallengeStartedEvent } from './challenge-started.event'
-import { ChallengeState } from './challenge-state'
+import { ChallengeState } from './challenge.state'
 import { ProgressLoggedEvent } from './progress-logged.event'
 import { HabitId } from '../habit/habit.id'
 import { DomainEvent } from '../shared/domain.event'
-import { ChallengeId } from './challenge-id'
+import { ChallengeId } from './challenge.id'
 import { UsersAddedEvent } from './users-added.event'
 import { AlreadyAttachedUserError } from '../../application/command/challenge/already-attached-user.error'
 

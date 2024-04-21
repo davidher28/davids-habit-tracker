@@ -9,13 +9,15 @@ export class InMemoryEventPublisher implements EventPublisher {
     this.publishedEvents = [...this.publishedEvents, ...events]
   }
 
-  hasPublishedEvent(type: string, aggregateId: string): boolean {
+  hasPublishedEvent(aggregateId: UUId, type: string): boolean {
     return this.publishedEvents.some(
-      (event) => event.type === type && event.aggregateId.value === aggregateId,
+      (event) => event.type === type && event.aggregateId.equals(aggregateId),
     )
   }
 
-  findByAggregateId(id: UUId): DomainEvent[] {
-    return this.publishedEvents.filter((event) => event.aggregateId.equals(id))
+  findByAggregateId(aggregateId: UUId): DomainEvent[] {
+    return this.publishedEvents.filter((event) =>
+      event.aggregateId.equals(aggregateId),
+    )
   }
 }
