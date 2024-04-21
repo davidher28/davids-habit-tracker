@@ -18,7 +18,7 @@ export class GetChallengesHandler
     const challengeIds = this.userChallengesReadModel.handle(userId)
     if (challengeIds.length === 0) {
       throw ChallengeNotFoundError.withMessage(
-        'No challenges found for user with id ' + userId.toString(),
+        'No challenges found for user with id ' + userId.value,
       )
     }
 

@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { InMemoryEventPublisher } from '../../../infrastructure/shared/event-publisher.in-memory'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
 import { AddChallengeUsersCommand } from './add-challenge-users.command'
@@ -25,7 +24,7 @@ describe('AddChallengeUsersHandler', () => {
   it('should add users to a challenge', async () => {
     // Given
     const challengeId = UUId.generate()
-    const initialUsers = [uuidv4()]
+    const initialUsers = [UUId.generate()]
     const challenge = Challenge.createStarted(
       challengeId,
       HabitId.create(UUId.generate()),
@@ -39,7 +38,7 @@ describe('AddChallengeUsersHandler', () => {
     eventPublisher.publish(challenge.releaseEvents())
 
     // When
-    const addedUsers = [uuidv4(), uuidv4()]
+    const addedUsers = [UUId.generate(), UUId.generate()]
     const command = new AddChallengeUsersCommand(challengeId, addedUsers)
     await handler.execute(command)
 
@@ -56,7 +55,7 @@ describe('AddChallengeUsersHandler', () => {
   it('should throw an error if the challenge does not exist', async () => {
     // Given
     const challengeId = UUId.generate()
-    const addedUsers = [uuidv4(), uuidv4()]
+    const addedUsers = [UUId.generate(), UUId.generate()]
 
     // When
     const command = new AddChallengeUsersCommand(UUId.generate(), addedUsers)
@@ -74,7 +73,7 @@ describe('AddChallengeUsersHandler', () => {
   it('should throw an error if the users are already in the challenge', async () => {
     // Given
     const challengeId = UUId.generate()
-    const initialUsers = [uuidv4(), uuidv4()]
+    const initialUsers = [UUId.generate(), UUId.generate()]
     const challenge = Challenge.createStarted(
       challengeId,
       HabitId.create(UUId.generate()),

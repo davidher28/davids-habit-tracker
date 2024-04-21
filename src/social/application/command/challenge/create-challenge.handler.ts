@@ -18,10 +18,12 @@ export class CreateChallengeHandler
     @Inject(HabitRepository) private readonly habitRepository: HabitRepository,
     @Inject(EventPublisher) private readonly eventPublisher: EventPublisher,
     @Inject(ReadModel) private readonly habitChallengesReadModel: ReadModel,
+    @Inject(ReadModel) private readonly userChallengesReadModel: ReadModel,
   ) {}
 
   private handleEvent(event: ChallengeStartedEvent): void {
     this.habitChallengesReadModel.update(event)
+    this.userChallengesReadModel.update(event)
   }
 
   async execute(command: CreateChallengeCommand): Promise<void> {

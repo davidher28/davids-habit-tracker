@@ -1,4 +1,3 @@
-import { v4 as uuidv4 } from 'uuid'
 import { InMemoryEventPublisher } from '../../../infrastructure/shared/event-publisher.in-memory'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
 import { UUId } from '../../../domain/shared/uuid'
@@ -22,10 +21,10 @@ describe('LogChallengeProgressHandler', () => {
     handler = new LogChallengeProgressHandler(eventPublisher, habitChallenges)
   })
 
-  it('should log progress to a challenge', async () => {
+  it('should log progress to multiple challenges', async () => {
     // Given
     const habitId = UUId.generate()
-    const initialUsers = [uuidv4()]
+    const initialUsers = [UUId.generate()]
     const firstChallenge = Challenge.createStarted(
       UUId.generate(),
       HabitId.create(habitId),
@@ -46,7 +45,6 @@ describe('LogChallengeProgressHandler', () => {
       new Date(new Date().getTime() + 1000),
       initialUsers,
     )
-
     eventPublisher.registerHandler(
       habitChallenges.update.bind(habitChallenges),
       ChallengeStartedEvent.TYPE,
@@ -66,19 +64,19 @@ describe('LogChallengeProgressHandler', () => {
     const challengeId1 = ChallengeId.create(challengeIds[0])
     const challengeStream1 = eventPublisher.findByAggregateId(challengeId1)
     const updatedChallenge1 = Challenge.create(challengeStream1)
-    expect(updatedChallenge1.isCompleted()).toBe(false)
+    expect(updatedChallenge1.isCompleted()).toBe(false) // Not completed yet
 
     // Second Challenge
     const challengeId2 = ChallengeId.create(challengeIds[1])
     const challengeStream2 = eventPublisher.findByAggregateId(challengeId2)
     const updatedChallenge2 = Challenge.create(challengeStream2)
-    expect(updatedChallenge2.isCompleted()).toBe(true)
+    expect(updatedChallenge2.isCompleted()).toBe(true) // Completed
   })
 
   it('should log progress to a challenge and complete it', async () => {
     // Given
     const habitId = UUId.generate()
-    const initialUsers = [uuidv4()]
+    const initialUsers = [UUId.generate()]
     const challenge = Challenge.createStarted(
       UUId.generate(),
       HabitId.create(habitId),
@@ -116,6 +114,6 @@ describe('LogChallengeProgressHandler', () => {
     const challengeId = ChallengeId.create(challengeIds[0])
     const challengeStream = eventPublisher.findByAggregateId(challengeId)
     const updatedChallenge = Challenge.create(challengeStream)
-    expect(updatedChallenge.isCompleted()).toBe(true)
+    expect(updatedChallenge.isCompleted()).toBe(true) // Completed
   })
 })

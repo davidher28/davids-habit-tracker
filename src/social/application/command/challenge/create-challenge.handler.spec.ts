@@ -1,5 +1,4 @@
 import { CreateChallengeCommand } from './create-challenge.command'
-import { v4 as uuidv4 } from 'uuid'
 import { CreateChallengeHandler } from './create-challenge.handler'
 import { InMemoryEventPublisher } from '../../../infrastructure/shared/event-publisher.in-memory'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
@@ -12,12 +11,15 @@ import { HabitNotFoundError } from './habit.not-found.error'
 import { ChallengeId } from '../../../domain/challenge/challenge.id'
 import { InMemoryHabitChallengesReadModel } from '../../../infrastructure/challenge/habit-challenges.in-memory.read-model'
 import { ReadModel } from '../../../domain/shared/read-model'
+import { InMemoryUserChallengesReadModel } from '../../../infrastructure/challenge/user-challenges.in-memory.read-model'
+import { UUId } from '../../../domain/shared/uuid'
 
 describe('CreateChallengeHandler', () => {
   let habit: Habit
   let habitRepository: HabitRepository
   let eventPublisher: EventPublisher
   let habitChallenges: ReadModel
+  let userChallenges: ReadModel
   let handler: CreateChallengeHandler
 
   beforeEach(() => {
@@ -25,10 +27,12 @@ describe('CreateChallengeHandler', () => {
     habitRepository = new InMemoryHabitRepository()
     eventPublisher = new InMemoryEventPublisher()
     habitChallenges = new InMemoryHabitChallengesReadModel()
+    userChallenges = new InMemoryUserChallengesReadModel()
     handler = new CreateChallengeHandler(
       habitRepository,
       eventPublisher,
       habitChallenges,
+      userChallenges,
     )
   })
 
@@ -36,13 +40,13 @@ describe('CreateChallengeHandler', () => {
     // Given
     habitRepository.setHabits([habit])
     const habitId = habit.idValue
-    const challengeId = uuidv4()
+    const challengeId = UUId.generate()
     const target = 10
     const partner = 'partner'
     const project = 'project'
     const cost = 100
     const deadline = new Date('2025-12-12')
-    const users = [uuidv4(), uuidv4()]
+    const users = [UUId.generate(), UUId.generate()]
 
     // When
     const command = new CreateChallengeCommand(
@@ -69,14 +73,14 @@ describe('CreateChallengeHandler', () => {
 
   it('should throw an error if the habit does not exist', async () => {
     // Given
-    const challengeId = uuidv4()
+    const challengeId = UUId.generate()
     const habitId = habit.idValue
     const target = 10
     const partner = 'partner'
     const project = 'project'
     const cost = 100
     const deadline = new Date('2025-12-12')
-    const users = [uuidv4(), uuidv4()]
+    const users = [UUId.generate(), UUId.generate()]
 
     // When
     const command = new CreateChallengeCommand(
@@ -102,14 +106,14 @@ describe('CreateChallengeHandler', () => {
 
     // When
     const command = new CreateChallengeCommand(
-      uuidv4(),
+      UUId.generate(),
       habitId,
       10,
       'partner'.repeat(1000),
       'project',
       -100,
       new Date(),
-      [uuidv4(), uuidv4()],
+      [UUId.generate(), UUId.generate()],
     )
 
     // Then
