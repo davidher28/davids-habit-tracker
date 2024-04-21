@@ -11,4 +11,8 @@ export class ChallengeNotFoundError extends BaseError {
       `Challenge with id ${challengeId} does not exist.`,
     )
   }
+
+  public static withMessage(message: string): ChallengeNotFoundError {
+    return new ChallengeNotFoundError(message)
+  }
 }

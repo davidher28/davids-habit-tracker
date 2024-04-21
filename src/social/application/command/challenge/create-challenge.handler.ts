@@ -21,7 +21,7 @@ export class CreateChallengeHandler
   ) {}
 
   private handleEvent(event: ChallengeStartedEvent): void {
-    this.habitChallengesReadModel.handle(event)
+    this.habitChallengesReadModel.update(event)
   }
 
   async execute(command: CreateChallengeCommand): Promise<void> {

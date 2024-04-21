@@ -11,7 +11,7 @@ import { AlreadyAttachedUserError } from '../../application/command/challenge/al
 export class Challenge extends EventSourcedEntity {
   private challengeState: ChallengeState
 
-  protected constructor(stream: Array<DomainEvent> = []) {
+  protected constructor(stream: DomainEvent[] = []) {
     super(stream)
     if (stream.length === 0) {
       this.challengeState = ChallengeState.empty()
@@ -52,11 +52,15 @@ export class Challenge extends EventSourcedEntity {
     this.challengeState = this.challengeState.withUsersAdded(event)
   }
 
-  isPending(): boolean {
+  private isPending(): boolean {
     return this.challengeState.isPending()
   }
 
-  static create(stream: Array<DomainEvent>): Challenge {
+  private isDateAfterDeadline(date: Date): boolean {
+    return this.challengeState.deadline < date
+  }
+
+  static create(stream: DomainEvent[]): Challenge {
     return new Challenge(stream)
   }
 
@@ -121,5 +125,16 @@ export class Challenge extends EventSourcedEntity {
       )
     }
     this.apply(UsersAddedEvent.with(this.challengeState.id, users))
+  }
+
+  logProgress(progress: number): void {
+    const progressDate = new Date()
+    if (this.isDateAfterDeadline(progressDate)) {
+      return
+    }
+
+    this.apply(
+      ProgressLoggedEvent.with(this.challengeState.id, progress, progressDate),
+    )
   }
 }

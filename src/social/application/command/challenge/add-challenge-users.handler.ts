@@ -18,7 +18,7 @@ export class AddChallengeUsersHandler
   ) {}
 
   private handleEvent(event: UsersAddedEvent): void {
-    this.userChallengesReadModel.handle(event)
+    this.userChallengesReadModel.update(event)
   }
 
   async execute(command: AddChallengeUsersCommand): Promise<void> {
