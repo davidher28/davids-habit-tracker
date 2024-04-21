@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
-import { InMemoryEventPublisher } from '../../../infrastructure/event-publisher.in-memory'
+import { InMemoryEventPublisher } from '../../../infrastructure/shared/event-publisher.in-memory'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
 import { AddChallengeUsersCommand } from './add-challenge-users.command'
 import { AddChallengeUsersHandler } from './add-challenge-users.handler'
@@ -8,14 +8,18 @@ import { UUId } from '../../../domain/shared/uuid'
 import { HabitId } from '../../../domain/habit/habit.id'
 import { ChallengeId } from '../../../domain/challenge/challenge.id'
 import { Challenge } from '../../../domain/challenge/challenge'
+import { InMemoryUserChallengesReadModel } from '../../../infrastructure/challenge/user-challenges.in-memory.read-model'
+import { ReadModel } from '../../../domain/shared/read-model'
 
 describe('AddChallengeUsersHandler', () => {
   let eventPublisher: EventPublisher
+  let userChallenges: ReadModel
   let handler: AddChallengeUsersHandler
 
   beforeEach(() => {
     eventPublisher = new InMemoryEventPublisher()
-    handler = new AddChallengeUsersHandler(eventPublisher)
+    userChallenges = new InMemoryUserChallengesReadModel()
+    handler = new AddChallengeUsersHandler(eventPublisher, userChallenges)
   })
 
   it('should add users to a challenge', async () => {

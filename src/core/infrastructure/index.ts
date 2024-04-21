@@ -8,7 +8,7 @@ import { UserWearableService } from './user/user.wearable.service'
 import { ChallengeRepository } from '../domain/challenge/challenge.repository'
 import { InMemoryChallengeRepository } from './challenge/challenge.in-memory.repository'
 import { EventPublisher } from '../../social/domain/shared/event-publisher'
-import { InMemoryEventPublisher } from '../../social/infrastructure/event-publisher.in-memory'
+import { InMemoryEventPublisher } from '../../social/infrastructure/shared/event-publisher.in-memory'
 
 export const RepositoryProviders = [
   { provide: UserRepository, useClass: InMemoryUserRepository },

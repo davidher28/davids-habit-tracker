@@ -1,7 +1,7 @@
 import { CreateChallengeCommand } from './create-challenge.command'
 import { v4 as uuidv4 } from 'uuid'
 import { CreateChallengeHandler } from './create-challenge.handler'
-import { InMemoryEventPublisher } from '../../../infrastructure/event-publisher.in-memory'
+import { InMemoryEventPublisher } from '../../../infrastructure/shared/event-publisher.in-memory'
 import { EventPublisher } from '../../../domain/shared/event-publisher'
 import { HabitRepository } from '../../../domain/habit/habit.repository'
 import { InMemoryHabitRepository } from '../../../../core/infrastructure/habit/habit.in-memory.repository'
@@ -10,18 +10,26 @@ import { Habit } from '../../../../core/domain/habit/habit'
 import { ChallengeStartedEvent } from '../../../domain/challenge/challenge-started.event'
 import { HabitNotFoundError } from './habit.not-found.error'
 import { ChallengeId } from '../../../domain/challenge/challenge.id'
+import { InMemoryHabitChallengesReadModel } from '../../../infrastructure/challenge/habit-challenges.in-memory.read-model'
+import { ReadModel } from '../../../domain/shared/read-model'
 
 describe('CreateChallengeHandler', () => {
   let habit: Habit
   let habitRepository: HabitRepository
   let eventPublisher: EventPublisher
+  let habitChallenges: ReadModel
   let handler: CreateChallengeHandler
 
   beforeEach(() => {
     habit = HabitMother.create()
     habitRepository = new InMemoryHabitRepository()
     eventPublisher = new InMemoryEventPublisher()
-    handler = new CreateChallengeHandler(habitRepository, eventPublisher)
+    habitChallenges = new InMemoryHabitChallengesReadModel()
+    handler = new CreateChallengeHandler(
+      habitRepository,
+      eventPublisher,
+      habitChallenges,
+    )
   })
 
   it('should create a challenge', async () => {
